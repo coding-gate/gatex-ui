@@ -20,7 +20,7 @@ const Home = () => {
             <div className="row">           
                 <div className="col">
                     <h4>How TestX works</h4>
-                    <p>explain it in flow diagram</p>
+                    <p>explain it in flow diagrams</p>
                 </div>    
                 
             </div>      
