@@ -1,0 +1,2 @@
+export const SAVE_JWT_TOKEN="SAVE_JWT_TOKEN";
+export const REMOVE_JWT_TOKEN="REMOVE_JWT_TOKEN";

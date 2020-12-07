@@ -1,0 +1,8 @@
+{
+  "short_name": "ITman",
+  "name": "ITman co in", 
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
