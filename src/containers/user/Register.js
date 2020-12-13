@@ -23,6 +23,9 @@ class Register extends FormClass {
 
     checkEquality = () => {
         if(this.state.fields["password"]===this.state.fields["pwd"] ){
+            if(this.state.fields["pwd"]){
+            this.validationCss['pwd'] = this.CSS_CLASS['success'];
+            }
             return true;
         }else{
             this.validationCss["pwd"] = this.CSS_CLASS['error'];
@@ -50,7 +53,7 @@ class Register extends FormClass {
    
 
     submitHandeler = () => {        
-
+      this.validationCss=[];
         if (this.validateEmpty('id')
             & this.validateEmpty('name')
             & this.validateEmail('email')
