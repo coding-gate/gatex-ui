@@ -33,12 +33,12 @@ const Header = () => {
         <div>
             <div className="row">
                 <div className="col">
-                    <nav className="navbar navbar-expand-md bg-white navbar-light px-0">
+                    <nav className="navbar navbar-expand-md navbar-light px-0 py-0 bg-light">
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" >
                             <span className="navbar-toggler-icon"></span>
                         </button>
                         <div className="collapse navbar-collapse " id="navbarSupportedContent">
-                            <Link className="navbar-brand" to="/">&nbsp;Test<span style={{ color: "red" }}><b>X</b></span></Link>
+                            <Link className="navbar-brand" to="/">&nbsp;Gate<span style={{ color: "green" }}><b>X</b></span></Link>
                             <ul className="navbar-nav ml-auto">
                                 {linkOption}
                                 <li className="nav-item">

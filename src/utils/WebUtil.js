@@ -1,7 +1,7 @@
 
 function getUrl() {
     let url = window.location.protocol + '//' + window.location.hostname + ":" + window.location.port
-    return url+"/itman";
+    return url;
 }
 
 export const parseJwt = function (token) {
@@ -22,6 +22,10 @@ export const handleError = function (error, props) {
         if (error.response.status === 400) {
             if (props.setAlert) {
                 props.setAlert({ type: 'warning', message: 'Invalid credentials !' });
+            }
+        }else if (error.response.status === 409) {
+            if (props.setAlert) {
+                props.setAlert({ type: 'warning', message: 'Record exists !' });
             }
         } else if (error.response.status === 401) {
             props.history.push("/login");

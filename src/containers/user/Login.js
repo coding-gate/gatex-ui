@@ -21,7 +21,7 @@ class Login extends FormClass {
         const header = {
             headers: {
                 'Content-type': 'application/x-www-form-urlencoded',
-                'Authorization': 'Basic ' + btoa("itman:secret")
+                'Authorization': 'Basic ' + btoa("gatexui:secret")
             }
         }
 
@@ -68,15 +68,14 @@ class Login extends FormClass {
                         <h5 align="center">Enter credentials</h5>
                         <AlertMessage alert={this.props.alert} reSetAlert={this.props.setAlert}/>  
                         <div className="form-group">
-                            <label>User name</label>
-                            <input className={this.getClassName('userName')} name="userName" placeholder="Type User Name"
+                            <label>User ID :</label>
+                            <input className={this.getClassName('userName')} name="userName" placeholder="Enter user id"
                                 onChange={(event) => this.updateFieldState(event)}
                                 onFocus={(event) => this.setCssAsDefault(event)} />
-                            <div className="invalid-feedback">User name can not be empty</div>
                         </div>
                         <div className="form-group">
-                            <label>Password</label>
-                            <input type="password" className={this.getClassName('password')} name="password" placeholder="Type password"
+                            <label>Password :</label>
+                            <input type="password" className={this.getClassName('password')} name="password" placeholder="Enter password"
                                 onChange={(event) => this.updateFieldState(event)}
                                 onFocus={(event) => this.setCssAsDefault(event)}
                                 onKeyPress={event => {
@@ -87,7 +86,7 @@ class Login extends FormClass {
                                 />
                         </div>                        
                         <div className="form-group">
-                            <button className="btn btn-light" onClick={this.submitHandeler}>Submit</button>
+                            <button className="btn btn-light btn-outline-primary" onClick={this.submitHandeler}>Submit</button>
                         </div>
                     </div>
                 </div>
