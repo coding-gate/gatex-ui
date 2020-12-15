@@ -15,7 +15,7 @@ const Home = () => {
                         It's simple, create a <b>test</b> by selecting question and then generate a link and send that to participant.
                     </p>
                     <p > Result will be calculated online, use our one stop solution. </p>
-                    <Link to="/register" className="btn btn-light btn-outline-primary">Register</Link>
+                    <Link to="/register?ac=user" className="btn btn-light btn-outline-primary">Register</Link>
                 </div>   
             </div>      
             <div className="row">           

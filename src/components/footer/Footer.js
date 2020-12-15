@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="col">
           <footer>
             <div className="footer-copyright text-center py-4">
-              © 2021 Copyright: TestX,&nbsp;all rights reserved.
+              © 2021 Copyright: GateX,&nbsp;all rights reserved.
               </div>
           </footer>
         </div>

@@ -31,14 +31,7 @@ class FormClass extends Component {
     }
     
 
-    isValidEmail = (email) => {
-        if(email){
-            if (email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/)) {
-                return true;
-            } 
-       }
-       return false;
-    }    
+      
 
     validateEmpty = (field) => {     
         if(this.state.fields[field]){
@@ -58,13 +51,50 @@ class FormClass extends Component {
         }
     }
 
+    
+
+    isValidEmail = (email) => {
+        if(email){
+            if (email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/)) {
+                return true;
+            } 
+       }
+       return false;
+    } 
+
     validateEmail = (field) => {
         let email =this.state.fields[field];
         let isValid = this.isValidEmail(email);
         this.buildValidationCss(isValid, field);
         return isValid;
+    } 
+
+    isValidPassword = (password) => {
+        if(password){
+            if (password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/)) {
+                return true;
+            } 
+       }
+       return false;
+    }  
+    
+    validatePassword = (field) => {
+        let password =this.state.fields[field];
+        let isValid = this.isValidPassword(password);
+        this.buildValidationCss(isValid, field);
+        return isValid;
     }
 
+    validateEquality = (source, copy) => {
+        if(this.state.fields[copy]&&(this.state.fields[source]===this.state.fields[copy]) ){
+            this.validationCss[copy] = this.CSS_CLASS['success'];
+            return true;
+        }else{
+            this.validationCss[copy] = this.CSS_CLASS['error'];
+            return false;
+        }
+    }
+    
     applyValidationCss = () => {
         this.setState({fieldStyle: this.validationCss });
     }

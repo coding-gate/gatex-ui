@@ -3,9 +3,11 @@ import {Route, withRouter, Switch} from 'react-router-dom';
 
 import Footer from './components/footer/Footer';
 import Header from './components/header/Header';
-import home from './components/body/Home';
+//import home from './components/body/Home';
 import ErrorPage from './components/error/ErrorPage';
 
+
+import Home from './containers/home/HomePage';
 import Login from './containers/user/Login';
 import Register from './containers/user/Register';
 import contactUs from './containers/contact/ContactUs';
@@ -18,7 +20,7 @@ function App() {
             <Header/>
             <div id="body" >    
                   <Switch>            
-                      <Route path="/" exact component={home}/>               
+                      <Route path="/" exact component={Home}/>               
                       <Route path="/login" component={Login}/> 
                       <Route path="/register" component={Register}/>      
                       <Route path="/contactUs" component={contactUs}/>   
