@@ -40,7 +40,7 @@ export default function Type(props) {
         <div className='mt-3'>
 
             <div className="row">
-                <div className="col">{props.state.text}</div>
+                <p className="col text-center lead">{props.state.text}</p>
             </div>
 
             <div className="row">

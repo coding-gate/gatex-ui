@@ -37,6 +37,7 @@ export default function Options(props) {
                 onChange={(e) => updateOptionValue(index, e.target.value)}
                 value={option}
                 className='form-control' type="text" />
+
             <button
                 onClick={()=>removeOption(index)}
                 className={props.type === 'tf' ? 'd-none' : 'btn'}>
@@ -51,10 +52,9 @@ export default function Options(props) {
     return (
         <div className='my-3'>
             <h4 className='lead'>{props.state.text}</h4>
-            <div className="d-flex justify-content-between">
-
+            <div className="d-flex justify-content-between align-items-center">
             <h4>{props.type==='tf'?'Please Proceed To The Next Page...':'Please Enter The Options:'}</h4>
-            <button onClick={()=>addOption()} className={props.type === 'tf' ? 'd-none' : 'btn btn-secondary my-3 d-block ml-auto'}>Add Options</button>
+            <button onClick={()=>addOption()} className={props.state.type === 'tf' ? 'd-none' : 'btn btn-secondary my-3 d-block ml-auto'}>Add Options</button>
             </div>
             <div>
                 <ul className='list-unstyled'>
