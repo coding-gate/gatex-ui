@@ -3,7 +3,6 @@ import {Route, withRouter, Switch} from 'react-router-dom';
 
 import Footer from './components/footer/Footer';
 import Header from './components/header/Header';
-//import home from './components/body/Home';
 import ErrorPage from './components/error/ErrorPage';
 
 
@@ -13,6 +12,7 @@ import Register from './containers/user/Register';
 import contactUs from './containers/contact/ContactUs';
 import VeiwContacts from './containers/contact/ViewContacts';
 import aboutUs from './containers/about/AboutUs';
+import AddMCQ from './containers/mcq/AddMCQ'
 
 function App() {
           return (<div className="container-fluid">
@@ -26,6 +26,7 @@ function App() {
                       <Route path="/contactUs" component={contactUs}/>   
                       <Route path="/viewContacts" component={VeiwContacts}/>
                       <Route path="/aboutUs" component={aboutUs}/>
+                      <Route path="/addMcq" component={AddMCQ}/>
                       <Route path="/error" component={ErrorPage}/>
                   </Switch>
             </div>            
