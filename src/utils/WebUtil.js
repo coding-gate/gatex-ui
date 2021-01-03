@@ -23,7 +23,7 @@ export const persistAdminAcountState = function (adminAcountState) {
 export const handleError = function (error, props) {
 
     if (error.response) {
-        let errMsg = 'error occurred';
+        let errMsg = 'Error occurred!';
         if (error.response.status === 401) {
             props.history.push("/login");
         } else if (error.response.status === 400) {
@@ -33,7 +33,6 @@ export const handleError = function (error, props) {
         } else if (error.response.status === 403            
             || error.response.status === 404
             || error.response.status === 409
-            || error.response.status === 500
         ) {
             errMsg = error.response.data
         }

@@ -1,4 +1,5 @@
 {
+  "proxy": "http://itman.co.in/gatex",
   "name": "gatex",
   "version": "0.1.0",
   "private": true,
