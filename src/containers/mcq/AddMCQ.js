@@ -86,16 +86,11 @@ export default class AddQuestion extends Component {
                         { url: '#', level: 'Add Question' }
                     ]} />
                 </div>
-                <StepProgress step={this.state.step} />
+                <StepProgress steps='5' step={this.state.step} />
                 <div className="row justify-content-center">
                     <div className="col-md-8" >
                        {body}
                     </div>
-                </div>
-                
-                <div className='container mt-3 px-5'>
-                    <div className='text-center'></div>
-                    
                 </div>
             </div>
         )

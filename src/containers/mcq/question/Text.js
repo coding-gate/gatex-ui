@@ -4,9 +4,9 @@ import Select from 'react-select';
 
 export default function Text(props) {
     const subjectOptions = [
-        { value: 'java', label: 'java' },
-        { value: 'python', label: 'python' },
-        { value: 'javascript', label: 'javascript' }
+        { value: 'java', label: 'Java' },
+        { value: 'python', label: 'Python' },
+        { value: 'javascript', label: 'Javascript' }
     ];
 
     const complexityOption = [
@@ -36,6 +36,7 @@ export default function Text(props) {
                 <div className="col-3">
                     <h5>Subject:</h5>
                     <CreatableSelect
+                        placeholder='Subject'
                         isClearable
                         value={props.state.subject}
                         onChange={(val) => props.updateField("subject", val)}
@@ -53,6 +54,7 @@ export default function Text(props) {
                 <div className="col">
                     <h5>Complexity:</h5>
                     <Select
+                        placeholder='Complexity'
                         value={props.state.complexity}
                         onChange={(val) => props.updateField('complexity', val)}
                         options={complexityOption}
@@ -63,6 +65,7 @@ export default function Text(props) {
                 <div className="col">
                     <h5>Add Tag</h5>
                     <CreatableSelect isMulti
+                        placeholder='Hashtags...'
                         value={props.state.tag}
                         onChange={(val) => props.updateField("tag", val)}
                         options={tagOptions} />
