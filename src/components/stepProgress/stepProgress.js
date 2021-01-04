@@ -13,8 +13,11 @@ export default function stepProgress(props) {
   </svg>
     let steps = []
     for(let i = 1;i<=props.steps;i++){
-      steps = [...steps, <li className={props.step > i ? classes.done : props.step===i ? classes.active : null}>
-        {props.step > i ? checked : unchecked}
+      steps = [...steps, 
+        <li key={i}><div className={props.step > i ? classes.done : props.step===i ? classes.active : null}>
+          {props.step > i ? checked : unchecked}
+        </div>
+        <div ><span style={{width:`${100/(props.steps-1)}%`}} className={props.step > i ? classes.done+" "+classes.lines : classes.lines}></span></div>
       </li> ]
     }    
 

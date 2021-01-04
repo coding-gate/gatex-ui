@@ -14,28 +14,26 @@
    background-color: #fff;
 }
 
-.list>li::before{
+.list>li .lines{
     background: linear-gradient(to right, rgb(11, 177, 11) 50%, #aaa 50%);
     z-index: -1;
     position: absolute;
-    content: '';
-    width: 33.33%;
     top: 56%;
     height: 5px;
     background-size: 200% 100%;
     background-position: 100% 0;
     transition: all .35s ease-in;
 }
-.list>li.active{
+.list>li>.active{
     color: rgb(44, 95, 236);
 }
-.list>li.done{
+.list>li>.done{
     color: green;
 }
-.list>li.done::before{
+.list>li span.done{
     background-position: 0 0;
 }
-.list>li:last-child::before{
+.list>li:last-child .lines{
     display: none;
 }
 

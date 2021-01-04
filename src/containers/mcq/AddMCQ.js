@@ -21,7 +21,7 @@ export default class AddQuestion extends Component {
     }
 
     updateField = (field, value)=>{
-        console.log("updateField", field, value)
+        //console.log("updateField", field, value)
         this.setState({[field]: value });
 
     }
