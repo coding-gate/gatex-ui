@@ -1,8 +1,11 @@
 import React from 'react'
+import AlertMessage from '../../../components/alert/AlertMessage';
+import withAlert from '../../../hoc/withAlert';
 
-export default function Answer(props) {
+function Answer(props) {
+    const [alertObj, setAlertObj] = React.useState(null)
 
-    function answerSelect(target, type){
+    function answerSelect(target, type) {
         let answer = [...props.state.answer]
         if (type === 'mmcq') {
             if (target.checked) {
@@ -21,42 +24,60 @@ export default function Answer(props) {
         props.updateField('answer', answer);
     }
 
+    const submit = () => {
 
-   
+        if (props.state.answer.length === 0) {
+            setAlertObj({ message: 'Please Choose the Answer(s)', type: 'warning' })
+            return
+        }
+        props.updateField("alertObj", null)
+
+        props.updateField("step", 'submit')
+    }
+
+
+
     let options = [...props.state.options]
-    let body = options.map((option,index) => <div key={index} className="input-group mb-3">
-                                                    <div className="input-group-prepend">
-                                                        <div className="input-group-text">
-                                                        <input
-                                                            type={props.state.type==='mmcq'? 'checkbox':'radio'} 
-                                                            name="answer"
-                                                            value={option} 
-                                                            id={index}
-                                                            onChange={(e) => answerSelect(e.target, props.state.type)}
-                                                        />
-                                                    </div>
-                                                </div>
-                                                <label style={{cursor:'pointer'}} className='form-control w-75' htmlFor={index}>{option}</label>
-                                            </div> )
+    let body = options.map((option, index) => <div key={index} className="input-group mb-3">
+        <div className="input-group-prepend">
+            <div className="input-group-text">
+                <input
+                    type={props.state.type === 'mmcq' ? 'checkbox' : 'radio'}
+                    name="answer"
+                    value={option}
+                    id={index}
+                    onChange={(e) => answerSelect(e.target, props.state.type)}
+                />
+            </div>
+        </div>
+        <label style={{ cursor: 'pointer' }} className='form-control w-75' htmlFor={index}>{option}</label>
+    </div>)
     return (
         <div>
-            <h3 className='my-3 lead'>{props.state.text}</h3>
-            <h5 className='text-left'>Mark The Correct Answer(s):</h5>
-            <div className='text-left pl-5 list-unstyled form-check' >
+            <AlertMessage alert={alertObj} reSetAlert={props.setAlert} />
+
+            <h3 className='my-3 text-center lead'>{props.state.text}</h3>
+            <h4 className='my-3 text-left'>Mark The Correct Answer(s):</h4>
+            <div className='text-left list-unstyled' >
                 {body}
             </div>
 
             <div className="mt-3 float-right">
-                <button className="btn btn-light btn-outline-primary mx-2"
-                    onClick={() => { props.updateField('step', 3) }}>
+                <button className="btn btn-secondary mx-2"
+                    onClick={() => {
+                        props.updateField("alertObj", null)
+                        props.updateField('step', 3)
+                    }}>
                     Back
                 </button>
-                <button className="btn btn-light btn-outline-primary"
-                    onClick={() => { props.updateField('step', 4) }}>
-                    Next
+                <button className="btn btn-info"
+                    onClick={submit}>
+                    Proceed
                 </button>
             </div>
 
         </div>
     )
 }
+
+export default withAlert(Answer)

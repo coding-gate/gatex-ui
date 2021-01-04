@@ -5,8 +5,10 @@ import Text from './question/Text'
 import Type from './question/Type'
 import Options from './question/Options'
 import Answer from './question/Answer'
+import AlertMessage from '../../components/alert/AlertMessage'
+import withAlert from '../../hoc/withAlert'
 
-export default class AddQuestion extends Component {
+class AddQuestion extends Component {
     state = {
         step: 1,
         text: '',
@@ -16,7 +18,8 @@ export default class AddQuestion extends Component {
         complexity: null,
         type: null,
         answer: [],
-        options: ['']
+        options: [''],
+        alertObj:null
 
     }
 
@@ -43,8 +46,8 @@ export default class AddQuestion extends Component {
             alert(`Options Can't be blank...`)
             return false
         }
-
         this.setState({ step: 'submit' })
+
 
     }
 
@@ -85,8 +88,13 @@ export default class AddQuestion extends Component {
                         { url: '/', level: 'Home' },
                         { url: '#', level: 'Add Question' }
                     ]} />
+
                 </div>
                 <StepProgress steps='4' step={this.state.step} />
+                <div className="col-8 mx-auto my-3">
+                <AlertMessage alert={this.state.alertObj} reSetAlert={this.props.setAlert} />
+
+                </div>
                 <div className="row justify-content-center">
                     <div className="col-md-8" >
                        {body}
@@ -96,3 +104,5 @@ export default class AddQuestion extends Component {
         )
     }
 }
+
+export default withAlert(AddQuestion)

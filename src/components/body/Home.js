@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from '../card/Card';
+import Card from '../card/Card'
 
 
 const Home = () => {
@@ -30,7 +30,7 @@ const Home = () => {
                 </div>
             </div>
             <div>
-                <h1 className='text-center mt-4'>How Test<span style={{ color: 'red' }}>X</span> Works...</h1>
+                <h1 className='text-center mt-4'>How Gate<span style={{ color: 'green' }}>X</span> Works...</h1>
                 <div className='p-3'>
                     <div className=" mb-5">
                         <h3 className='text-center mb-3'>Add Your Own Question !!!</h3>

@@ -9,6 +9,7 @@ import AlertMessage from '../../components/alert/AlertMessage';
 import * as actionType from '../../store/actions'
 import * as webUtil from '../../utils/WebUtil'
 import withAlert from '../../hoc/withAlert'
+import { Link } from 'react-router-dom';
 
 class Login extends FormClass {
 
@@ -60,12 +61,12 @@ class Login extends FormClass {
                 <div className="row">
                     <Breadcrumb elements={[
                         { url: '/', level: 'Home' },
-                        { url: '#', level: 'login' }
+                        { url: '#', level: 'Login' }
                     ]} />
                 </div>               
                 <div className="row justify-content-center">
-                    <div className="col-md-5" >                   
-                        <h5 align="center">Enter credentials</h5>
+                    <div style={{maxWidth:'400px'}} className="border p-4 col-md-5" >                   
+                        <h5 align="center">Enter Credentials</h5>
                         <AlertMessage alert={this.props.alert} reSetAlert={this.props.setAlert}/>  
                         <div className="form-group">
                             <label>User ID :</label>
@@ -84,9 +85,20 @@ class Login extends FormClass {
                                         }
                                       }} 
                                 />
-                        </div>                        
+                                <div className='mt-2 text-right'>
+                                    <small >Forgot Password ?</small>                       
+                                </div>
+                        </div>
                         <div className="form-group">
-                            <button className="btn btn-light btn-outline-primary" onClick={this.submitHandeler}>Submit</button>
+                            <button className="btn btn-primary d-block mx-auto" onClick={this.submitHandeler}>Submit</button>
+                        </div>
+                        <div className='my-3' style={{position:'relative'}}>
+                            <hr/>
+                            <p style={{position:'absolute',top:'-12px',left:'50%',transform:'translateX(-50%)'}} className='text-secondary bg-white px-3 text-center'>OR</p>
+                        </div>
+                        <div className='text-center'>
+                            Don't Have an Account ? &nbsp;&nbsp; 
+                            <span><Link to="/register?ac=user">Register Here</Link></span>
                         </div>
                     </div>
                 </div>

@@ -15,7 +15,7 @@ import aboutUs from './containers/about/AboutUs';
 import AddMCQ from './containers/mcq/AddMCQ'
 
 function App() {
-          return (<div className="container-fluid">
+          return (<div style={{minHeight:'100vh'}} className="container-fluid">
           <main className="bd-content" role="main">
             <Header/>
             <div id="body" >    

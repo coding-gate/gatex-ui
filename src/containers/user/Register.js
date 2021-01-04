@@ -67,7 +67,7 @@ class Register extends FormClass {
                 <div className="row">
                     <Breadcrumb elements={[
                         { url: '/', level: 'Home' },
-                        { url: '#', level: 'login' }
+                        { url: '#', level: 'Register' }
                     ]} />
                 </div>               
                 <div className="row justify-content-center">
