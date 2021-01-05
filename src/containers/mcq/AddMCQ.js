@@ -7,6 +7,7 @@ import Options from './question/Options'
 import Answer from './question/Answer'
 import AlertMessage from '../../components/alert/AlertMessage'
 import withAlert from '../../hoc/withAlert'
+import ViewQuestion from '../ViewQuestion/ViewQuestion'
 
 class AddQuestion extends Component {
     state = {
@@ -38,14 +39,6 @@ class AddQuestion extends Component {
             hashtags:this.state.hashtags
         }
         console.log(Question)
-        if (this.state.text === '' || this.state.type === "" || !this.state.options.lengthg || !this.state.answer.length) {
-            alert('Please Enter All Fields Properly...')
-            return false
-        }
-        if(this.state.options.some(elem => elem==='')){
-            alert(`Options Can't be blank...`)
-            return false
-        }
         this.setState({ step: 'submit' })
 
 
@@ -70,14 +63,11 @@ class AddQuestion extends Component {
                 updateField={this.updateField}
                 state={this.state}/>
                 break
-           // Why this?
-            case 'submit': body = <div className="alert mt-4 alert-success">
-                <h4>  <svg height="2em" viewBox="0 0 16 16" className="text-success" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd" d="M15.354 2.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L8 9.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
-                    <path fillRule="evenodd" d="M8 2.5A5.5 5.5 0 1 0 13.5 8a.5.5 0 0 1 1 0 6.5 6.5 0 1 1-3.25-5.63.5.5 0 1 1-.5.865A5.472 5.472 0 0 0 8 2.5z" />
-                </svg> &nbsp; Question Submitted</h4>
-            </div>
+            case 5: body = <ViewQuestion            
+                updateField={this.updateField}
+                state={this.state}/>
                 break
+           // Why this?
             default: body = "Body"
         }
         return (

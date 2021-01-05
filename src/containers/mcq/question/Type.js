@@ -36,21 +36,22 @@ function Type(props) {
 
 
     let types = ['mmcq', 'mcq', 'tf']
-    let list = types.map(type => <div key={type} className='form-group form-check'>
-        <input
-            onChange={(e) => updateTypeAndOption(e.target.value)}
-            className='form-check-input'
-            checked={props.state.type === type}
-            type="radio"
-            value={type}
-            name="questionType"
-            id={type}
-        />
-        <label
-            className='form-check-label'
-            htmlFor={type}>
-            {type === 'tf' ? 'True/False' : type === 'mcq' ? 'MCQ' : 'MMCQ'}</label>
-    </div>)
+    let list = types.map((type, index) => <div key={index} className="input-group mb-3">
+                                                <div className="input-group-prepend">
+                                                    <div className="input-group-text">
+                                                        <input
+                                                            type="radio"
+                                                            checked={props.state.type === type}
+                                                            value={type}
+                                                            id={index}
+                                                            onChange={(e) => updateTypeAndOption(e.target.value)}
+                                                            />
+                                                    </div>
+                                                </div>
+                                                <label style={{ cursor: 'pointer' }} className='form-control' htmlFor={index}>
+                                                    {type === 'tf' ? 'True/False' : type === 'mcq' ? 'MCQ' : 'MMCQ'}</label>
+                                            </div>)
+    
     return (
         <div className='my-3'>
             <AlertMessage alert={alertObj} reSetAlert={props.setAlert} />

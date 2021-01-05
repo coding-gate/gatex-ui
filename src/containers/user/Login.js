@@ -94,7 +94,7 @@ class Login extends FormClass {
                         </div>
                         <div className='my-3' style={{position:'relative'}}>
                             <hr/>
-                            <p style={{position:'absolute',top:'-12px',left:'50%',transform:'translateX(-50%)'}} className='text-secondary bg-white px-3 text-center'>OR</p>
+                            <p style={{position:'absolute',top:'-12px',left:'50%',transform:'translateX(-50%)'}} className='text-secondary bg-white px-3'>OR</p>
                         </div>
                         <div className='text-center'>
                             Don't Have an Account ? &nbsp;&nbsp; 

@@ -32,7 +32,7 @@ function Answer(props) {
         }
         props.updateField("alertObj", null)
 
-        props.updateField("step", 'submit')
+        props.updateField("step", 5)
     }
 
 
