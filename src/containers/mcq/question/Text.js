@@ -29,23 +29,23 @@ function Text(props) {
     const submit = () => {
 
         if (props.state.text === '') {
-            props.updateField('alertObj', { message: 'Please Enter a Valid Text', type: 'warning' })
+            props.setAlert({type:'warning',message:'Please Enter a Valid Text'})
             return
         }
         if (!props.state.subject) {
-            props.updateField('alertObj', { message: 'Please Choose a Subject', type: 'warning' })
-            return
-        }
-        if (!props.state.complexity) {
-            props.updateField('alertObj', { message: 'Please Choose a Complexity', type: 'warning' })
+            props.setAlert({type:'warning',message:'Please Choose a Subject'})
             return
         }
         if (!props.state.time) {
-            props.updateField('alertObj', { message: 'Please Set a Time', type: 'warning' })
+            props.setAlert({type:'warning',message:'Please Set a Time'})
             return
         }
-        props.updateField("alertObj", null)
-
+        if (!props.state.complexity) {
+            props.setAlert({type:'warning',message:'Please Choose a Complexity'})
+            return
+        }
+        
+        props.setAlert(null)
         props.updateField("step", 2)
     }
 

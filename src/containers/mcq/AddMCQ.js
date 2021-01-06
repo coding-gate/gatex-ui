@@ -7,7 +7,7 @@ import Options from './question/Options'
 import Answer from './question/Answer'
 import AlertMessage from '../../components/alert/AlertMessage'
 import withAlert from '../../hoc/withAlert'
-import ViewQuestion from '../ViewQuestion/ViewQuestion'
+import SubmitMCQ from './SubmitMCQ'
 
 class AddQuestion extends Component {
     state = {
@@ -39,9 +39,18 @@ class AddQuestion extends Component {
             hashtags:this.state.hashtags
         }
         console.log(Question)
-        this.setState({ step: 'submit' })
-
-
+    }
+    cancel = () => {
+        this.setState({step: 1,
+            text: '',
+            tag: null,
+            subject: null,
+            time: null,
+            complexity: null,
+            type: null,
+            answer: [],
+            options: [''],
+            alertMessage:null})
     }
 
     render() {
@@ -49,22 +58,27 @@ class AddQuestion extends Component {
         switch (this.state.step) {
             case 1: body = <Text   
                 updateField={this.updateField}
+                setAlert={this.props.setAlert}
                 state={this.state} />
                 break
             case 2: body = <Type
-                updateField={this.updateField}                
+                updateField={this.updateField}
+                setAlert={this.props.setAlert}            
                 state={this.state}/>
                 break
             case 3: body = <Options
-                updateField={this.updateField}                
+                updateField={this.updateField}
+                setAlert={this.props.setAlert}            
                 state={this.state} />
                 break
             case 4: body = <Answer            
                 updateField={this.updateField}
+                setAlert={this.props.setAlert}
                 state={this.state}/>
                 break
-            case 5: body = <ViewQuestion            
-                updateField={this.updateField}
+            case 5: body = <SubmitMCQ            
+                cancel={this.cancel}
+                submit={this.submitHandler}
                 state={this.state}/>
                 break
            // Why this?
@@ -82,8 +96,7 @@ class AddQuestion extends Component {
                 </div>
                 <StepProgress steps='4' step={this.state.step} />
                 <div className="col-8 mx-auto my-3">
-                <AlertMessage alert={this.state.alertObj} reSetAlert={this.props.setAlert} />
-
+                <AlertMessage alert={this.props.alert} reSetAlert={this.props.setAlert} />
                 </div>
                 <div className="row justify-content-center">
                     <div className="col-md-8" >

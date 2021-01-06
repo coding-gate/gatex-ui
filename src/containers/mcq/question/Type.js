@@ -1,9 +1,6 @@
 import React from 'react'
-import AlertMessage from '../../../components/alert/AlertMessage';
-import withAlert from '../../../hoc/withAlert';
 
 function Type(props) {
-    const [alertObj, setAlertObj] = React.useState(null)
 
     function updateTypeAndOption(type) {
 
@@ -26,10 +23,10 @@ function Type(props) {
     const submit = () => {
 
         if (!props.state.type) {
-            setAlertObj({ message: 'Please Choose a Type ', type: 'warning' })
+            props.setAlert({ message: 'Please Choose a Type ', type: 'warning' })
             return
         }
-        props.updateField("alertObj", null)
+        props.setAlert(null)
 
         props.updateField("step", 3)
     }
@@ -54,8 +51,6 @@ function Type(props) {
     
     return (
         <div className='my-3'>
-            <AlertMessage alert={alertObj} reSetAlert={props.setAlert} />
-
             <div className="row">
                 <h4 className="col text-center lead">{props.state.text}</h4>
             </div>
@@ -69,7 +64,7 @@ function Type(props) {
             <div className="mt-3 float-right">
                 <button className="btn btn-secondary mx-2"
                     onClick={() => {
-                        props.updateField("alertObj", null)
+                        props.setAlert(null)
                         props.updateField('step', 1)
                     }}>
                     Back
@@ -83,4 +78,4 @@ function Type(props) {
     )
 }
 
-export default withAlert(Type)
+export default Type

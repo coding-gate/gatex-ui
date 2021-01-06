@@ -8,7 +8,7 @@ class FormClass extends Component {
 
     state = {
         fields:[],
-        fieldStyle: []
+        fieldStyle: [],
     }; 
    
 

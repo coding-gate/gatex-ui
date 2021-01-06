@@ -1,9 +1,6 @@
 import React from 'react'
-import AlertMessage from '../../../components/alert/AlertMessage';
-import withAlert from '../../../hoc/withAlert';
 
 function Answer(props) {
-    const [alertObj, setAlertObj] = React.useState(null)
 
     function answerSelect(target, type) {
         let answer = [...props.state.answer]
@@ -27,10 +24,10 @@ function Answer(props) {
     const submit = () => {
 
         if (props.state.answer.length === 0) {
-            setAlertObj({ message: 'Please Choose the Answer(s)', type: 'warning' })
+            props.setAlert({ message: 'Please Choose the Answer(s)', type: 'warning' })
             return
         }
-        props.updateField("alertObj", null)
+        props.setAlert(null)
 
         props.updateField("step", 5)
     }
@@ -54,8 +51,6 @@ function Answer(props) {
     </div>)
     return (
         <div>
-            <AlertMessage alert={alertObj} reSetAlert={props.setAlert} />
-
             <h3 className='my-3 text-center lead'>{props.state.text}</h3>
             <h4 className='my-3 text-left'>Mark The Correct Answer(s):</h4>
             <div className='text-left list-unstyled' >
@@ -65,7 +60,7 @@ function Answer(props) {
             <div className="mt-3 float-right">
                 <button className="btn btn-secondary mx-2"
                     onClick={() => {
-                        props.updateField("alertObj", null)
+                        props.setAlert(null)
                         props.updateField('step', 3)
                     }}>
                     Back
@@ -80,4 +75,4 @@ function Answer(props) {
     )
 }
 
-export default withAlert(Answer)
+export default Answer

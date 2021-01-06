@@ -23,19 +23,19 @@ function Options(props) {
     const submit = () => {
         if (props.state.type !== 'tf') {
             if (props.state.options.length < 3) {
-                props.updateField('alertObj', { message: 'Please Enter At Least 3 Options', type: 'warning' })
+                props.setAlert({ message: 'Please Enter At Least 3 Options', type: 'warning' })
                 return
             }
             if (props.state.options.some(option => option.trim() === '')) {
-                props.updateField('alertObj', { message: "Options Can't be Blank", type: 'warning' })
+                props.setAlert({ message: "Options Can't be Blank", type: 'warning' })
                 return
             }
             if (!props.state.options.every((elem, index, array) => array.indexOf(elem) === index)) {
-                props.updateField('alertObj', { message: "Options Can't Repeat", type: 'warning' })
+                props.setAlert({ message: "Options Can't Repeat", type: 'warning' })
                 return
             }
         }
-        props.updateField("alertObj", null)
+        props.setAlert(null)
         props.updateField("step", 4)
 
     }
@@ -54,7 +54,7 @@ function Options(props) {
                 onChange={(e) => updateOptionValue(index, e.target.value)}
                 value={option}
                 className='form-control' type="text" />
-
+            
             <button
                 onClick={() => removeOption(index)}
                 className={props.state.type === 'tf' ? 'd-none' : 'btn'}>
@@ -86,7 +86,7 @@ function Options(props) {
             <div className="mt-3 float-right">
                 <button className="btn btn-secondary mx-2"
                     onClick={() => {
-                        props.updateField("alertObj", null)
+                        props.setAlert(null)
                         props.updateField('step', 2)
                     }}>
                     Back

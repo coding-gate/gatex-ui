@@ -29,8 +29,9 @@ function App() {
                       <Route path="/addMcq" component={AddMCQ}/>
                       <Route path="/error" component={ErrorPage}/>
                   </Switch>
-            </div>            
-            <Footer/>
+            </div>   
+              <Footer />
+         
           </main>
         </div>)
 }

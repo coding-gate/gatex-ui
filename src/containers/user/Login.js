@@ -11,8 +11,8 @@ import * as webUtil from '../../utils/WebUtil'
 import withAlert from '../../hoc/withAlert'
 import { Link } from 'react-router-dom';
 
-class Login extends FormClass {
-
+class Login extends FormClass  {
+    
     getTokenAndSave = () => {
         let body = new FormData();
         body.set('username', this.state.fields['userName']);
@@ -90,7 +90,8 @@ class Login extends FormClass {
                                 </div>
                         </div>
                         <div className="form-group">
-                            <button className="btn btn-primary d-block mx-auto" onClick={this.submitHandeler}>Submit</button>
+                            <button className="btn btn-primary d-block mx-auto" onClick={this.submitHandeler}>
+                                 Submit</button>
                         </div>
                         <div className='my-3' style={{position:'relative'}}>
                             <hr/>
