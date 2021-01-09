@@ -2,48 +2,41 @@ import React from 'react'
 
 function Answer(props) {
 
-    function answerSelect(target, type) {
-        let answer = [...props.state.answer]
-        if (type === 'mmcq') {
-            if (target.checked) {
-                answer = [...answer, target.value]
-            }
-            else {
-                const index = answer.indexOf(target.value);
-                if (index > -1) {
-                    answer.splice(index, 1);
+    function answerSelect(index) {
+        let options = {...props.state.options}
+        if (props.state.type === 'mmcq') {
+            options[props.state.type].forEach((option,i) => {
+                if(i===index){
+                    option[1] = !option[1]
                 }
-            }
+            })
         }
         else {
-            answer = [target.value]
+            options[props.state.type].forEach((option,i) => {
+                    option[1] = i===index
+            })
         }
-        props.updateField('answer', answer);
+        props.updateField('options',options);
     }
 
     const submit = () => {
-
-        if (props.state.answer.length === 0) {
-            props.setAlert({ message: 'Please Choose the Answer(s)', type: 'warning' })
-            return
-        }
         props.setAlert(null)
-
         props.updateField("step", 5)
     }
 
 
 
-    let options = [...props.state.options]
+    let options = [...props.state.options[props.state.type]]
     let body = options.map((option, index) => <div key={index} className="input-group mb-3">
         <div className="input-group-prepend">
             <div className="input-group-text">
                 <input
                     type={props.state.type === 'mmcq' ? 'checkbox' : 'radio'}
                     name="answer"
-                    value={option}
+                    value={option[0]}
                     id={index}
-                    onChange={(e) => answerSelect(e.target, props.state.type)}
+                    checked={option[1]}
+                    onChange={() => answerSelect(index)}
                 />
             </div>
         </div>

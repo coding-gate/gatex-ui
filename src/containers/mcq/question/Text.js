@@ -10,15 +10,15 @@ function Text(props) {
     ];
 
     const complexityOption = [
-        { value: 'easy', label: 'easy' },
-        { value: 'medium', label: 'medium' },
-        { value: 'complex', label: 'complex' }
+        { value: 'easy', label: 'Easy' },
+        { value: 'medium', label: 'Medium' },
+        { value: 'complex', label: 'Complex' }
     ]
 
     const timeOption = [
-        { value: '1', label: '1' },
-        { value: '2', label: '2' },
-        { value: '3', label: '3' },
+        { value: '1', label: '1 Min' },
+        { value: '2', label: '2 Mins' },
+        { value: '3', label: '3 Mins' },
     ]
 
     const tagOptions = [
@@ -26,7 +26,7 @@ function Text(props) {
         { value: 'function', label: 'Function' },
         { value: 'es6', label: 'ES6' }
     ];
-    const submit = () => {
+    const stepAhead = () => {
 
         if (props.state.text === '') {
             props.setAlert({type:'warning',message:'Please Enter a Valid Text'})
@@ -103,7 +103,7 @@ function Text(props) {
             </div>
             <div className="mt-3 float-right">
                 <button className="btn btn-info"
-                    onClick={submit}>
+                    onClick={stepAhead}>
                     Proceed
                 </button>
             </div>

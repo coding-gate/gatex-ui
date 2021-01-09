@@ -4,45 +4,44 @@ import React from 'react'
 function Options(props) {
 
     function addOption() {
-        let options = [...props.state.options, ""]
+        let options = {...props.state.options, [props.state.type]:[...props.state.options[props.state.type],["",false]]}
         props.updateField('options', options)
     }
 
     function removeOption(index) {
-        let options = [...props.state.options]
-        options.splice(index, 1)
+        let options = {...props.state.options}
+        options[props.state.type].splice(index, 1)
         props.updateField('options', options)
     }
 
     function updateOptionValue(index, value) {
-        let options = [...props.state.options]
-        options[index] = value;
+        let options = {...props.state.options}
+        options[props.state.type][index][0] = value;
         props.updateField('options', options)
     }
 
     const submit = () => {
         if (props.state.type !== 'tf') {
-            if (props.state.options.length < 3) {
+            if (props.state.options[props.state.type].length < 3) {
                 props.setAlert({ message: 'Please Enter At Least 3 Options', type: 'warning' })
                 return
             }
-            if (props.state.options.some(option => option.trim() === '')) {
+            if (props.state.options[props.state.type].some(option => option[0].trim() === '')) {
                 props.setAlert({ message: "Options Can't be Blank", type: 'warning' })
                 return
             }
-            if (!props.state.options.every((elem, index, array) => array.indexOf(elem) === index)) {
-                props.setAlert({ message: "Options Can't Repeat", type: 'warning' })
+            if (!props.state.options[props.state.type].map(option => option[0]).every((elem, index, array) => array.indexOf(elem) === index)) {
+                props.setAlert({ message: "Options Shouldn't Be Repeated", type: 'warning' })
                 return
             }
         }
         props.setAlert(null)
         props.updateField("step", 4)
-
     }
 
 
 
-    let options = [...props.state.options]
+    let options = [...props.state.options[props.state.type]]
 
     let optionLists = options.map((option, index) =>
         <div className="input-group mb-3" key={index + 1}>
@@ -52,7 +51,8 @@ function Options(props) {
             <input
                 disabled={props.state.type === 'tf'}
                 onChange={(e) => updateOptionValue(index, e.target.value)}
-                value={option}
+                value={option[0]}
+                autoFocus
                 className='form-control' type="text" />
             
             <button

@@ -13,6 +13,8 @@ import contactUs from './containers/contact/ContactUs';
 import VeiwContacts from './containers/contact/ViewContacts';
 import aboutUs from './containers/about/AboutUs';
 import AddMCQ from './containers/mcq/AddMCQ'
+import ForgetPassword from './containers/ForgetPassword/ForgetPassword';
+import mcqList from './containers/mcqList/mcqList';
 
 function App() {
           return (<div style={{minHeight:'100vh'}} className="container-fluid">
@@ -27,7 +29,9 @@ function App() {
                       <Route path="/viewContacts" component={VeiwContacts}/>
                       <Route path="/aboutUs" component={aboutUs}/>
                       <Route path="/addMcq" component={AddMCQ}/>
+                      <Route path="/mcqList" component={mcqList}/>
                       <Route path="/error" component={ErrorPage}/>
+                      <Route path="/forgotPassword" component={ForgetPassword}/>
                   </Switch>
             </div>   
               <Footer />

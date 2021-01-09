@@ -12,8 +12,14 @@ import withAlert from '../../hoc/withAlert'
 import { Link } from 'react-router-dom';
 
 class Login extends FormClass  {
+
+    state = {
+        ...this.state,
+        isLoading:false
+    }
     
     getTokenAndSave = () => {
+        
         let body = new FormData();
         body.set('username', this.state.fields['userName']);
         body.set('password', this.state.fields['password']);
@@ -25,8 +31,9 @@ class Login extends FormClass  {
                 'Authorization': 'Basic ' + btoa("gatexui:secret")
             }
         }
-
-        axios.post(webUtil.URL + '/oauth/token', body, header).then(response => {
+        this.setState({isLoading:true})
+        axios.post(webUtil.URL + '/oauth/token', body, header)
+            .then(response => {
             const tokenData = webUtil.parseJwt(response.data.access_token);
 
             const payload = {
@@ -37,6 +44,7 @@ class Login extends FormClass  {
             this.props.history.push("/");
         }).catch(error => {
             webUtil.handleError(error, this.props);
+            this.setState({isLoading:false})
         })
     }
    
@@ -86,16 +94,23 @@ class Login extends FormClass  {
                                       }} 
                                 />
                                 <div className='mt-2 text-right'>
-                                    <small >Forgot Password ?</small>                       
+                                    <small><Link to='/forgotPassword'>Forgot Password ?</Link></small>                       
                                 </div>
                         </div>
                         <div className="form-group">
-                            <button className="btn btn-primary d-block mx-auto" onClick={this.submitHandeler}>
-                                 Submit</button>
+                            <button 
+                                className="btn btn-primary d-block mx-auto" 
+                                onClick={this.submitHandeler}
+                            >
+                                <span className={this.state.isLoading ? "spinner-border spinner-border-sm" : 'd-none'}>
+                                    </span>
+                                    {this.state.isLoading ? ' Loading...':' Submit'}</button>
                         </div>
                         <div className='my-3' style={{position:'relative'}}>
                             <hr/>
-                            <p style={{position:'absolute',top:'-12px',left:'50%',transform:'translateX(-50%)'}} className='text-secondary bg-white px-3'>OR</p>
+                            <p 
+                                style={{position:'absolute',top:'-12px',left:'50%',transform:'translateX(-50%)'}} 
+                                className='text-secondary bg-white px-3'>OR</p>
                         </div>
                         <div className='text-center'>
                             Don't Have an Account ? &nbsp;&nbsp; 

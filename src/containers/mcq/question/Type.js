@@ -2,32 +2,13 @@ import React from 'react'
 
 function Type(props) {
 
-    function updateTypeAndOption(type) {
-
-
-        let options = [...props.state.options]
-        let prvType = props.state.type;
-
-        if (type === 'tf') {
-            options = ['True', 'False']
-        } else {
-            if (prvType === 'tf') {
-                options = ['']
-            }
-        }
-        props.updateField('type', type)
-        props.updateField('options', options)
-
-    }
-
-    const submit = () => {
-
+    const stepAhead = () => {
         if (!props.state.type) {
             props.setAlert({ message: 'Please Choose a Type ', type: 'warning' })
             return
         }
         props.setAlert(null)
-
+        
         props.updateField("step", 3)
     }
 
@@ -41,7 +22,7 @@ function Type(props) {
                                                             checked={props.state.type === type}
                                                             value={type}
                                                             id={index}
-                                                            onChange={(e) => updateTypeAndOption(e.target.value)}
+                                                            onChange={(e) => props.updateField("type", e.target.value)}
                                                             />
                                                     </div>
                                                 </div>
@@ -70,7 +51,7 @@ function Type(props) {
                     Back
                 </button>
                 <button className="btn btn-info"
-                    onClick={submit}>
+                    onClick={stepAhead}>
                     Proceed
                 </button>
             </div>

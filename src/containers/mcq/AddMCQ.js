@@ -8,8 +8,12 @@ import Answer from './question/Answer'
 import AlertMessage from '../../components/alert/AlertMessage'
 import withAlert from '../../hoc/withAlert'
 import SubmitMCQ from './SubmitMCQ'
+import axios from 'axios'
+import * as QueryString from "query-string"
+
 
 class AddQuestion extends Component {
+    
     state = {
         step: 1,
         text: '',
@@ -18,10 +22,53 @@ class AddQuestion extends Component {
         time: null,
         complexity: null,
         type: null,
-        answer: [],
-        options: [''],
-        alertObj:null
+        options:{
+                mmcq:[["",false]],
+                mcq:[["",false]],
+                tf:[['True',false],['False',false]]
+                },
+        isLoading:false,
+        isRedirected:false
+    }
 
+    componentDidMount(){
+        const params = QueryString.parse(this.props.location.search) 
+        this.setState({isRedirected:!!params.questionId})
+        if(!!params.questionId){
+            this.setState({isLoading:true},() => {
+                axios.get('https://gatex-exam-default-rtdb.firebaseio.com/question/'+params.questionId+'.json')
+                    .then(res => res.data)
+                    .then(data => this.setState({complexity:data.complexity, 
+                                                 type:data.type,
+                                                 text:data.text,
+                                                 subject:data.subject,
+                                                 tag:data.tag,
+                                                 time:data.time,
+                                                 options:{...this.state.options,[data.type]:data.options},
+                                                 isLoading:false}))
+            })
+        }
+        //console.log('Mounted');
+    }
+
+    componentDidUpdate(prevProps){
+        if(prevProps.location.search!==this.props.location.search){
+            this.setState({step: 1,
+                text: '',
+                tag: null,
+                subject: null,
+                time: null,
+                complexity: null,
+                type: null,
+                options:{
+                            mmcq:[["",false]],
+                            mcq:[["",false]],
+                            tf:[['True',false],['False',false]]
+                        },
+                isLoading:false,
+                isRedirected:false})
+        }
+        
     }
 
     updateField = (field, value)=>{
@@ -31,26 +78,70 @@ class AddQuestion extends Component {
     }
    
     submitHandler = () => {
-        let Question = {
-            body: this.state.text,
-            type: this.state.type,
-            options: this.state.options,
-            answer: this.state.answer,
-            hashtags:this.state.hashtags
+        let question = {
+            text:this.state.text,
+            type:this.state.type,
+            tag:this.state.tag,
+            time:this.state.time,
+            subject:this.state.subject,
+            complexity:this.state.complexity,
+            options:this.state.options[this.state.type],
         }
-        console.log(Question)
+        this.setState({isLoading:true},() => {
+            axios.post('https://gatex-exam-default-rtdb.firebaseio.com/question.json',question)
+                .then(() => this.props.setAlert({type:'success',message:'Succesfully Submitted'}))
+                .then(() => {
+                    this.setState({
+                        step: 1,
+                        text: '',
+                        tag: null,
+                        subject: null,
+                        time: null,
+                        complexity: null,
+                        type: null,
+                        options:{mmcq:[["",false]],mcq:[["",false]],tf:[['True',false],['False',false]]},
+                        isLoading:false
+                    })
+                })
+                .catch(() => {
+                    this.props.setAlert({type:'danger',message:'Something Went Wrong, Try Again...'}
+                )})
+                //.then(()=>this.props.history.push('/mcqList'))
+            })
     }
+
+    updateHandler = () => {
+        let question = {
+            text:this.state.text,
+            type:this.state.type,
+            tag:this.state.tag,
+            time:this.state.time,
+            subject:this.state.subject,
+            complexity:this.state.complexity,
+            options:this.state.options[this.state.type],
+        }
+        this.setState({isLoading:true},() => {
+            axios.put('https://gatex-exam-default-rtdb.firebaseio.com/question/'+ QueryString.parse(this.props.location.search).questionId+'.json',question)
+                .then(() => this.props.setAlert({type:'success',message:'Question Successfully Updated'}))
+                .then(() => this.props.history.push('/addMcq'))
+                .catch(() => {
+                    this.props.setAlert({type:'danger',message:'Something Went Wrong, Try Again...'}
+                )})
+                //.then(()=>this.props.history.push('/mcqList'))
+            })
+    }
+    
     cancel = () => {
-        this.setState({step: 1,
+        this.state.isRedirected ? this.props.history.push('/mcqList') : this.setState({
+            step: 1,
             text: '',
             tag: null,
             subject: null,
             time: null,
             complexity: null,
             type: null,
-            answer: [],
-            options: [''],
-            alertMessage:null})
+            options:{mmcq:[["",false]],mcq:[["",false]],tf:[['True',false],['False',false]]}
+        })
     }
 
     render() {
@@ -77,12 +168,18 @@ class AddQuestion extends Component {
                 state={this.state}/>
                 break
             case 5: body = <SubmitMCQ            
-                cancel={this.cancel}
-                submit={this.submitHandler}
-                state={this.state}/>
-                break
+                                cancel={this.cancel}
+                                submit={this.submitHandler}
+                                update={this.updateHandler}
+                                state={this.state}/>
+                            break
            // Why this?
             default: body = "Body"
+        }
+        if(this.state.isLoading) {
+            body=  <div style={{width:'5rem',height:'5rem'}} 
+                        className="spinner-border mx-auto d-block mt-5">
+                    </div>
         }
         return (
             <div>
@@ -90,7 +187,8 @@ class AddQuestion extends Component {
 
                     <Breadcrumb elements={[
                         { url: '/', level: 'Home' },
-                        { url: '#', level: 'Add Question' }
+                        { url: '/mcqList', level: 'MCQ List' },
+                        { url: '#', level: this.state.isRedirected? 'Edit Question' : 'Add Question' }
                     ]} />
 
                 </div>
