@@ -4,6 +4,7 @@ import classes from './mcqList.module.css'
 import ViewQuestion from '../ViewQuestion/ViewQuestion'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import { Link } from 'react-router-dom'
+import Select from 'react-select'
 
 export default class mcqList extends Component {
 
@@ -11,7 +12,11 @@ export default class mcqList extends Component {
         questions:[],
         isLoading:true,
         isDeleting:false,
-        deletingIndex:null
+        deletingIndex:null,
+        isSelecting:false,
+        searchParam:'',
+        complexityParam:null,
+        subjectParam:null,
     }
 
     componentDidMount(){
@@ -24,6 +29,18 @@ export default class mcqList extends Component {
                 }
             })
     }
+
+    subjectOptions = [
+        { value: 'java', label: 'Java' },
+        { value: 'python', label: 'Python' },
+        { value: 'javascript', label: 'Javascript' }
+    ];
+
+    complexityOption = [
+        { value: 'easy', label: 'Easy' },
+        { value: 'medium', label: 'Medium' },
+        { value: 'complex', label: 'Complex' }
+    ]
 
     deleteQuestion = (questionId,index) => {
         this.setState({isDeleting:true, deletingIndex:index},()=> {
@@ -38,6 +55,9 @@ export default class mcqList extends Component {
                 })
         })
     }
+    selectQuestion = (e,i) => {
+        e.stopPropagation()
+    }
     render() {
         let editButton = <>
                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
@@ -49,7 +69,29 @@ export default class mcqList extends Component {
                             <path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                         </>
 
+    //     let searchIcon = <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+    //     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+    //   </svg>
+
         let questions = this.state.questions
+        //questions=[...questions,...questions,...questions,...questions,...questions]
+
+        if(this.state.complexityParam){
+            questions = questions.filter(ques => ques.complexity.value.toLowerCase()===this.state.complexityParam.value.toLowerCase())
+        }
+
+        if(this.state.subjectParam){
+            questions = questions.filter(ques => ques.subject.value.toLowerCase()===this.state.subjectParam.value.toLowerCase())
+        }
+        
+        if(this.state.searchParam){
+            questions = questions.filter(ques => ques.tag.map(tag=>tag.value.toLowerCase()).some(val=>val.includes(this.state.searchParam.toLowerCase()))|| ques.text.includes(this.state.searchParam))
+        }
+                            
+            
+
+        
+        let questionList = questions
                             .map((ques,i) => 
                                             <div className='w-100' key={i}>
                                                 <div 
@@ -80,7 +122,8 @@ export default class mcqList extends Component {
                                                     </div>
 
                                                     <div className="col-md-1 col-2 h-100 p-2 text-center">
-                                                        <Link className='text-secondary' to={'/addMcq?questionId='+ques.id} >
+                                                        <Link className='text-secondary' 
+                                                        to={'/addMcq?questionId='+ques.id} >
 
                                                             <svg
                                                                 xmlns="http://www.w3.org/2000/svg" 
@@ -95,8 +138,7 @@ export default class mcqList extends Component {
                                                     </div>
                                                 </div>
                                                 <div id={`delete${i}`} className='collapse'>
-                                                    <div className='mb-3 w-50 mx-auto border border-danger p-3'>
-
+                                                    <div className='col-9 col-md-6 mb-3 mx-auto border border-danger p-3'>
                                                     <p className='text-center'>Are You Sure You Want To Delete The Question ??</p> 
                                                     <div className='d-flex justify-content-center'>
                                                         <button data-toggle="collapse" 
@@ -109,21 +151,24 @@ export default class mcqList extends Component {
                                                     </div>
                                                     </div>
                                                 </div>
-                                                <div style={{position:'relative'}} className='collapse w-100 mb-3' id={`question${i}`}>
-                                                    <ViewQuestion state={ques} />
+                                                <div className='collapse border border-info w-100 mb-3' id={`question${i}`}>
                                                     <span 
+                                                        className='float-right mr-3'
                                                         data-toggle="collapse" 
                                                         data-target={`#question${i}`} 
-                                                        style={{cursor:'pointer',position:'absolute', top:'0rem',right:'1rem',fontSize:'2.5rem',  color:'red'}}>&times;</span>
+                                                        style={{cursor:'pointer',fontSize:'2.5rem',  color:'red'}}>&times;</span>
+                                                    <ViewQuestion state={ques} />
                                                 </div>
                                             </div>
                                             )
         if(this.state.isDeleting){
-            questions[this.state.deletingIndex] = <div 
+            questionList[this.state.deletingIndex] = <div 
                                 style={{width:'5rem',height:'5rem'}} 
                                 className="spinner-border d-block my-4 mx-auto">
                             </div>
         }
+
+
 
         return (
             <div >
@@ -133,30 +178,60 @@ export default class mcqList extends Component {
                     { url: '/#', level: 'MCQ List' },
                 ]} />
                 </div>
-                <div className="col-9 d-flex justify-content-between mx-auto">
-                    <button className="btn btn-info">
-                        <Link to='addMcq' className='text-white'>
-                            Add New Question
-                        </Link>
-                    </button>
-                    <div className='text-right'>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
-  <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
-  <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
-</svg>
+
+                <div className="row">
+                    <div style={{minHeight:'calc(100vh - 160px)'}} className="col-4 col-md-3 col-lg-3 col-xl-2 border-right d-none d-md-block">
+                        <p style={{fontSize:'20px'}} className='text-center bg-light py-2 font-weight-bold rounded border '>Repositories</p>
+                        <p style={{cursor:'pointer',fontSize:'1.1rem'}} className='font-weight-bold pl-3'><u>Local Repository</u></p>
+                        <p style={{cursor:'pointer',fontSize:'1.1rem'}} className='font-weight-bold pl-3'><u>Global Repository</u></p>
                     </div>
-                </div>
-                <div className="row col-9 mx-auto bg-light p-2 my-3">
-                    <div className="col-md-10 col-8  text-center">Questions</div>
-                    <div className="col-md-1 col-2 text-center">Delete</div>
-                    <div className="col-md-1 col-2 text-center">Edit</div>
-                </div>
-                <div className="row mx-auto w-75">
-                    {this.state.isLoading ? 
-                        <div 
-                            style={{width:'5rem',height:'5rem'}} 
-                            className="spinner-border d-block mt-5 mx-auto"></div> 
-                        : questions}
+
+                    <div className="col-8 col-md-9 col-lg-9 col-xl-10">
+                        <div className="col-9 mx-auto">
+                            <div className="row">
+                                <div className="col-12 col-xl-6 mb-3">
+                                    <input 
+                                    type="text" 
+                                    placeholder='Search...' 
+                                    onChange={(e) => this.setState({searchParam:e.target.value})}
+                                    className='form-control'/>
+                                </div>
+                                
+                                <div className="col-6 col-xl-3">
+                                    <Select 
+                                    isClearable
+                                    placeholder='Choose Complexity...'
+                                    value={this.state.complexity}
+                                    onChange={(val) => this.setState({complexityParam:val})}
+                                    options={this.complexityOption}/>
+                                </div>
+                                
+                                <div className="col-6 col-xl-3">
+                                    <Select 
+                                    isClearable
+                                    placeholder='Choose Subject...'
+                                    value={this.state.complexity}
+                                    onChange={(val) => this.setState({subjectParam:val})}
+                                    options={this.subjectOptions}/>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    
+                        <div className="row col-9 mx-auto bg-light p-2 my-3">
+                            <div className="col-md-10 col-8  text-center">Questions</div>
+                            <div className="col-md-1 col-2 text-center">Delete</div>
+                            <div className="col-md-1 col-2 text-center">Edit</div>
+                        </div>
+
+                        <div className="row mx-auto w-75">
+                            {this.state.isLoading ? 
+                                <div 
+                                    style={{width:'5rem',height:'5rem'}} 
+                                    className="spinner-border d-block mt-5 mx-auto"></div> 
+                                : questionList}
+                        </div>
+                    </div>
                 </div>
             </div>
         )
