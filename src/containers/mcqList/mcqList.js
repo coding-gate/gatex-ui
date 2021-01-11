@@ -42,8 +42,9 @@ export default class mcqList extends Component {
         { value: 'complex', label: 'Complex' }
     ]
 
-    deleteQuestion = (questionId,index) => {
-        this.setState({isDeleting:true, deletingIndex:index},()=> {
+    deleteQuestion = (questionId,i) => {
+        let index = this.state.questions.indexOf(this.state.questions.filter(ques =>ques.id===questionId)[0])
+        this.setState({isDeleting:true, deletingIndex:i},()=> {
             let questions = this.state.questions
             questions.splice(index,1)
             axios.delete('https://gatex-exam-default-rtdb.firebaseio.com/question/'+questionId+'.json')
@@ -55,9 +56,7 @@ export default class mcqList extends Component {
                 })
         })
     }
-    selectQuestion = (e,i) => {
-        e.stopPropagation()
-    }
+
     render() {
         let editButton = <>
                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
@@ -69,12 +68,7 @@ export default class mcqList extends Component {
                             <path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                         </>
 
-    //     let searchIcon = <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-    //     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-    //   </svg>
-
         let questions = this.state.questions
-        //questions=[...questions,...questions,...questions,...questions,...questions]
 
         if(this.state.complexityParam){
             questions = questions.filter(ques => ques.complexity.value.toLowerCase()===this.state.complexityParam.value.toLowerCase())
@@ -85,7 +79,7 @@ export default class mcqList extends Component {
         }
         
         if(this.state.searchParam){
-            questions = questions.filter(ques => ques.tag.map(tag=>tag.value.toLowerCase()).some(val=>val.includes(this.state.searchParam.toLowerCase()))|| ques.text.includes(this.state.searchParam))
+            questions = questions.filter(ques => ques.tag.map(tag=>tag.value.toLowerCase()).some(val=>val.includes(this.state.searchParam.toLowerCase()))|| ques.text.toLowerCase().includes(this.state.searchParam.toLowerCase()))
         }
                             
             
