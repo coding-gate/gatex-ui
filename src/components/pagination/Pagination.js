@@ -23,7 +23,7 @@ const Pagination = (props) => {
     }
 
     return (
-        <ul className="pagination justify-content-center">
+        <ul className="pagination mx-auto justify-content-center">
             <li className={prevCss}><button className="page-link" onClick={() => props.drawPaginationWindow('prev')}>Prev</button></li>
             {printPageItem()}
             <li className={nextCss}><button className="page-link" onClick={() => props.drawPaginationWindow('next')}>Next</button></li>

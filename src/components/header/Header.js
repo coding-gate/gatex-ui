@@ -17,7 +17,7 @@ const Header = () => {
         <div>
             <div className="row">
                 <div className="col">
-                    <nav className="navbar navbar-expand-md navbar-light px-0 py-0 bg-light">
+                    <nav className="navbar navbar-expand-md navbar-light px-0 py-1 text-capitalize bg-light">
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" >
                             <span className="navbar-toggler-icon"></span>
                         </button>

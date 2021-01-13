@@ -17,7 +17,7 @@ import ForgetPassword from './containers/ForgetPassword/ForgetPassword';
 import mcqList from './containers/mcqList/mcqList';
 
 function App() {
-          return (<div style={{minHeight:'100vh'}} className="container-fluid">
+          return (<div className="container-fluid">
           <main className="bd-content" role="main">
             <Header/>
             <div id="body" >    

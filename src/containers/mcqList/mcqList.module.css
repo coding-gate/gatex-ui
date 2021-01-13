@@ -9,3 +9,28 @@
     cursor: pointer;
     color: rgb(202, 23, 23);
 }
+
+.scrollable{
+    overflow-y: auto;
+    max-height: calc(100vh - 348px);    
+}
+
+.scrollable::-webkit-scrollbar {
+    margin-left: 10px;
+    width: 8px;
+}
+
+.scrollable::-webkit-scrollbar-track{
+    background-color: #eeeeee;
+}
+
+.scrollable::-webkit-scrollbar-thumb{
+    background-color: #ccc;
+    border-radius: 5px;
+    transition: all .5s ease-in;
+
+}
+
+.scrollable:hover::-webkit-scrollbar-thumb {   
+    background: #999999;
+}
