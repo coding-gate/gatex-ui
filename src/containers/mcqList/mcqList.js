@@ -84,13 +84,8 @@ export default class mcqList extends Component {
                 </div>
 
                 <div className="row">
-                    <div style={{minHeight:'calc(100vh - 170px)'}} className="col-md-3 col-lg-3 col-xl-2 border-right d-none d-md-block">
-                        <p style={{fontSize:'20px'}} className='text-center bg-light py-2 font-weight-bold rounded border '>Repositories</p>
-                        <p style={{cursor:'pointer',fontSize:'1.1rem'}} className='font-weight-bold pl-3'><u>Local Repository</u></p>
-                        <p style={{cursor:'pointer',fontSize:'1.1rem'}} className='font-weight-bold pl-3'><u>Global Repository</u></p>
-                    </div>
 
-                    <div className="col-12 col-md-9 col-lg-9 col-xl-10">
+                    <div className="col-10 mx-auto">
                         <div className="col-9 mx-auto">
                             <div className="row">
                                 <div className="col-12 col-xl-6 mb-3">
@@ -123,9 +118,8 @@ export default class mcqList extends Component {
                         </div>
                     
                         <div className="row col-9 mx-auto bg-light p-2 my-3">
-                            <div className="col-lg-10 col-8  text-center">Questions</div>
-                            <div className="col-lg-1 col-2 text-center">Delete</div>
-                            <div className="col-lg-1 col-2 text-center">Edit</div>
+                            <div className="col-12 text-center">Questions</div>
+                            
                         </div>
 
                         <div className="row mx-auto col-9 p-0">
