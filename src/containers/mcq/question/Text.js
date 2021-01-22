@@ -1,6 +1,9 @@
 import React from 'react'
 import CreatableSelect from 'react-select/creatable';
 import Select from 'react-select';
+import ReactQuill from 'react-quill'; // ES6
+import 'react-quill/dist/quill.snow.css'; // ES6
+
 
 function Text(props) {
     const subjectOptions = [
@@ -28,7 +31,7 @@ function Text(props) {
     ];
     const stepAhead = () => {
 
-        if (props.state.text === '') {
+        if (props.state.text==='<p><br></p>') {
             props.setAlert({type:'warning',message:'Please Enter a Valid Text'})
             return
         }
@@ -95,10 +98,9 @@ function Text(props) {
             <div className="row mt-2">
                 <div className="col">
                     <h5>Question Statement:</h5>
-                    <textarea style={{ height: '120px' }} className='form-control'
-                        onChange={(e) => props.updateField("text", e.target.value)}
-                        value={props.state.text}>
-                    </textarea>
+                    <ReactQuill 
+                        onChange={(val) => props.updateField("text", val)}
+                        value={props.state.text} />
                 </div>
             </div>
             <div className="mt-3 float-right">

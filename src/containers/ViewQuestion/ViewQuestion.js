@@ -9,7 +9,7 @@ export default function ViewQuestion(props) {
                 {String.fromCharCode(index+65)}
             </div>
         </div>
-        <div className='form-control  w-75' htmlFor={index}>
+        <div className='form-control  w-75'>
             {option[0]} 
             {option[1] ? <span className='text-success float-right'>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
@@ -19,20 +19,25 @@ export default function ViewQuestion(props) {
             </span> : null} 
         </div>
     </div>)
-    //let answers ="[ "+ options.filter(option => option[1]).map(option => option[0]) + " ]"
     return (
         <div className='border p-3'>
-            <h4 className='lead'><span className='font-weight-bold'>Question: &nbsp;</span>{props.state.text}</h4>
-            <br/>
-            <h4 className='font-weight-bold lead'>Options: </h4>
-            <div className="mt-3 pl-3">
-            {optionList}
+
+            <div className="row px-3">
+                <span className='lead font-weight-bold h4'>Question: &nbsp;</span>
+                <h4 className='lead' dangerouslySetInnerHTML={{__html: props.state.text}}></h4>
             </div>
-            <div className='d-flex mt-4 justify-content-between'>
+
+            <div className="row px-3">
+                <h4 className='font-weight-bold lead'>Options: </h4>
+                <div className="mt-3 w-100 pl-3">
+                {optionList}
+                </div>
+            </div>
+
+            <div className='row px-3 d-flex mt-4 justify-content-between'>
                 <h4 className='lead'><span className='font-weight-bold'>Complexity: &nbsp;</span>{props.state.complexity.value}</h4>
                 <h4 className='lead'><span className='font-weight-bold'>Time: &nbsp;</span>{props.state.time.value} min(s)</h4>
             </div>
-
         </div>
     )
 }

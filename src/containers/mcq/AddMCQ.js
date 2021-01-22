@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
+
 import StepProgress from '../../components/stepProgress/stepProgress'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
+import AlertMessage from '../../components/alert/AlertMessage'
+
 import Text from './question/Text'
 import Type from './question/Type'
 import Options from './question/Options'
 import Answer from './question/Answer'
-import AlertMessage from '../../components/alert/AlertMessage'
-import withAlert from '../../hoc/withAlert'
 import SubmitMCQ from './SubmitMCQ'
+
+import withAlert from '../../hoc/withAlert'
 import axios from 'axios'
+
 import * as QueryString from "query-string"
 
 

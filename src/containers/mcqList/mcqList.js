@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import Select from 'react-select'
-import ListQuestion from './ListQuestion/ListQuestion'
+import ListQuestion from '../../containers/ListQuestion/ListQuestion'
 
 export default class mcqList extends Component {
 
@@ -61,6 +61,7 @@ export default class mcqList extends Component {
     render() {
         
         let questions = this.state.questions
+        questions = [...questions,...questions,...questions]
 
         if(this.state.complexityParam){
             questions = questions.filter(ques => ques.complexity.value.toLowerCase()===this.state.complexityParam.value.toLowerCase())
@@ -85,8 +86,8 @@ export default class mcqList extends Component {
 
                 <div className="row">
 
-                    <div className="col-10 mx-auto">
-                        <div className="col-9 mx-auto">
+                    <div className="col-10 mx-auto mt-4">
+                        <div className="col-12 col-xl-9 mx-auto">
                             <div className="row">
                                 <div className="col-12 col-xl-6 mb-3">
                                     <input 
@@ -100,7 +101,6 @@ export default class mcqList extends Component {
                                     <Select 
                                     isClearable
                                     placeholder='Filter By Complexity'
-                                    value={this.state.complexity}
                                     onChange={(val) => this.setState({complexityParam:val})}
                                     options={this.complexityOption}/>
                                 </div>
@@ -109,7 +109,6 @@ export default class mcqList extends Component {
                                     <Select 
                                     isClearable
                                     placeholder='Filter By Subject'
-                                    value={this.state.complexity}
                                     onChange={(val) => this.setState({subjectParam:val})}
                                     options={this.subjectOptions}/>
                                 </div>
@@ -117,17 +116,18 @@ export default class mcqList extends Component {
                             
                         </div>
                     
-                        <div className="row col-9 mx-auto bg-light p-2 my-3">
+                        <div className="row col-12 col-xl-9 mx-auto bg-light p-2 my-3">
                             <div className="col-12 text-center">Questions</div>
                             
                         </div>
 
-                        <div className="row mx-auto col-9 p-0">
+                        <div className="row mx-auto col-12 col-xl-9 p-0">
                             {this.state.isLoading ? 
                                 <div 
                                     style={{width:'5rem',height:'5rem'}} 
                                     className="spinner-border d-block mt-5 mx-auto"></div> 
                                 : <ListQuestion 
+                                    fromQuestionList
                                     deletingIndex={this.state.deletingIndex}
                                     deleteQuestion={this.deleteQuestion}
                                     questions={questions} /> }

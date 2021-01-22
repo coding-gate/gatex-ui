@@ -1,4 +1,4 @@
-
+/* 
 .scrollable{
     overflow-y: auto;
     max-height: calc(100vh - 348px);    
@@ -20,7 +20,7 @@
 
 .scrollable:hover::-webkit-scrollbar-thumb {   
     background: #999999;
-}
+} */
 
 .question:hover .dots{
     opacity: 1;
@@ -30,12 +30,17 @@
 
 .question{
     position: relative;
-    cursor: pointer;
+}
+
+.question:hover .questionText{
+    background-color: #eeeeff;
 }
 
 .dots{
     opacity: 0;
+    font-weight: 900;
     position: relative;
+    transition: all .25s ease-in;
 }
 
 .optionWindow{
@@ -48,6 +53,7 @@
     transform-origin: top;
     transition: all .25s ease-in;
     background-color: #fff;
+    border: 1px solid cadetblue;
 }
 
 .dots:hover + .optionWindow, .optionWindow:hover {

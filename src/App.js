@@ -15,6 +15,7 @@ import aboutUs from './containers/about/AboutUs';
 import AddMCQ from './containers/mcq/AddMCQ'
 import ForgetPassword from './containers/ForgetPassword/ForgetPassword';
 import mcqList from './containers/mcqList/mcqList';
+import CreateTest from './containers/CreateTest/CreateTest';
 
 function App() {
           return (<div className="container-fluid">
@@ -32,6 +33,7 @@ function App() {
                       <Route path="/mcqList" component={mcqList}/>
                       <Route path="/error" component={ErrorPage}/>
                       <Route path="/forgotPassword" component={ForgetPassword}/>
+                      <Route path="/createTest" component={CreateTest}/>
                   </Switch>
             </div>   
               <Footer />

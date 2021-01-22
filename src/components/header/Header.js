@@ -54,6 +54,7 @@ const Header = () => {
                                         <div className="dropdown-menu">
                                             <Link className="dropdown-item text-primary" to="addMcq">Add new</Link>
                                             <Link className="dropdown-item text-primary" to="/mcqList">List all</Link>
+                                            <Link className="dropdown-item text-primary" to="/createTest">Create test</Link>
                                         </div>
                                 </li>
                                
