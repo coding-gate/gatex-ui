@@ -17,13 +17,15 @@ const Header = () => {
         <div>
             <div className="row">
                 <div className="col">
-                    <nav className="navbar navbar-expand-md navbar-light px-0 py-0 bg-light">
+                    <nav className="navbar navbar-expand-md navbar-light px-0 py-1 text-capitalize bg-light">
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" >
                             <span className="navbar-toggler-icon"></span>
                         </button>
                         <div className="collapse navbar-collapse " id="navbarSupportedContent">
                             <Link className="navbar-brand" to="/">&nbsp;Gate<span style={{ color: "green" }}><b>X</b></span></Link>
                             <ul className="navbar-nav ml-auto">
+                               
+                               
                                 {roles.includes("ADMIN")
                                     ? <li className="nav-item dropdown">
                                         <Link className="nav-link dropdown-toggle" to="#" id="navbardrop" data-toggle="dropdown">
@@ -34,12 +36,43 @@ const Header = () => {
                                         </div>
                                     </li>
                                     : null}
+
+                                <li className="nav-item dropdown">
+                                        <Link className="nav-link dropdown-toggle text-primary" to="#" id="navbardrop" data-toggle="dropdown">
+                                           code
+                                        </Link>
+                                        <div className="dropdown-menu">
+                                            <Link className="dropdown-item text-primary" to="/addMcq">Add new</Link>
+                                            <Link className="dropdown-item text-primary" to="/mcqList">List all</Link>
+                                        </div>
+                                </li>
+
+                                <li className="nav-item dropdown">
+                                        <Link className="nav-link dropdown-toggle text-primary" to="#" id="navbardrop" data-toggle="dropdown">
+                                            MCQ
+                                        </Link>
+                                        <div className="dropdown-menu">
+                                            <Link className="dropdown-item text-primary" to="addMcq">Add new</Link>
+                                            <Link className="dropdown-item text-primary" to="/mcqList">List all</Link>
+                                        </div>
+                                </li>
+                               
+                                
+                                <li className="nav-item dropdown">
+                                   <Link className="nav-link dropdown-toggle text-primary" to="#" id="navbardrop" data-toggle="dropdown">
+                                      account
+                                    </Link>
+                                    <div className="dropdown-menu ">
+                                      <Link to="/register?ac=user" className="dropdown-item text-primary">register</Link>
+                                    </div>
+                                </li>
+
+
                                 <li className="nav-item">
                                     <Link className="nav-link text-primary" to="/aboutUs">about us</Link>
                                 </li>
-                                <li className="nav-item">
-                                    <Link className="nav-link text-primary" to="/contactUs">contact</Link>
-                                </li>
+
+
                                 <li className="nav-item ">
                                     {roles.length === 0
                                         ? <Link className="nav-link text-primary" to="/login">

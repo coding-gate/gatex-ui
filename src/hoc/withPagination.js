@@ -36,7 +36,7 @@ const withPagination = (WrappedComponent, PAGE_SIZE = 10, PAGE_COUNT = 5) => {
 
         render() {           
             return (
-                <div>                   
+                <>                   
                     <WrappedComponent {...this.props} tableBody={this.state.tableBody} initPagination={this.initPagination}/>
                     <Pagination startWindowIndex={this.state.startPageWindowIndex}
                         pageSize={PAGE_SIZE}
@@ -44,7 +44,7 @@ const withPagination = (WrappedComponent, PAGE_SIZE = 10, PAGE_COUNT = 5) => {
                         totalRecordCount={this.allRecords.length}
                         drawPaginationWindow={this.paginationWindowHandler}
                         pageNoHandler={this.setTableBody} />
-                </div>
+                </>
             )
         }
     }

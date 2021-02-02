@@ -1,0 +1,44 @@
+.list{
+    padding-left: 0;
+    position: relative;
+    display: flex;
+    list-style: none;
+    font-size: 40px;
+    color: #aaa;
+    width: 50%;
+    justify-content: space-between;
+    margin: 0 auto;
+}
+
+.list>li{
+   background-color: #fff;
+}
+
+.list>li .lines{
+    background: linear-gradient(to right, rgb(11, 177, 11) 50%, #aaa 50%);
+    z-index: -1;
+    position: absolute;
+    top: 56%;
+    height: 5px;
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    transition: all .35s ease-in;
+}
+.list>li>.active{
+    color: rgb(44, 95, 236);
+}
+.list>li>.done{
+    color: green;
+}
+.list>li span.done{
+    background-position: 0 0;
+}
+.list>li:last-child .lines{
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .list{
+        width: 70%;
+    }
+}

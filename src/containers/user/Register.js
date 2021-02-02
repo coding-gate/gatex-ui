@@ -11,6 +11,7 @@ import AlertMessage from '../../components/alert/AlertMessage';
 
 import * as webUtil from '../../utils/WebUtil'
 import withAlert from '../../hoc/withAlert'
+import { Link } from 'react-router-dom';
 
 
 class Register extends FormClass {
@@ -67,11 +68,11 @@ class Register extends FormClass {
                 <div className="row">
                     <Breadcrumb elements={[
                         { url: '/', level: 'Home' },
-                        { url: '#', level: 'login' }
+                        { url: '#', level: 'Register' }
                     ]} />
                 </div>               
                 <div className="row justify-content-center">
-                    <div className="col-md-5" >                   
+                    <div style={{maxWidth:'600px'}} className="border p-4 col-md-5" >                   
                         <h5 align="center">Create {params.ac} acount</h5>
                         <AlertMessage alert={this.props.alert} reSetAlert={this.props.setAlert}/>  
                         <div className="form-group">
@@ -115,7 +116,15 @@ class Register extends FormClass {
                             :null
                         }                      
                         <div className="form-group">
-                            <button className="btn btn-light btn-outline-primary" onClick={this.submitHandeler}>Submit</button>
+                            <button className="btn btn-primary d-block mx-auto" onClick={this.submitHandeler}>Submit</button>
+                        </div>
+                        <div className='my-3' style={{position:'relative'}}>
+                            <hr/>
+                            <p style={{position:'absolute',top:'-12px',left:'50%',transform:'translateX(-50%)'}} className='text-secondary bg-white px-3 text-center'>OR</p>
+                        </div>
+                        <div className='text-center'>
+                            Already Have an Account ? &nbsp;&nbsp; 
+                            <span><Link to="/login">Login Here</Link></span>
                         </div>
                     </div>
                 </div>
