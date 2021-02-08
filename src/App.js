@@ -16,29 +16,34 @@ import AddMCQ from './containers/mcq/AddMCQ'
 import ForgetPassword from './containers/ForgetPassword/ForgetPassword';
 import mcqList from './containers/mcqList/mcqList';
 import CreateTest from './containers/CreateTest/CreateTest';
+import Exam from './containers/Exam/Exam';
 
 function App() {
-          return (<div className="container-fluid">
-          <main className="bd-content" role="main">
-            <Header/>
-            <div id="body" >    
-                  <Switch>            
-                      <Route path="/" exact component={Home}/>               
-                      <Route path="/login" component={Login}/> 
-                      <Route path="/register" component={Register}/>      
-                      <Route path="/contactUs" component={contactUs}/>   
-                      <Route path="/viewContacts" component={VeiwContacts}/>
-                      <Route path="/aboutUs" component={aboutUs}/>
-                      <Route path="/addMcq" component={AddMCQ}/>
-                      <Route path="/mcqList" component={mcqList}/>
-                      <Route path="/error" component={ErrorPage}/>
-                      <Route path="/forgotPassword" component={ForgetPassword}/>
-                      <Route path="/createTest" component={CreateTest}/>
-                  </Switch>
-            </div>   
+
+          if(window.location.pathname==='/exam'){
+            return <Exam />
+          }
+          return (
+          <div className="container-fluid">
+            <main className="bd-content" role="main">
+              <Header/>
+              <div id="body" >    
+                    <Switch>            
+                        <Route path="/" exact component={Home}/>               
+                        <Route path="/login" component={Login}/> 
+                        <Route path="/register" component={Register}/>      
+                        <Route path="/contactUs" component={contactUs}/>   
+                        <Route path="/viewContacts" component={VeiwContacts}/>
+                        <Route path="/aboutUs" component={aboutUs}/>
+                        <Route path="/addMcq" component={AddMCQ}/>
+                        <Route path="/mcqList" component={mcqList}/>
+                        <Route path="/error" component={ErrorPage}/>
+                        <Route path="/forgotPassword" component={ForgetPassword}/>
+                        <Route path="/createTest" component={CreateTest}/>
+                    </Switch>
+              </div>   
               <Footer />
-         
-          </main>
+            </main>
         </div>)
 }
 

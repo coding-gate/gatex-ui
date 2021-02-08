@@ -6,6 +6,7 @@ import 'react-quill/dist/quill.snow.css'; // ES6
 
 
 function Text(props) {
+    
     const subjectOptions = [
         { value: 'java', label: 'Java' },
         { value: 'python', label: 'Python' },
@@ -29,10 +30,11 @@ function Text(props) {
         { value: 'function', label: 'Function' },
         { value: 'es6', label: 'ES6' }
     ];
-    const stepAhead = () => {
 
-        if (props.state.text==='<p><br></p>') {
-            props.setAlert({type:'warning',message:'Please Enter a Valid Text'})
+    const proceed = () => {
+        
+        if (text.current.getEditor().getText().trim()==='') {
+            props.setAlert({type:'warning',message:'Please Enter A Question Statement'})
             return
         }
         if (!props.state.subject) {
@@ -48,9 +50,12 @@ function Text(props) {
             return
         }
         
+        
         props.setAlert(null)
         props.updateField("step", 2)
     }
+
+    const text = React.createRef()
 
     return (
         <div className='mt-3'>
@@ -99,13 +104,14 @@ function Text(props) {
                 <div className="col">
                     <h5>Question Statement:</h5>
                     <ReactQuill 
+                        ref={text}
                         onChange={(val) => props.updateField("text", val)}
                         value={props.state.text} />
                 </div>
             </div>
             <div className="mt-3 float-right">
                 <button className="btn btn-info"
-                    onClick={stepAhead}>
+                    onClick={proceed}>
                     Proceed
                 </button>
             </div>

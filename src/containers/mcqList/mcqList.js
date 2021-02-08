@@ -10,7 +10,7 @@ export default class mcqList extends Component {
         questions:[],
         isLoading:true,
         isDeleting:false,
-        deletingIndex:null,
+        deletingIndex:[],
         isSelecting:false,
         searchParam:'',
         complexityParam:null,
@@ -42,26 +42,23 @@ export default class mcqList extends Component {
 
     deleteQuestion = (questionId,i) => {
         let index = this.state.questions.indexOf(this.state.questions.filter(ques =>ques.id===questionId)[0])
-        this.setState({isDeleting:true,deletingIndex:i},()=> {
+        this.setState({isDeleting:true,deletingIndex:[...this.state.deletingIndex,i]},()=> {
             let questions = this.state.questions
             questions.splice(index,1)
-            setTimeout(()=>{
-                this.setState({deletingIndex:false})
-            },800)
-            // axios.delete('https://gatex-exam-default-rtdb.firebaseio.com/question/'+questionId+'.json')
-            //     .then(res => {
-            //         this.setState({isDeleting:false,questions})
-            //     })
-            //     .catch((error) => {
-            //         console.log(error);
-            //     })
+            axios.delete('https://gatex-exam-default-rtdb.firebaseio.com/question/'+questionId+'.json')
+                .then(res => {
+                    let delin = this.state.deletingIndex.filter(index => index!==i)
+                    this.setState({isDeleting:false,questions,deletingIndex:delin})
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
         })
     }
 
     render() {
         
         let questions = this.state.questions
-        questions = [...questions,...questions,...questions]
 
         if(this.state.complexityParam){
             questions = questions.filter(ques => ques.complexity.value.toLowerCase()===this.state.complexityParam.value.toLowerCase())
@@ -100,7 +97,7 @@ export default class mcqList extends Component {
                                 <div className="col-6 col-xl-3">
                                     <Select 
                                     isClearable
-                                    placeholder='Filter By Complexity'
+                                    placeholder='Complexity'
                                     onChange={(val) => this.setState({complexityParam:val})}
                                     options={this.complexityOption}/>
                                 </div>
@@ -108,7 +105,7 @@ export default class mcqList extends Component {
                                 <div className="col-6 col-xl-3">
                                     <Select 
                                     isClearable
-                                    placeholder='Filter By Subject'
+                                    placeholder='Subject'
                                     onChange={(val) => this.setState({subjectParam:val})}
                                     options={this.subjectOptions}/>
                                 </div>

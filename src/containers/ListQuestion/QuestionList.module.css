@@ -27,7 +27,6 @@
 }
 
 
-
 .question{
     position: relative;
 }
@@ -59,4 +58,8 @@
 .dots:hover + .optionWindow, .optionWindow:hover {
     transform: scaleY(1);
 
+}
+
+.textBlock > p{
+    margin-bottom: 0;
 }

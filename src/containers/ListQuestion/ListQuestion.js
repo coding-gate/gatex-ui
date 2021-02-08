@@ -21,19 +21,19 @@ function ListQuestion(props) {
 
     
     let list = tableBody
-                .map((ques,i) => i===deletingIndex ? 
+                .map((ques,i) => deletingIndex.includes(i) ? 
                     <div 
                         style={{width:'5rem',height:'5rem'}} 
                         className="spinner-border text-danger d-block my-4 mx-auto">
                     </div>
                     :
-                    <div className={classes.question + ' mb-3 w-100'} key={i}>
-                        <div className={classes.questionText + ' d-flex align-items-center mb-3'}>
+                    <div className={classes.question + ' w-100'} key={i}>
+                        <div className={classes.questionText + ' d-flex align-items-center'}>
                             <label
                                 style={{cursor: !fromQuestionList ? 'pointer': 'default'}}
                                 htmlFor={i}
-                                className="col-11 p-2 pl-3">
-                                <span>
+                                className="col-11 d-sm-flex p-2 pl-3">
+                                <span className='text-nowrap'>
                                     {fromQuestionList ? 
                                     null : 
                                     <input 
@@ -47,8 +47,7 @@ function ListQuestion(props) {
                                         Q-{startingIndex+ i+1} : &nbsp;
                                     </b>
                                 </span>
-
-                                {ques.text}
+                                <span className={classes.textBlock} dangerouslySetInnerHTML={{__html : ques.text}}></span>
                             </label>
                             <p className={classes.dots +' ml-auto mr-4'}>
                                 <b style={{fontSize:'1.2rem'}} >...</b>

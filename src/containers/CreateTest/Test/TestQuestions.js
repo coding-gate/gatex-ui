@@ -6,18 +6,10 @@ import Select from 'react-select'
 export default class TestQuestions extends Component {
     state={
         questions:[],
-        subjectParam:null,
+        hashTagParam:null,
         complexityParam:null,
         isLoading:true,
-
-
     }
-
-    subjectOptions = [
-        { value: 'java', label: 'Java' },
-        { value: 'python', label: 'Python' },
-        { value: 'javascript', label: 'Javascript' }
-    ];
 
     complexityOption = [
         { value: 'easy', label: 'Easy' },
@@ -39,6 +31,7 @@ export default class TestQuestions extends Component {
     proceed = () => {
         if(!this.props.selectedQuestions.length>0){
             this.props.setAlert({type:'warning',message:'Please Enter Some Questions'})
+            return
         }
         this.props.setAlert(null)
         this.props.updateState('step',3)
@@ -51,20 +44,23 @@ export default class TestQuestions extends Component {
 
     render() {
 
-        let questions = this.state.questions
+        let questions = this.state.questions.filter(ques => ques.subject.value.toLowerCase()===this.props.state.subject.value.toLowerCase())
+
 
         if(this.state.complexityParam){
             questions = questions.filter(ques => ques.complexity.value.toLowerCase()===this.state.complexityParam.value.toLowerCase())
         }
-
-        if(this.state.subjectParam){
-            questions = questions.filter(ques => ques.subject.value.toLowerCase()===this.state.subjectParam.value.toLowerCase())
+        if(this.state.hashTagParam){
+            questions = questions.filter(ques => ques.tag.map(tag=>tag.value.toLowerCase()).some(elem => elem.includes(this.state.hashTagParam.toLowerCase())))
         }
         
         return (
             <div className='col-9 mx-auto border p-5'>
 
-                <button data-toggle="modal" data-target="#exampleModal" className='ml-auto mb-4 d-block btn border btn-light'>Selected : <b>{this.props.selectedQuestions.length}</b> </button>
+                <div  className="row">
+                    <p style={{position:'absolute',top:'0',left:'0'}} className="p-2 border-bottom border-right mx-auto text-capitalize text-center">Selected Topic : {this.props.state.subject.value}</p>
+                    <p style={{position:'absolute',top:'0',right:'0'}} className="p-2 border-bottom border-left mx-auto text-capitalize text-center">Selected : <b>{this.props.selectedQuestions.length}</b> </p>
+                </div>
 
                 <div 
                     style={{position:'relative'}} 
@@ -74,21 +70,20 @@ export default class TestQuestions extends Component {
                         style={{position:'absolute',top:'-1.2rem',left:'1.5rem',borderRadius:'15px'}}>
                     Filter</p>
                         <div className='col-12 mx-auto my-2 col-md-6'>
-                            <Select 
-                            isClearable
-                            placeholder='Filter By Subject'
-                            value={this.state.subjectParam}
-                            onChange={(val) => this.setState({subjectParam:val,complexityParam:null})}
-                            options={this.subjectOptions}/>
+                            <input 
+                                type="text" 
+                                className='w-100 form-control' 
+                                onChange={e => this.setState({hashTagParam:e.target.value})} 
+                                placeholder='Hashtag'/>
                         </div>
 
                         <div className='col-12 mx-auto my-2 col-md-6'>
                             <Select 
-                            isClearable
-                            placeholder='Filter By Complexity'
-                            value={this.state.complexityParam}
-                            onChange={(val) => this.setState({complexityParam:val})}
-                            options={this.complexityOption}/>
+                                isClearable
+                                placeholder='Complexity'
+                                value={this.state.complexityParam}
+                                onChange={(val) => this.setState({complexityParam:val})}
+                                options={this.complexityOption}/>
                         </div>
                 </div>
 
@@ -99,53 +94,19 @@ export default class TestQuestions extends Component {
                         className="spinner-border d-block mt-5 mx-auto">
                     </div> 
                     :
-                    this.state.subjectParam ?
-                        questions.length >0 ? 
+                    questions.length >0 ? 
                         <ListQuestion 
                             selectedQuestions={this.props.selectedQuestions} 
                             selectQuestion={this.props.selectQuestion} 
                             questions={questions} />
                         : 
                         <p className='mx-auto border p-3 lead'>No Questions Found...</p>
-                    :
-                    <p className='mx-auto border p-3 lead'>Please Select A Subject First...</p>
                 }
                 </div>
 
                 <div className="d-flex align-items-end row">
-
-                <button onClick={this.back} className="btn d-block ml-auto mr-4 btn-secondary">Back</button>
-                <button onClick={this.proceed} className="btn d-block btn-info">Proceed</button>
-                </div>
-
-                <div className="modal fade mt-5" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div className="modal-dialog modal-lg " role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="exampleModalLabel">Selected Questions:</h5>
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                    <span className='text-danger' aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
-                                {this.props.selectedQuestions
-                                    .map((ques, index) => <div key={index} className='d-flex align-items-center rounded border p-2 mb-3 mx-auto col-12'>
-                                        <p className='mb-0 col-10'>
-                                            <b>{'Q-' + Number(index + 1)} :&nbsp; </b>
-                                            {ques.text}
-                                        </p>
-                                        <div
-                                            style={{ cursor: 'pointer', fontSize: '1.5rem' }}
-                                            onClick={() => this.props.deleteSelectedQuestion(ques.id)}
-                                            className="text-right text-danger col-2"><b>&times;</b></div>
-                                    </div>)}
-                                {this.props.selectedQuestions.length>0 ? null: <h4 className="lead">No Questions Selected...</h4> }
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-info" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
+                    <button onClick={this.back} className="btn d-block ml-auto mr-4 btn-secondary">Back</button>
+                    <button onClick={this.proceed} className="btn d-block btn-info">Proceed</button>
                 </div>
                 
             </div>
