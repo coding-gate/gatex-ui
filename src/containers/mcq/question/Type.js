@@ -43,16 +43,16 @@ function Type(props) {
                 </div>
             </div>
             <div className="mt-3 float-right">
-                <button className="btn btn-secondary mx-2"
+                <button className="btn btn-sm btn-outline-primary mx-2"
                     onClick={() => {
                         props.setAlert(null)
                         props.updateField('step', 1)
                     }}>
                     Back
                 </button>
-                <button className="btn btn-info"
+                <button className="btn btn-sm btn-primary"
                     onClick={stepAhead}>
-                    Proceed
+                    Next
                 </button>
             </div>
         </div>

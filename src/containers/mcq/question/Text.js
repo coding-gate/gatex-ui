@@ -33,9 +33,9 @@ function Text(props) {
         <div className='mt-3'>
             <div className="row">
                 <div className="col-3">
-                    <h5>lang:</h5>
+                    <h5>Language:</h5>
                     <CreatableSelect
-                        placeholder='Choose lang'
+                        placeholder='Choose Language'
                         isClearable
                         value={props.state.lang}
                         onChange={(val) => props.updateField("lang", val)}
@@ -82,9 +82,9 @@ function Text(props) {
                 </div>
             </div>
             <div className="mt-3 float-right">
-                <button className="btn btn-info"
+                <button className="btn btn-sm btn-primary"
                     onClick={stepAhead}>
-                    Proceed
+                    Next
                 </button>
             </div>
         </div>

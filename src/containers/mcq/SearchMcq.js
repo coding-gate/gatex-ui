@@ -20,9 +20,6 @@ class SearchMcq extends Component {
         }
           this.setState({fields});
       }
-
-
-
     
 
     updateField = (name, value)=>{
@@ -67,7 +64,7 @@ class SearchMcq extends Component {
                     <div className="col-3">
                         <h6>Language:</h6>
                         <Select
-                            placeholder='Choose lang'
+                            placeholder='Choose Language'
                             value={this.state.fields['lang']}
                             onChange={(val) => this.updateField("lang", val)}
                             options={Settings.langOptions}
@@ -76,7 +73,7 @@ class SearchMcq extends Component {
                     <div className="col">
                         <h6>Estimated time to solve:</h6>
                         <Select
-                            placeholder='Choose Estimated time to solve'
+                            placeholder='Choose time'
                             value={this.state.fields['time']}
                             onChange={(val) => this.updateField("time", val)}
                             options={Settings.timeOption}
@@ -105,7 +102,7 @@ class SearchMcq extends Component {
                     <div className="col-3">
                         <h6>Type</h6>
                         <Select 
-                            placeholder='Hashtagss...'
+                            placeholder='Choose Type'
                             value={this.state.fields['type']}
                             onChange={(val) => this.updateField("type", val)}
                             options={Settings.typeOption} />
@@ -113,7 +110,7 @@ class SearchMcq extends Component {
                 </div>
                 <div className="row mt-2">
                     <div className="col text-right">
-                        <button className="btn btn-sm btn-primary mx-2" onClick={this.clear}> Clear</button>
+                        <button className="btn btn-sm btn-outline-primary mx-2" onClick={this.clear}> Clear</button>
                         <button className="btn btn-sm btn-primary mx-2" onClick={this.makeURL}> Serach</button>
                     </div>
                 </div>

@@ -74,7 +74,7 @@ function Options(props) {
 
             <div className="my-3 d-flex justify-content-between align-items-center">
                 <h4>{props.state.type === 'tf' ? 'Please Proceed To The Next Page...' : 'Please Enter The Options:'}</h4>
-                <button onClick={() => addOption()} className={props.state.type === 'tf' ? 'd-none' : 'btn btn-secondary d-block ml-auto'}>Add Options</button>
+                <button onClick={() => addOption()} className={props.state.type === 'tf' ? 'd-none' : 'btn btn-sm btn-primary d-block ml-auto'}>Add Options</button>
             </div>
 
             <div>
@@ -84,16 +84,16 @@ function Options(props) {
             </div>
 
             <div className="mt-3 float-right">
-                <button className="btn btn-secondary mx-2"
+                <button className="btn btn-sm btn-outline-primary mx-2"
                     onClick={() => {
                         props.setAlert(null)
                         props.updateField('step', 2)
                     }}>
                     Back
                 </button>
-                <button className="btn btn-info"
+                <button className="btn btn-sm btn-primary"
                     onClick={submit}>
-                    Proceed
+                    Next
                 </button>
             </div>
         </div>

@@ -51,16 +51,16 @@ function Answer(props) {
             </div>
 
             <div className="mt-3 float-right">
-                <button className="btn btn-secondary mx-2"
+                <button className="btn btn-sm btn-outline-primary mx-2 mx-2"
                     onClick={() => {
                         props.setAlert(null)
                         props.updateField('step', 3)
                     }}>
                     Back
                 </button>
-                <button className="btn btn-info"
+                <button className="btn btn-sm btn-primary"
                     onClick={submit}>
-                    Proceed
+                    Next
                 </button>
             </div>
 
