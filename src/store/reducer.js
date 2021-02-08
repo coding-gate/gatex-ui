@@ -22,7 +22,7 @@ function retrieveAdminAcountState() {
 const initialState = {
     oauth: retrieveOauthState(),
     isAdminAccountConfigured: retrieveAdminAcountState(),
-    mcqSerchParam: { lang: null, time: null, complexity: null, tags: null, type: null }
+    mcqSerchParam: {}
 }
 
 const reducer = (state = initialState, action)=>{
