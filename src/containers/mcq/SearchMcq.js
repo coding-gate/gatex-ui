@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb';
 
 import CreatableSelect from 'react-select/creatable';
 import Select from 'react-select';
 
+import * as actionType from '../../store/actions'
 import * as Settings from '../../utils/SiteSettings'
 
 
@@ -11,6 +13,11 @@ class SearchMcq extends Component {
 
     state = {
         fields: {}
+      }
+
+      componentDidMount() {
+          console.log(this.props.mcqSerchParam)
+          this.setState({fields:this.props.mcqSerchParam})
       }
 
       clear = ()=>{
@@ -43,6 +50,7 @@ class SearchMcq extends Component {
                 } 
             }
           }
+          this.props.onSearchSaveParamState(this.state.fields)
           if(query.length){
             this.props.history.push('/mcqList?search='+encodeURIComponent(query));
           }else{
@@ -121,4 +129,16 @@ class SearchMcq extends Component {
 
 }
 
-export default SearchMcq;
+const mapDispatchToProps = dispatch =>{
+    return {
+        onSearchSaveParamState: (payload)=>dispatch({type: actionType.SAVE_MCQ_SEARCH_PARAM, payload: payload})
+    }
+}
+
+const mapStateToProps = state =>{
+    return {
+        mcqSerchParam: state.mcqSerchParam
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchMcq);

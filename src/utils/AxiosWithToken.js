@@ -13,12 +13,12 @@ axiosWithToken.interceptors.request.use(request=>{
     if(accessToken){
         request.headers.Authorization = `Bearer ${accessToken}`;
     }
-    console.log(request);
+    //console.log(request);
     return request;
 })
 
 axiosWithToken.interceptors.response.use(response=>{
-    console.log(response);
+    //console.log(response);
     return response;
  }, error=>{
     console.log(error.response)
