@@ -8,8 +8,9 @@ import Answer from './question/Answer'
 import AlertMessage from '../../components/alert/AlertMessage'
 import withAlert from '../../hoc/withAlert'
 import SubmitMCQ from './SubmitMCQ'
-import axios from 'axios'
+import axios from '../../utils/AxiosWithToken'
 import * as QueryString from "query-string"
+import * as webUtil from '../../utils/WebUtil'
 
 
 class AddQuestion extends Component {
@@ -17,8 +18,8 @@ class AddQuestion extends Component {
     state = {
         step: 1,
         text: '',
-        tag: null,
-        subject: null,
+        tags: null,
+        lang: null,
         time: null,
         complexity: null,
         type: null,
@@ -31,18 +32,33 @@ class AddQuestion extends Component {
         isRedirected:false
     }
 
+    initializedState=()=>{
+        this.setState({
+            step: 1,
+            text: '',
+            tags: null,
+            lang: null,
+            time: null,
+            complexity: null,
+            type: null,
+            options:{mmcq:[["",false]],mcq:[["",false]],tf:[['True',false],['False',false]]},
+            isLoading:false
+        })
+
+    }
+
     componentDidMount(){
         const params = QueryString.parse(this.props.location.search) 
         this.setState({isRedirected:!!params.questionId})
         if(!!params.questionId){
             this.setState({isLoading:true},() => {
-                axios.get('https://gatex-exam-default-rtdb.firebaseio.com/question/'+params.questionId+'.json')
+                axios.get(webUtil.URL+'/mcqQuestions/'+params.questionId)
                     .then(res => res.data)
                     .then(data => this.setState({complexity:data.complexity, 
                                                  type:data.type,
                                                  text:data.text,
-                                                 subject:data.subject,
-                                                 tag:data.tag,
+                                                 lang:data.lang,
+                                                 tags:data.tags,
                                                  time:data.time,
                                                  options:{...this.state.options,[data.type]:data.options},
                                                  isLoading:false}))
@@ -51,12 +67,13 @@ class AddQuestion extends Component {
         //console.log('Mounted');
     }
 
+    /*
     componentDidUpdate(prevProps){
         if(prevProps.location.search!==this.props.location.search){
             this.setState({step: 1,
                 text: '',
-                tag: null,
-                subject: null,
+                tags: null,
+                lang: null,
                 time: null,
                 complexity: null,
                 type: null,
@@ -70,7 +87,7 @@ class AddQuestion extends Component {
         }
         
     }
-
+  */
     updateField = (field, value)=>{
         //console.log("updateField", field, value)
         this.setState({[field]: value });
@@ -81,27 +98,25 @@ class AddQuestion extends Component {
         let question = {
             text:this.state.text,
             type:this.state.type,
-            tag:this.state.tag,
+            tags:this.state.tags,
             time:this.state.time,
-            subject:this.state.subject,
+            lang:this.state.lang,
             complexity:this.state.complexity,
             options:this.state.options[this.state.type],
         }
+
+        if(this.state.isRedirected){
+            const params = QueryString.parse(this.props.location.search)
+            question.id = params.questionId
+        }
+
+        console.log(question);
+
         this.setState({isLoading:true},() => {
-            axios.post('https://gatex-exam-default-rtdb.firebaseio.com/question.json',question)
-                .then(() => this.props.setAlert({type:'success',message:'Succesfully Submitted'}))
+            axios.post(webUtil.URL+'/mcqQuestions',question)
+                .then(() => this.props.setAlert({type:'success',message:'Succesfully Saved'}))
                 .then(() => {
-                    this.setState({
-                        step: 1,
-                        text: '',
-                        tag: null,
-                        subject: null,
-                        time: null,
-                        complexity: null,
-                        type: null,
-                        options:{mmcq:[["",false]],mcq:[["",false]],tf:[['True',false],['False',false]]},
-                        isLoading:false
-                    })
+                    this.initializedState();
                 })
                 .catch(() => {
                     this.props.setAlert({type:'danger',message:'Something Went Wrong, Try Again...'}
@@ -110,13 +125,15 @@ class AddQuestion extends Component {
             })
     }
 
+
+    /*
     updateHandler = () => {
         let question = {
             text:this.state.text,
             type:this.state.type,
-            tag:this.state.tag,
+            tags:this.state.tags,
             time:this.state.time,
-            subject:this.state.subject,
+            lang:this.state.lang,
             complexity:this.state.complexity,
             options:this.state.options[this.state.type],
         }
@@ -130,18 +147,11 @@ class AddQuestion extends Component {
                 //.then(()=>this.props.history.push('/mcqList'))
             })
     }
+
+    */
     
     cancel = () => {
-        this.state.isRedirected ? this.props.history.push('/mcqList') : this.setState({
-            step: 1,
-            text: '',
-            tag: null,
-            subject: null,
-            time: null,
-            complexity: null,
-            type: null,
-            options:{mmcq:[["",false]],mcq:[["",false]],tf:[['True',false],['False',false]]}
-        })
+        this.state.isRedirected ? this.props.history.push('/mcqList') : this.initializedState()
     }
 
     render() {

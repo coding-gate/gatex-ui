@@ -15,7 +15,7 @@ export default function SubmitMCQ(props) {
                 </button>
                 <button 
                     className='btn btn-success'
-                    onClick={props.state.isRedirected ? props.update : props.submit}
+                    onClick={props.submit}
                 >{props.state.isRedirected ? 'Update' : 'Submit'}
                 </button>
             </div>

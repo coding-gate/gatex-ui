@@ -14,7 +14,8 @@ import VeiwContacts from './containers/contact/ViewContacts';
 import aboutUs from './containers/about/AboutUs';
 import AddMCQ from './containers/mcq/AddMCQ'
 import ForgetPassword from './containers/ForgetPassword/ForgetPassword';
-import mcqList from './containers/mcqList/mcqList';
+import mcqList from './containers/listMCQ/ListMcq';
+import searchMcq from './containers/mcq/SearchMcq'
 
 function App() {
           return (<div className="container-fluid">
@@ -30,6 +31,7 @@ function App() {
                       <Route path="/aboutUs" component={aboutUs}/>
                       <Route path="/addMcq" component={AddMCQ}/>
                       <Route path="/mcqList" component={mcqList}/>
+                      <Route path="/searchMcq" component={searchMcq}/>
                       <Route path="/error" component={ErrorPage}/>
                       <Route path="/forgotPassword" component={ForgetPassword}/>
                   </Switch>
