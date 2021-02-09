@@ -1,7 +1,8 @@
 export const langOptions = [
     { value: 'java', label: 'Java' },
     { value: 'python', label: 'Python' },
-    { value: 'javascript', label: 'Javascript' }
+    { value: 'javascript', label: 'Javascript' },
+    { value: 'csharp', label: 'C#' }
 ];
 
 export const complexityOption = [
