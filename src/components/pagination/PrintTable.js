@@ -51,8 +51,10 @@ const PrintTable = (props) => {
 
     return (<div className="row mb-2">
         <div className="col col-md-10 offset-1" >
-            <div className="row bg-light" >
-                {printHeader(props.tableHeader)}
+           <div className="border-bottom border-secondary">
+             <div className="row bg-light mx-0" >              
+                  {printHeader(props.tableHeader)}
+               </div>
             </div>
             {printBody(props.tableBody, props.tableHeader, props.option)}
         </div>
