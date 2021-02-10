@@ -2,7 +2,7 @@ import CreatableSelect from 'react-select/creatable';
 import ReactQuill from 'react-quill';
 import Select from 'react-select';
 
-import axios from axios
+import axios from '../../../utils/AxiosWithToken'
 import * as webUtil from '../../../utils/WebUtil'
 import * as Settings from '../../../utils/SiteSettings';
 
