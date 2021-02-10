@@ -1,6 +1,9 @@
 import CreatableSelect from 'react-select/creatable';
+import ReactQuill from 'react-quill';
 import Select from 'react-select';
 
+import axios from '../../../utils/AxiosWithToken'
+import * as webUtil from '../../../utils/WebUtil'
 import * as Settings from '../../../utils/SiteSettings';
 
 function GeneralField(props) {
@@ -11,7 +14,33 @@ function GeneralField(props) {
         tags:'Please select tags',
         text:'Please enter question statement'
         };
-   
+
+
+   function fetchData(lang) {
+    if (lang) {
+        props.updateStateField('isLoading', true)
+        axios.get(webUtil.URL + '/gatexapi/tags/' + lang.value)
+            .then(response => {
+                props.updateStateField('tagOptions', response.data.tagEntries)
+            }).catch(error => {
+                webUtil.handleError(error, props);
+            })
+
+            axios.get(webUtil.URL + '/gatexapi/codeTemplate/' + lang.value)
+            .then(response => {
+                props.updateFromField('answerTemplate', response.data.answerTemplate)
+                props.updateFromField('unittestTemplate', response.data.unittestTemplate)
+                props.updateStateField('isLoading', false)
+            }).catch(error => {
+                webUtil.handleError(error, props);
+                props.updateStateField('isLoading', false)
+            })
+    }
+
+    props.updateFromField('lang', lang)
+
+   }
+
 
     return (
         <div className='mt-3'>
@@ -22,7 +51,7 @@ function GeneralField(props) {
                         placeholder='Choose Language'
                         isClearable
                         value={props.state.fields['lang']}
-                        onChange={(val) => props.updateField("lang", val)}
+                        onChange={(val) => fetchData(val)}
                         options={Settings.langOptions}
                     />
                 </div>
@@ -31,7 +60,7 @@ function GeneralField(props) {
                     <Select
                         placeholder='Choose Estimated time to solve'
                         value={props.state.fields['time']}
-                        onChange={(val) => props.updateField("time", val)}
+                        onChange={(val) => props.updateFromField("time", val)}
                         options={Settings.timeOption}
                     />
                 </div>
@@ -40,7 +69,7 @@ function GeneralField(props) {
                     <Select
                         placeholder='Choose Complexity'
                         value={props.state.fields['complexity']}
-                        onChange={(val) => props.updateField('complexity', val)}
+                        onChange={(val) => props.updateFromField('complexity', val)}
                         options={Settings.complexityOption}
                     />
                 </div>
@@ -51,7 +80,7 @@ function GeneralField(props) {
                     <CreatableSelect isMulti
                         placeholder='Hashtagss...'
                         value={props.state.fields['tags']}
-                        onChange={(val) => props.updateField("tags", val)}
+                        onChange={(val) => props.updateFromField("tags", val)}
                         options={props.state.tagOptions} />
                 </div>
             </div>
@@ -59,10 +88,9 @@ function GeneralField(props) {
             <div className="row mt-2">
                 <div className="col">
                     <h6>Question Statement:</h6>
-                    <textarea style={{ height: '120px' }} className='form-control'
-                        onChange={(e) => props.updateField("text", e.target.value)}
-                        value={props.state.fields['text']?props.state.fields['text']:''}>
-                    </textarea>
+                    <ReactQuill  modules={Settings.modules} formats={Settings.formats} theme='snow' 
+                      value={props.state.fields['text']?props.state.fields['text']:null} 
+                      onChange = {(content)=>props.updateFromField('text',content)}/>                    
                 </div>
             </div>
             <div className="mt-3 float-right">

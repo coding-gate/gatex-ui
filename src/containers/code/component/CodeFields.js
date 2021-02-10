@@ -1,8 +1,9 @@
+import AceEditor from 'react-ace';
 
 function CodeField(props) {
 
-    const errorMessages={answer:'Answer code can not be enpty',
-        unittest:'Unittest code can not be enpty'
+    const errorMessages={answerTemplate:'Answer code can not be enpty',
+           unittestTemplate:'Unittest code can not be enpty'
         };
    
 
@@ -11,25 +12,31 @@ function CodeField(props) {
             <div className="row mt-2">
                 <div className="col">
                     <h6>Answer code:</h6>
-                    <textarea style={{ height: '120px' }} className='form-control'
-                        onChange={(e) => props.updateField("answer", e.target.value)}
-                        value={props.state.fields['answer']?props.state.fields['answer']:''}>
-                    </textarea>
+                    <AceEditor mode={props.state.fields['lang'].value} theme="eclipse" 
+                                value={props.state.fields['answerTemplate']} 
+                                onChange={(value) => props.updateFromField("answerTemplate", value)} 
+                                width="auto"
+                                minLines={12} maxLines={12}/>                     
                 </div>
             </div>
 
             <div className="row mt-2">
                 <div className="col">
                     <h6>Unittest code:</h6>
-                    <textarea style={{ height: '120px' }} className='form-control'
-                        onChange={(e) => props.updateField("unittest", e.target.value)}
-                        value={props.state.fields['unittest']?props.state.fields['unittest']:''}>
-                    </textarea>
+                    <AceEditor mode={props.state.fields['lang'].value} theme="eclipse"        
+                                value={props.state.fields['unittestTemplate']} 
+                                onChange={(value) => props.updateFromField("unittestTemplate", value)}  
+                                width="auto"                             
+                                minLines={20} maxLines={20}/>                      
                 </div>
             </div>
             <div className="mt-3 float-right">
+            <button className="btn btn-sm btn-outline-primary mx-2"
+                    onClick={()=>props.updateStateField('step', 1)}>
+                    Back
+                </button>
                 <button className="btn btn-sm btn-primary"
-                    onClick={()=>props.handleNext(errorMessages, 2)}>
+                    onClick={()=>props.handleNext(errorMessages, 3)}>
                     Next
                 </button>
             </div>

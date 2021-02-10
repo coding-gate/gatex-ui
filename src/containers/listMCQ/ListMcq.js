@@ -28,11 +28,11 @@ class ListMcq extends Component {
 
     componentDidMount() {
 
-       let uriComponent='/mcqQuestions/byUser';
+       let uriComponent='/gatexapi/mcqQuestions/byUser';
 
         const params = QueryString.parse(this.props.location.search)
         if(params.search){
-            uriComponent='/mcqQuestions/search?'+params.search
+            uriComponent='/gatexapi/mcqQuestions/search?'+params.search
         }
 
         axios.get(webUtil.URL+uriComponent)
@@ -55,7 +55,7 @@ class ListMcq extends Component {
     deleteHandler = (id) => {
         var response = window.confirm("Would you like to delete!");
         if (response === true) {
-            axios.delete(webUtil.URL+'/mcqQuestions/'+this.RECORDS[this.props.startPageIndex+id]['id'])
+            axios.delete(webUtil.URL+'/gatexapi/mcqQuestions/'+this.RECORDS[this.props.startPageIndex+id]['id'])
             .then(()=>{
                 this.props.setAlert({type:'success',message:'Succesfully deleted'})
                  this.RECORDS.splice(this.props.startPageIndex+id,1);
