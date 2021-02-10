@@ -2,7 +2,7 @@ import CreatableSelect from 'react-select/creatable';
 import ReactQuill from 'react-quill';
 import Select from 'react-select';
 
-import axios from '../../../utils/AxiosWithToken'
+import axios from axios
 import * as webUtil from '../../../utils/WebUtil'
 import * as Settings from '../../../utils/SiteSettings';
 
@@ -28,8 +28,8 @@ function GeneralField(props) {
 
             axios.get(webUtil.URL + '/gatexapi/codeTemplate/' + lang.value)
             .then(response => {
-                props.updateFromField('answerTemplate', response.data.answerTemplate)
-                props.updateFromField('unittestTemplate', response.data.unittestTemplate)
+                props.updateFromField('answerTemplate', response.data.answer)
+                props.updateFromField('unittestTemplate', response.data.unittest)
                 props.updateStateField('isLoading', false)
             }).catch(error => {
                 webUtil.handleError(error, props);
