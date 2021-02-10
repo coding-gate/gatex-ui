@@ -36,26 +36,28 @@ const Header = () => {
                                         </div>
                                     </li>
                                     : null}
-
-                                <li className="nav-item dropdown">
-                                        <Link className="nav-link dropdown-toggle text-primary" to="#" id="navbardrop" data-toggle="dropdown">
-                                           code
-                                        </Link>
-                                        <div className="dropdown-menu">
-                                            <Link className="dropdown-item text-primary" to="/addMcq">Add new</Link>
-                                            <Link className="dropdown-item text-primary" to="/mcqList">List all</Link>
-                                        </div>
-                                </li>
-
-                                <li className="nav-item dropdown">
+                                {roles.length !== 0
+                                    ?<li className="nav-item dropdown">
+                                            <Link className="nav-link dropdown-toggle text-primary" to="#" id="navbardrop" data-toggle="dropdown">
+                                            code
+                                            </Link>
+                                            <div className="dropdown-menu">
+                                                <Link className="dropdown-item text-primary" to="/addCodeQuestion">addCodeQuestion</Link>
+                                            </div>
+                                    </li>
+                                    :null
+                                }
+                                {roles.length !== 0
+                                ?<li className="nav-item dropdown">
                                         <Link className="nav-link dropdown-toggle text-primary" to="#" id="navbardrop" data-toggle="dropdown">
                                             MCQ
                                         </Link>
                                         <div className="dropdown-menu">
-                                            <Link className="dropdown-item text-primary" to="addMcq">Add new</Link>
-                                            <Link className="dropdown-item text-primary" to="/mcqList">List all</Link>
+                                            <Link className="dropdown-item text-primary" to="/mcqList">questions</Link>
                                         </div>
                                 </li>
+                                :null
+                                }
                                
                                 
                                 <li className="nav-item dropdown">
