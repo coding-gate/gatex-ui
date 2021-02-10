@@ -30,3 +30,25 @@ export const tagsOptions = [
     { value: 'function', label: 'Function' },
     { value: 'es6', label: 'ES6' }
 ];
+
+
+export const modules = {
+    toolbar: [
+      [{ 'size': ['small', false, 'large', 'huge'] }],
+      ['bold', 'italic', 'underline'],
+      [{'list': 'ordered'}, {'list': 'bullet'}],
+      [{ 'align': [] }],
+      ['link'],
+      [{ 'color': [] }, { 'background': [] }],
+      ['clean']
+    ]
+};
+
+export const formats = [
+    'size',
+    'bold', 'italic', 'underline',
+    'list', 'bullet',
+    'align',
+    'link',
+    'color', 'background'
+  ];

@@ -52,7 +52,7 @@ class AddQuestion extends Component {
         this.setState({isRedirected:!!params.questionId})
         if(!!params.questionId){
             this.setState({isLoading:true},() => {
-                axios.get(webUtil.URL+'/mcqQuestions/'+params.questionId)
+                axios.get(webUtil.URL+'/gatexapi/mcqQuestions/'+params.questionId)
                     .then(res => res.data)
                     .then(data => this.setState({complexity:data.complexity, 
                                                  type:data.type,
@@ -113,7 +113,7 @@ class AddQuestion extends Component {
         console.log(question);
 
         this.setState({isLoading:true},() => {
-            axios.post(webUtil.URL+'/mcqQuestions',question)
+            axios.post(webUtil.URL+'/gatexapi/mcqQuestions',question)
                 .then(() => this.props.setAlert({type:'success',message:'Succesfully Saved'}))
                 .then(() => {
                     this.initializedState();

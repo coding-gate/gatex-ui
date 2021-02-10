@@ -16,7 +16,7 @@ class HomePage  extends Component  {
     componentDidMount() {
 
         if(this.props.isAdminAccountConfigured==="NA"){
-                axios.get(webUtil.URL + '/users/adminAccountStatus').then(response => {
+                axios.get(webUtil.URL + '/gatexapi/users/adminAccountStatus').then(response => {
                     if(response.data==='NO'){
                         this.props.setAlert({ type: 'warning', message: 'Please create admin acount !' });
                     }

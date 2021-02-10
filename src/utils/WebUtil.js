@@ -35,10 +35,13 @@ export const handleError = function (error, props) {
             || error.response.status === 409
         ) {
             errMsg = error.response.data
+            if(typeof errMsg !== 'string'){
+                errMsg="Unknown error occurred!";
+            }
         }
 
         if (props.setAlert) {
-            props.setAlert({ type: 'warning', message: errMsg });
+              props.setAlert({ type: 'warning', message: errMsg });
         }
 
     } else {

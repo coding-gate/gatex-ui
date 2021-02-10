@@ -21,7 +21,7 @@ class Register extends FormClass {
         let fields={...this.state.fields};
         fields.type = params.ac
 
-        axios.post(webUtil.URL+'/users', fields).then(response=> {
+        axios.post(webUtil.URL+'/gatexapi/users', fields).then(response=> {
             this.props.setAlert({type:'success',message:'Saved successfully.'});
             if(params.ac==='admin'){
               this.props.onAdminAccountState('YES')
