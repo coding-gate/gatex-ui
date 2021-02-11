@@ -28,8 +28,8 @@ function GeneralField(props) {
 
             axios.get(webUtil.URL + '/gatexapi/codeTemplate/' + lang.value)
             .then(response => {
-                props.updateFromField('answerTemplate', response.data.answerTemplate)
-                props.updateFromField('unittestTemplate', response.data.unittestTemplate)
+                props.updateFromField('answerTemplate', response.data.answer)
+                props.updateFromField('unittestTemplate', response.data.unittest)
                 props.updateStateField('isLoading', false)
             }).catch(error => {
                 webUtil.handleError(error, props);
