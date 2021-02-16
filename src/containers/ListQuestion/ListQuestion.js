@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import DisplayModal from '../../components/Modal/DisplayModal';
+import DecisionModal from '../../components/Modal/DecisionModal';
 import withPagination from '../../hoc/withPagination';
 import ViewQuestion from '../ViewQuestion/ViewQuestion';
 import classes from './QuestionList.module.css'
@@ -54,15 +56,17 @@ function ListQuestion(props) {
                             </p>
 
                             <div className={classes.optionWindow} >
-                                <p className='dropdown-item' data-toggle="collapse" 
-                                    data-target={`#question${i}`}>
+                                <p 
+                                    className='dropdown-item' 
+                                    data-toggle="modal" 
+                                    data-target={'#display'+ques.id}>
                                     View
                                 </p>
                                 {fromQuestionList ? 
                                 <>
                                     <p  className='dropdown-item' 
-                                        data-toggle="collapse" 
-                                        data-target={`#delete${i}`}>
+                                        data-toggle="modal" 
+                                        data-target={`#decision${ques.id}`}>
                                         Delete
                                     </p>
                                     <Link 
@@ -84,31 +88,16 @@ function ListQuestion(props) {
                          
                     <>
                         {fromQuestionList ?
-                            <div id={`delete${i}`}  className='collapse'>
-                                <div className='col-9 col-md-6 mb-3 mx-auto border border-danger p-3'>
-                                <p className='text-center'>Are You Sure You Want To Delete The Question ??</p> 
-                                <div className='d-flex justify-content-center'>
-                                    <button data-toggle="collapse" 
-                                            data-target={`#delete${i}`} 
-                                            className='btn btn-warning mr-4'>Cancel</button>
-
-                                    <button 
-                                            onClick={() => {deleteQuestion(ques.id,i)}} 
-                                            className='btn btn-outline-danger ml-4'>Confirm</button>
-                                </div>
-                                </div>
-                            </div>
+                            <DecisionModal confirmActionHandler={() => {deleteQuestion(ques.id,i)}} id={ques.id}>
+                                    <p className='font-weight-bold'>Are You Sure You Want To Delete The Question ?</p> 
+                                    <p className='border p-3'>{ques.text}</p>
+                            </DecisionModal>
                         : 
                         null}
 
-                        <div className='collapse border border-info w-100 mb-3' id={`question${i}`}>
-                            <span 
-                                className='float-right mr-3'
-                                data-toggle="collapse" 
-                                data-target={`#question${i}`} 
-                                style={{cursor:'pointer',fontSize:'2.5rem',  color:'red'}}>&times;</span>
+                        <DisplayModal id={ques.id}>
                             <ViewQuestion state={ques} />
-                        </div>
+                        </DisplayModal>
                     </>
                     </div>
                     )
