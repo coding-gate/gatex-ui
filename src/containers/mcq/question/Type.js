@@ -33,7 +33,7 @@ function Type(props) {
     return (
         <div className='my-3'>
             <div className="row">
-                <h4 className="col text-center lead">{props.state.text}</h4>
+                <h4 className="col text-center lead" dangerouslySetInnerHTML={{__html:props.state.text}} />
             </div>
 
             <div className="row">

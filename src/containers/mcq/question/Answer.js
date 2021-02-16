@@ -44,7 +44,10 @@ function Answer(props) {
     </div>)
     return (
         <div>
-            <h3 className='my-3 text-center lead'>{props.state.text}</h3>
+            <div className="row">
+            <h4 className="col text-center lead" dangerouslySetInnerHTML={{__html:props.state.text}} />
+
+            </div>
             <h4 className='my-3 text-left'>Mark The Correct Answer(s):</h4>
             <div className='text-left list-unstyled' >
                 {body}

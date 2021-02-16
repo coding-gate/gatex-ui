@@ -1,15 +1,19 @@
 import React from 'react'
 import CreatableSelect from 'react-select/creatable';
 import Select from 'react-select';
+import ReactQuill from 'react-quill'; // ES6
+import 'react-quill/dist/quill.snow.css'; // ES6
+
 
 import * as Settings from '../../../utils/SiteSettings';
 
 function Text(props) {
     
-    const stepAhead = () => {
 
-        if (props.state.text === '') {
-            props.setAlert({type:'warning',message:'Please Enter a Valid Text'})
+    const proceed = () => {
+        
+        if (text.current.getEditor().getText().trim()==='') {
+            props.setAlert({type:'warning',message:'Please Enter A Question Statement'})
             return
         }
         if (!props.state.lang) {
@@ -25,9 +29,12 @@ function Text(props) {
             return
         }
         
+        
         props.setAlert(null)
         props.updateField("step", 2)
     }
+
+    const text = React.createRef()
 
     return (
         <div className='mt-3'>
@@ -75,15 +82,15 @@ function Text(props) {
             <div className="row mt-2">
                 <div className="col">
                     <h5>Question Statement:</h5>
-                    <textarea style={{ height: '120px' }} className='form-control'
-                        onChange={(e) => props.updateField("text", e.target.value)}
-                        value={props.state.text}>
-                    </textarea>
+                    <ReactQuill 
+                        ref={text}
+                        onChange={(val) => props.updateField("text", val)}
+                        value={props.state.text} />
                 </div>
             </div>
             <div className="mt-3 float-right">
                 <button className="btn btn-sm btn-primary"
-                    onClick={stepAhead}>
+                    onClick={proceed}>
                     Next
                 </button>
             </div>

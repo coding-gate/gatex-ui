@@ -46,6 +46,7 @@ const withPagination = (WrappedComponent, PAGE_SIZE = 10, PAGE_COUNT = 5) => {
                         totalRecordCount={this.allRecords.length}
                         drawPaginationWindow={this.paginationWindowHandler}
                         pageNoHandler={this.setTableBody} />
+                    }
                 </>
             )
         }

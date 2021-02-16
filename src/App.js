@@ -15,10 +15,17 @@ import aboutUs from './containers/about/AboutUs';
 import AddMCQ from './containers/mcq/AddMCQ'
 import ForgetPassword from './containers/ForgetPassword/ForgetPassword';
 import mcqList from './containers/listMCQ/ListMcq';
+import CreateTest from './containers/CreateTest/CreateTest';
+import Exam from './containers/Exam/Exam';
 import searchMcq from './containers/mcq/SearchMcq'
 import AddCodeQuestion from './containers/code/AddCodeQuestion'
 
 function App() {
+
+          if(window.location.pathname==='/exam'){
+            return <Exam />
+          }
+
           return (<div className="container-fluid">
           <main className="bd-content" role="main">
             <Header/>
@@ -36,11 +43,11 @@ function App() {
                       <Route path="/addCodeQuestion" component={AddCodeQuestion}/>
                       <Route path="/error" component={ErrorPage}/>
                       <Route path="/forgotPassword" component={ForgetPassword}/>
+                      <Route path="/createTest" component={CreateTest}/>
                   </Switch>
             </div>   
-              <Footer />
-         
-          </main>
+            <Footer />
+            </main>
         </div>)
 }
 

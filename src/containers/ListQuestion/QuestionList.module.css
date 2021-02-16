@@ -1,0 +1,65 @@
+/* 
+.scrollable{
+    overflow-y: auto;
+    max-height: calc(100vh - 348px);    
+}
+
+.scrollable::-webkit-scrollbar {
+    margin-left: 10px;
+    width: 8px;
+}
+
+.scrollable::-webkit-scrollbar-track{
+    background-color: #eeeeee;
+}
+
+.scrollable::-webkit-scrollbar-thumb{
+    background-color: #ccc;
+    border-radius: 5px;
+}
+
+.scrollable:hover::-webkit-scrollbar-thumb {   
+    background: #999999;
+} */
+
+.question:hover .dots{
+    opacity: 1;
+}
+
+
+.question{
+    position: relative;
+}
+
+.question:hover .questionText{
+    background-color: #eeeeff;
+}
+
+.dots{
+    opacity: 0;
+    font-weight: 900;
+    position: relative;
+    transition: all .25s ease-in;
+}
+
+.optionWindow{
+    position: absolute;
+    cursor: pointer;
+    z-index: 999;
+    right: 0;
+    top: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: all .25s ease-in;
+    background-color: #fff;
+    border: 1px solid cadetblue;
+}
+
+.dots:hover + .optionWindow, .optionWindow:hover {
+    transform: scaleY(1);
+
+}
+
+.textBlock > p{
+    margin-bottom: 0;
+}

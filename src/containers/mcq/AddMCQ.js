@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
+
 import StepProgress from '../../components/stepProgress/stepProgress'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
+import AlertMessage from '../../components/alert/AlertMessage'
+
 import Text from './question/Text'
 import Type from './question/Type'
 import Options from './question/Options'
 import Answer from './question/Answer'
-import AlertMessage from '../../components/alert/AlertMessage'
-import withAlert from '../../hoc/withAlert'
 import SubmitMCQ from './SubmitMCQ'
-import axios from '../../utils/AxiosWithToken'
+
+import withAlert from '../../hoc/withAlert'
+import axios from 'axios'
+
 import * as QueryString from "query-string"
 import * as webUtil from '../../utils/WebUtil'
 
@@ -69,7 +73,7 @@ class AddQuestion extends Component {
 
     /*
     componentDidUpdate(prevProps){
-        if(prevProps.location.search!==this.props.location.search){
+        if(prevProps.location.search!==this.props.location.search&&!!prevProps.location.search){
             this.setState({step: 1,
                 text: '',
                 tags: null,
@@ -84,6 +88,21 @@ class AddQuestion extends Component {
                         },
                 isLoading:false,
                 isRedirected:false})
+        }
+        else if(prevProps.location.search!==this.props.location.search&&!prevProps.location.search){
+            const params = QueryString.parse(this.props.location.search) 
+
+            axios.get('https://gatex-exam-default-rtdb.firebaseio.com/question/'+params.questionId+'.json')
+            .then(res => res.data)
+            .then(data => this.setState({complexity:data.complexity, 
+                                         type:data.type,
+                                         text:data.text,
+                                         subject:data.subject,
+                                         tag:data.tag,
+                                         isRedirected:true,
+                                         time:data.time,
+                                         options:{...this.state.options,[data.type]:data.options},
+                                         isLoading:false}))
         }
         
     }
