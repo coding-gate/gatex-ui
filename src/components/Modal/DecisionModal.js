@@ -2,8 +2,8 @@ import React from 'react'
 
 export default function DecisionModal(props) {
     return (
-        <div className="modal fade" id={"decision"+props.id} tabIndex="-1" aria-hidden="true">
-            <div className="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div className="modal mt-5 fade" id={"decision"+props.id} tabIndex="-1" aria-hidden="true">
+            <div className="modal-dialog modal-lg" role="document">
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="exampleModalLabel">Confirmation Window</h5>
@@ -16,7 +16,7 @@ export default function DecisionModal(props) {
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-primary" data-dismiss="modal">Cancel</button>
-                        <button type="button" className="btn btn-danger" onClick={props.confirmActionHandler}>Confirm</button>
+                        <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={props.confirmActionHandler}>Confirm</button>
                     </div>
                 </div>
             </div>

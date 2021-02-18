@@ -33,7 +33,7 @@ class AddQuestion extends Component {
                 tf:[['True',false],['False',false]]
                 },
         isLoading:false,
-        isRedirected:false
+        isEditing:false
     }
 
     initializedState=()=>{
@@ -53,7 +53,7 @@ class AddQuestion extends Component {
 
     componentDidMount(){
         const params = QueryString.parse(this.props.location.search) 
-        this.setState({isRedirected:!!params.questionId})
+        this.setState({isEditing:!!params.questionId})
         if(!!params.questionId){
             this.setState({isLoading:true},() => {
                 axios.get(webUtil.URL+'/gatexapi/mcqQuestions/'+params.questionId)
@@ -66,47 +66,15 @@ class AddQuestion extends Component {
                                                  time:data.time,
                                                  options:{...this.state.options,[data.type]:data.options},
                                                  isLoading:false}))
+                    .catch(error => {
+                        webUtil.handleError(error, this.props);
+                    }) 
             })
         }
         //console.log('Mounted');
     }
 
-    /*
-    componentDidUpdate(prevProps){
-        if(prevProps.location.search!==this.props.location.search&&!!prevProps.location.search){
-            this.setState({step: 1,
-                text: '',
-                tags: null,
-                lang: null,
-                time: null,
-                complexity: null,
-                type: null,
-                options:{
-                            mmcq:[["",false]],
-                            mcq:[["",false]],
-                            tf:[['True',false],['False',false]]
-                        },
-                isLoading:false,
-                isRedirected:false})
-        }
-        else if(prevProps.location.search!==this.props.location.search&&!prevProps.location.search){
-            const params = QueryString.parse(this.props.location.search) 
-
-            axios.get('https://gatex-exam-default-rtdb.firebaseio.com/question/'+params.questionId+'.json')
-            .then(res => res.data)
-            .then(data => this.setState({complexity:data.complexity, 
-                                         type:data.type,
-                                         text:data.text,
-                                         subject:data.subject,
-                                         tag:data.tag,
-                                         isRedirected:true,
-                                         time:data.time,
-                                         options:{...this.state.options,[data.type]:data.options},
-                                         isLoading:false}))
-        }
-        
-    }
-  */
+    
     updateField = (field, value)=>{
         //console.log("updateField", field, value)
         this.setState({[field]: value });
@@ -124,7 +92,7 @@ class AddQuestion extends Component {
             options:this.state.options[this.state.type],
         }
 
-        if(this.state.isRedirected){
+        if(this.state.isEditing){
             const params = QueryString.parse(this.props.location.search)
             question.id = params.questionId
         }
@@ -170,7 +138,7 @@ class AddQuestion extends Component {
     */
     
     cancel = () => {
-        this.state.isRedirected ? this.props.history.push('/mcqList') : this.initializedState()
+        this.state.isEditing ? this.props.history.push('/mcqList') : this.initializedState()
     }
 
     render() {

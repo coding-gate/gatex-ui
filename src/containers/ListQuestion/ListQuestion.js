@@ -9,7 +9,6 @@ import classes from './QuestionList.module.css'
 function ListQuestion(props) {
     const { questions,
             selectedQuestions, 
-            startingIndex, 
             fromQuestionList,
             selectQuestion, 
             tableBody, 
@@ -23,7 +22,7 @@ function ListQuestion(props) {
 
     
     let list = tableBody
-                .map((ques,i) => deletingIndex.includes(i) ? 
+                .map((ques,i) => deletingIndex ===i ? 
                     <div 
                         style={{width:'5rem',height:'5rem'}} 
                         className="spinner-border text-danger d-block my-4 mx-auto">
@@ -46,7 +45,7 @@ function ListQuestion(props) {
                                         id={i}/> 
                                     }
                                     <b>
-                                        Q-{startingIndex+ i+1} : &nbsp;
+                                        Q-{i+1} : &nbsp;
                                     </b>
                                 </span>
                                 <span className={classes.textBlock} dangerouslySetInnerHTML={{__html : ques.text}}></span>

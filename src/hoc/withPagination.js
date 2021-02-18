@@ -30,6 +30,7 @@ const withPagination = (WrappedComponent, PAGE_SIZE = 10, PAGE_COUNT = 5) => {
         }
 
         initPagination = (allRecords)=>{
+            console.log(allRecords);
           this.allRecords=allRecords;
           this.setTableBody(1);
         }
@@ -46,7 +47,6 @@ const withPagination = (WrappedComponent, PAGE_SIZE = 10, PAGE_COUNT = 5) => {
                         totalRecordCount={this.allRecords.length}
                         drawPaginationWindow={this.paginationWindowHandler}
                         pageNoHandler={this.setTableBody} />
-                    }
                 </>
             )
         }

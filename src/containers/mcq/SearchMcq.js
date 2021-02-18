@@ -15,24 +15,27 @@ class SearchMcq extends Component {
         fields: {}
       }
 
-      componentDidMount() {
-          console.log(this.props.mcqSerchParam)
-          this.setState({fields:this.props.mcqSerchParam})
-      }
+    componentDidMount() {
+        console.log(this.props.mcqSerchParam)
+        this.setState({fields:this.props.mcqSerchParam})
+    }
 
-      clear = ()=>{
-        let fields={...this.state.fields};
-        for (var key in fields) {
-            fields[key]=null;   
-        }
-          this.setState({fields});
-      }
-    
+    clear = ()=>{
+    let fields={...this.state.fields};
+    for (var key in fields) {
+        fields[key]=null;   
+    }
+        this.setState({fields});
+    }
+
 
     updateField = (name, value)=>{
         let fields={...this.state.fields};
         fields[name]=value;      
-        this.setState({fields}); 
+        this.setState({fields},() => {
+            console.log(this.state)
+
+        }); 
     }
 
     makeURL= ()=>{
@@ -119,7 +122,7 @@ class SearchMcq extends Component {
                 <div className="row mt-2">
                     <div className="col text-right">
                         <button className="btn btn-sm btn-outline-primary mx-2" onClick={this.clear}> Clear</button>
-                        <button className="btn btn-sm btn-primary mx-2" onClick={this.makeURL}> Serach</button>
+                        <button className="btn btn-sm btn-primary mx-2" onClick={this.makeURL}> Search</button>
                     </div>
                 </div>
              </div>
