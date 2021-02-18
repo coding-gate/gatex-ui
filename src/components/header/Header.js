@@ -52,7 +52,7 @@ const Header = () => {
                                 
                                 <li className="nav-item dropdown">
                                    <Link className="nav-link dropdown-toggle text-primary" to="#" id="navbardrop" data-toggle="dropdown">
-                                      account
+                                     profile
                                     </Link>
                                     <div className="dropdown-menu ">
                                       <Link to="/register?ac=user" className="dropdown-item text-primary">register</Link>
