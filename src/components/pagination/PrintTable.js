@@ -56,7 +56,8 @@ const PrintTable = (props) => {
                     option.view ? 
                     <DisplayModal id={index}>
                         <ViewQuestion state={body[index]} />
-                    </DisplayModal> :null
+                    </DisplayModal> 
+                    :null
                 }
                 
                 {
@@ -64,7 +65,8 @@ const PrintTable = (props) => {
                     <DecisionModal confirmActionHandler={() => option.delete(index)} id={index}>
                         <p className='font-weight-bold'>Are You Sure You Want To Delete The Question ?</p> 
                         <p className='border p-3'>{body[index].text}</p>
-                    </DecisionModal> :null
+                    </DecisionModal> 
+                    :null
                 }
 
             </div>

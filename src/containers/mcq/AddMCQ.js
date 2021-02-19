@@ -56,7 +56,7 @@ class AddQuestion extends Component {
         this.setState({isEditing:!!params.questionId})
         if(!!params.questionId){
             this.setState({isLoading:true},() => {
-                axios.get(webUtil.URL+'/gatexapi/mcqQuestions/'+params.questionId)
+                axios.get(webUtil.getApiUrl+'/mcqQuestions/'+params.questionId)
                     .then(res => res.data)
                     .then(data => this.setState({complexity:data.complexity, 
                                                  type:data.type,

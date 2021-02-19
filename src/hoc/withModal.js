@@ -11,7 +11,6 @@ const withModal = WrappedComponent  => {
 
         hideModel = (btn) => {   
             this.setState({ modal: {isVisible: false}});
-           // console.log("Other", WrappedComponent.prototype)
             if(this.modalAction){
              this.modalAction(btn);
             }

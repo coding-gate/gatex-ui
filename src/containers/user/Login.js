@@ -34,7 +34,8 @@ class Login extends FormClass  {
         this.setState({isLoading:true})
         axios.post(webUtil.URL + '/gatexapi/oauth/token', body, header)
             .then(response => {
-            const tokenData = webUtil.parseJwt(response.data.access_token);
+                const tokenData = webUtil.parseJwt(response.data.access_token);
+                console.log(tokenData);
 
             const payload = {
                 accessToken: response.data.access_token,

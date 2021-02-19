@@ -13,7 +13,7 @@ import contactUs from './containers/contact/ContactUs';
 import VeiwContacts from './containers/contact/ViewContacts';
 import aboutUs from './containers/about/AboutUs';
 import AddMCQ from './containers/mcq/AddMCQ'
-import ForgetPassword from './containers/ForgetPassword/ForgetPassword';
+import ChangePassword from './containers/ChangePassword/ChangePassword';
 import mcqList from './containers/listMCQ/ListMcq';
 import CreateTest from './containers/CreateTest/CreateTest';
 import Exam from './containers/Exam/Exam';
@@ -42,7 +42,7 @@ function App() {
                       <Route path="/searchMcq" component={searchMcq}/>
                       <Route path="/addCodeQuestion" component={AddCodeQuestion}/>
                       <Route path="/error" component={ErrorPage}/>
-                      <Route path="/forgotPassword" component={ForgetPassword}/>
+                      <Route path="/changePassword" component={ChangePassword}/>
                       <Route path="/createTest" component={CreateTest}/>
                   </Switch>
             </div>   
