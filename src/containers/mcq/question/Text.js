@@ -8,33 +8,13 @@ import 'react-quill/dist/quill.snow.css'; // ES6
 import * as Settings from '../../../utils/SiteSettings';
 
 function Text(props) {
-    
 
-    const proceed = () => {
-        
-        if (text.current.getEditor().getText().trim()==='') {
-            props.setAlert({type:'warning',message:'Please Enter A Question Statement'})
-            return
-        }
-        if (!props.state.lang) {
-            props.setAlert({type:'warning',message:'Please Choose a lang'})
-            return
-        }
-        if (!props.state.time) {
-            props.setAlert({type:'warning',message:'Please Set a Time'})
-            return
-        }
-        if (!props.state.complexity) {
-            props.setAlert({type:'warning',message:'Please Choose a Complexity'})
-            return
-        }
-        
-        
-        props.setAlert(null)
-        props.updateField("step", 2)
-    }
-
-    const text = React.createRef()
+    const errorMessages={lang:'Please select language',
+        time:'Please select time',
+        complexity:'Please select complexity',
+        tags:'Please select tags',
+        text:'Please enter question statement'
+        };
 
     return (
         <div className='mt-3'>
@@ -72,8 +52,8 @@ function Text(props) {
                 <div className="col">
                     <h5>Add tags</h5>
                     <CreatableSelect isMulti
-                        placeholder='Hashtagss...'
-                        value={props.state.tags}
+                        placeholder='Hashtags...'
+                        value={props.state.fields['tags']}
                         onChange={(val) => props.updateField("tags", val)}
                         options={Settings.tagsOptions} />
                 </div>
@@ -83,14 +63,14 @@ function Text(props) {
                 <div className="col">
                     <h5>Question Statement:</h5>
                     <ReactQuill 
-                        ref={text}
                         onChange={(val) => props.updateField("text", val)}
-                        value={props.state.text} />
+                        value={props.state.fields['text']?props.state.fields['text']:null} 
+                        />
                 </div>
             </div>
             <div className="mt-3 float-right">
                 <button className="btn btn-sm btn-primary"
-                    onClick={proceed}>
+                    onClick={() => props.handleNext(errorMessages,2)}>
                     Next
                 </button>
             </div>

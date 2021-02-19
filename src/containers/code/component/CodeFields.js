@@ -3,7 +3,7 @@ import AceEditor from 'react-ace';
 function CodeField(props) {
 
     const errorMessages={answerTemplate:'Answer code can not be enpty',
-           unittestTemplate:'Unittest code can not be enpty'
+           unittestTemplate:'Unittest code can not be empty'
         };
    
 

@@ -78,10 +78,10 @@ function GeneralField(props) {
                 <div className="col">
                     <h6>Add tags</h6>
                     <CreatableSelect isMulti
-                        placeholder='Hashtagss...'
+                        placeholder='Hashtags...'
                         value={props.state.fields['tags']}
                         onChange={(val) => props.updateFromField("tags", val)}
-                        options={props.state.tagOptions} />
+                        options={Settings.tagsOptions} />
                 </div>
             </div>
 
