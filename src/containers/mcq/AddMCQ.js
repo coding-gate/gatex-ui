@@ -71,8 +71,8 @@ class AddQuestion extends Component {
 
     
     updateField = (field, value)=>{
-        if(field==='step'){
-            this.setState({step:value})
+        if(field==='step'||field==='options'){
+            this.setState({[field]:value})
         }
         else{
             let fields = this.state.fields

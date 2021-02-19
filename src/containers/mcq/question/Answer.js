@@ -4,15 +4,15 @@ function Answer(props) {
 
     function answerSelect(index) {
         let options = {...props.state.options}
-        if (props.state.type === 'mmcq') {
-            options[props.state.type].forEach((option,i) => {
+        if (props.state.fields.type === 'mmcq') {
+            options[props.state.fields.type].forEach((option,i) => {
                 if(i===index){
                     option[1] = !option[1]
                 }
             })
         }
         else {
-            options[props.state.type].forEach((option,i) => {
+            options[props.state.fields.type].forEach((option,i) => {
                     option[1] = i===index
             })
         }
@@ -26,12 +26,12 @@ function Answer(props) {
 
 
 
-    let options = [...props.state.options[props.state.type]]
+    let options = [...props.state.options[props.state.fields.type]]
     let body = options.map((option, index) => <div key={index} className="input-group mb-3">
         <div className="input-group-prepend">
             <div className="input-group-text">
                 <input
-                    type={props.state.type === 'mmcq' ? 'checkbox' : 'radio'}
+                    type={props.state.fields.type === 'mmcq' ? 'checkbox' : 'radio'}
                     name="answer"
                     value={option[0]}
                     id={index}

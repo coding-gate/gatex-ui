@@ -12,7 +12,7 @@ function Options(props) {
 
     function removeOption(index) {
         let options = {...props.state.options}
-        options[props.state.type].splice(index, 1)
+        options[props.state.fields.type].splice(index, 1)
         props.updateField('options', options)
     }
 
@@ -22,17 +22,17 @@ function Options(props) {
         props.updateField('options', options)
     }
 
-    const submit = () => {
-        if (props.state.type !== 'tf') {
-            if (props.state.options[props.state.type].length < 3) {
+    const proceed = () => {
+        if (props.state.fields.type !== 'tf') {
+            if (props.state.options[props.state.fields.type].length < 3) {
                 props.setAlert({ message: 'Please Enter At Least 3 Options', type: 'warning' })
                 return
             }
-            if (props.state.options[props.state.type].some(option => option[0].trim() === '')) {
+            if (props.state.options[props.state.fields.type].some(option => option[0].trim() === '')) {
                 props.setAlert({ message: "Options Can't be Blank", type: 'warning' })
                 return
             }
-            if (!props.state.options[props.state.type].map(option => option[0]).every((elem, index, array) => array.indexOf(elem) === index)) {
+            if (!props.state.options[props.state.fields.type].map(option => option[0]).every((elem, index, array) => array.indexOf(elem) === index)) {
                 props.setAlert({ message: "Options Shouldn't Be Repeated", type: 'warning' })
                 return
             }
@@ -94,7 +94,7 @@ function Options(props) {
                     Back
                 </button>
                 <button className="btn btn-sm btn-primary"
-                    onClick={submit}>
+                    onClick={proceed}>
                     Next
                 </button>
             </div>

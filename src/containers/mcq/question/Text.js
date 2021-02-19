@@ -24,7 +24,7 @@ function Text(props) {
                     <CreatableSelect
                         placeholder='Choose Language'
                         isClearable
-                        value={props.state.lang}
+                        value={props.state.fields.lang}
                         onChange={(val) => props.updateField("lang", val)}
                         options={Settings.langOptions}
                     />
@@ -33,7 +33,7 @@ function Text(props) {
                     <h5>Estimated time to solve:</h5>
                     <Select
                         placeholder='Choose Estimated time to solve'
-                        value={props.state.time}
+                        value={props.state.fields.time}
                         onChange={(val) => props.updateField("time", val)}
                         options={Settings.timeOption}
                     />
@@ -42,7 +42,7 @@ function Text(props) {
                     <h5>Complexity:</h5>
                     <Select
                         placeholder='Choose Complexity'
-                        value={props.state.complexity}
+                        value={props.state.fields.complexity}
                         onChange={(val) => props.updateField('complexity', val)}
                         options={Settings.complexityOption}
                     />
