@@ -8,6 +8,7 @@ import { PersonFill } from 'react-bootstrap-icons';
 const Header = () => {
     const history = useHistory();
     const roles = useSelector(state => state.oauth.userRole)
+    const userName = useSelector(state => state.oauth.userName)
     const dispatch = useDispatch()
 
     return (
@@ -58,39 +59,36 @@ const Header = () => {
                                 </li>
                                 :null
                                 }
-                               
-                                
-                                <li className="nav-item dropdown">
-                                   <Link className="nav-link dropdown-toggle text-primary" to="#" id="navbardrop" data-toggle="dropdown">
-                                      account
-                                    </Link>
-                                    <div className="dropdown-menu ">
-                                      <Link to="/register?ac=user" className="dropdown-item text-primary">register</Link>
-                                      {roles.length !== 0 ?
-                                      <Link to="/changePassword" className="dropdown-item text-primary">change password</Link>
-                                      : null}
-                                    </div>
-                                </li>
-
 
                                 <li className="nav-item">
                                     <Link className="nav-link text-primary" to="/aboutUs">about us</Link>
                                 </li>
-
-
-                                <li className="nav-item ">
-                                    {roles.length === 0
-                                        ? <Link className="nav-link text-primary" to="/login">
-                                            <PersonFill /> Login
+                               
+                                
+                                <li className="nav-item dropdown">
+                                   <Link className="nav-link dropdown-toggle text-primary" to="#" id="navbardrop" data-toggle="dropdown">
+                                   <PersonFill /> {userName ? userName : 'account'}
+                                    </Link>
+                                    <div className="dropdown-menu ">
+                                      {roles.length===0 ?
+                                        <>
+                                      <Link to="/register?ac=user" className="dropdown-item text-primary">register</Link>
+                                      <Link className="dropdown-item text-primary" to="/login">
+                                             Login
                                         </Link>
-                                        : <button type="button" className="btn btn-link px-0" onClick={() => {
+                                      </>
+                                      :
+                                      <>
+                                      <Link to="/changePassword" className="dropdown-item text-primary">change password</Link>
+                                         <button type="button" className="dropdown-item text-primary" onClick={() => {
                                                         history.push("/login")
                                                         dispatch({ type: actionType.REMOVE_JWT_TOKEN })
                                                     }}>
-                                            <PersonFill /> Logout
-                                        </button>}
+                                            Logout
+                                        </button>
+                                        </>}
+                                    </div>
                                 </li>
-
                             </ul>
                         </div>
                     </nav>

@@ -18,66 +18,55 @@ import * as webUtil from '../../utils/WebUtil'
 
 
 class AddQuestion extends Component {
-    
+
     state = {
         step: 1,
-        fields:{},
-        tags: null,
-        options:{
-                mmcq:[["",false]],
-                mcq:[["",false]],
-                tf:[['True',false],['False',false]]
-                },
-        isLoading:false,
-        isEditing:false
+        fields: {options: {
+            mmcq: [["", false]],
+            mcq: [["", false]],
+            tf: [['True', false], ['False', false]]
+        }},
+        isLoading: false,
+        isEditing: false
     }
 
-    initializedState=()=>{
+    initializedState = () => {
         this.setState({
             step: 1,
-            text: '',
-            tags: null,
-            lang: null,
-            time: null,
-            complexity: null,
-            type: null,
-            options:{mmcq:[["",false]],mcq:[["",false]],tf:[['True',false],['False',false]]},
-            isLoading:false
+            fields: {options: {
+                mmcq: [["", false]],
+                mcq: [["", false]],
+                tf: [['True', false], ['False', false]]
+            },},
+            isLoading: false,
         })
 
     }
 
-    componentDidMount(){
-        const params = QueryString.parse(this.props.location.search) 
-        this.setState({isEditing:!!params.questionId})
-        if(!!params.questionId){
-            this.setState({isLoading:true},() => {
-                axios.get(webUtil.getApiUrl+'/mcqQuestions/'+params.questionId)
+    componentDidMount() {
+        const params = QueryString.parse(this.props.location.search)
+        this.setState({ isEditing: !!params.questionId })
+        if (!!params.questionId) {
+            this.setState({ isLoading: true }, () => {
+                axios.get(webUtil.getApiUrl() + '/mcqQuestions/' + params.questionId)
                     .then(res => res.data)
-                    .then(data => this.setState({complexity:data.complexity, 
-                                                 type:data.type,
-                                                 text:data.text,
-                                                 lang:data.lang,
-                                                 tags:data.tags,
-                                                 time:data.time,
-                                                 options:{...this.state.options,[data.type]:data.options},
-                                                 isLoading:false}))
+                    .then(data => console.log(data))
                     .catch(error => {
                         webUtil.handleError(error, this.props);
-                    }) 
+                    })
             })
         }
     }
 
-    
-    updateField = (field, value)=>{
-        if(field==='step'||field==='options'){
-            this.setState({[field]:value})
+
+    updateField = (field, value) => {
+        if (field === 'step') {
+            this.setState({ [field]: value })
         }
-        else{
+        else {
             let fields = this.state.fields
             fields[field] = value
-            this.setState({fields });
+            this.setState({ fields });
         }
 
     }
@@ -94,12 +83,12 @@ class AddQuestion extends Component {
         this.props.setAlert(null)
         this.setState({ step: nextVal });
     }
-    
+
 
     render() {
         let body
         switch (this.state.step) {
-            case 1: body = <Text   
+            case 1: body = <Text
                 handleNext={this.handleNext}
                 updateField={this.updateField}
                 setAlert={this.props.setAlert}
@@ -108,35 +97,35 @@ class AddQuestion extends Component {
             case 2: body = <Type
                 handleNext={this.handleNext}
                 updateField={this.updateField}
-                setAlert={this.props.setAlert}            
-                state={this.state}/>
+                setAlert={this.props.setAlert}
+                state={this.state} />
                 break
             case 3: body = <Options
                 handleNext={this.handleNext}
                 updateField={this.updateField}
-                setAlert={this.props.setAlert}            
+                setAlert={this.props.setAlert}
                 state={this.state} />
                 break
             case 4: body = <Answer
-                handleNext={this.handleNext}            
+                handleNext={this.handleNext}
                 updateField={this.updateField}
                 setAlert={this.props.setAlert}
-                state={this.state}/>
+                state={this.state} />
                 break
-            case 5: body = <SubmitMCQ 
+            case 5: body = <SubmitMCQ
                 handleNext={this.handleNext}
                 setAlert={this.props.setAlert}
                 initializedState={this.initializedState}
                 updateField={this.updateField}
-                state={this.state}/>
+                state={this.state} />
                 break
             default: body = "Body"
         }
 
-        if(this.state.isLoading) {
-            body=  <div style={{width:'5rem',height:'5rem'}} 
-                        className="spinner-border mx-auto d-block mt-5">
-                    </div>
+        if (this.state.isLoading) {
+            body = <div style={{ width: '5rem', height: '5rem' }}
+                className="spinner-border mx-auto d-block mt-5">
+            </div>
         }
         return (
             <div>
@@ -145,7 +134,7 @@ class AddQuestion extends Component {
                     <Breadcrumb elements={[
                         { url: '/', level: 'Home' },
                         { url: '/mcqList', level: 'MCQ List' },
-                        { url: '#', level: this.state.isRedirected? 'Edit Question' : 'Add Question' }
+                        { url: '#', level: this.state.isRedirected ? 'Edit Question' : 'Add Question' }
                     ]} />
                 </div>
 
@@ -156,7 +145,7 @@ class AddQuestion extends Component {
                 </div>
                 <div className="row justify-content-center">
                     <div className="col-md-8" >
-                       {body}
+                        {body}
                     </div>
                 </div>
             </div>

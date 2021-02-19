@@ -2,10 +2,10 @@
 export const URL = window.location.protocol + '//' + window.location.hostname + ":" + window.location.port
 
 export const getApiUrl = function () {
-    return URL +'gatexapi';
+    return URL +'/gatexapi';
 }
 export const getLangUrl = function () {
-    return URL +'gatexlang';
+    return URL +'/gatexlang';
 }
 
 export const parseJwt = function (token) {

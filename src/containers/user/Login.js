@@ -32,14 +32,15 @@ class Login extends FormClass  {
             }
         }
         this.setState({isLoading:true})
-        axios.post(webUtil.getApiUrl + '/oauth/token', body, header)
+        axios.post(webUtil.getApiUrl() + '/oauth/token', body, header)
             .then(response => {
                 const tokenData = webUtil.parseJwt(response.data.access_token);
                 console.log(tokenData);
 
             const payload = {
                 accessToken: response.data.access_token,
-                userRole: tokenData.authorities
+                userRole: tokenData.authorities,
+                userName:tokenData.user_name
             }
             this.props.onSaveJwtToken(payload);
             this.props.history.push("/");

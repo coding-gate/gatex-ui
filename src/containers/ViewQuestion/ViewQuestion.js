@@ -2,7 +2,7 @@ import React from 'react'
 import { CheckCircle } from 'react-bootstrap-icons'
 
 export default function ViewQuestion(props) {
-    let options = Array.isArray(props.state.options) ? props.state.options : props.state.options[props.state.type]
+    let options = Array.isArray(props.state.fields.options) ? props.state.fields.options : props.state.fields.options[props.state.fields.type]
     let optionList = options.map((option, index) => <div key={index} 
             className={option[1] ? "input-group border rounded border-success mb-3" : "input-group mb-3"} >
         <div className="input-group-prepend">
@@ -22,7 +22,7 @@ export default function ViewQuestion(props) {
 
             <div className="row px-3">
                 <span className='lead font-weight-bold h4'>Question: &nbsp;</span>
-                <h4 className='lead' dangerouslySetInnerHTML={{__html: props.state.text}}></h4>
+                <h4 className='lead' dangerouslySetInnerHTML={{__html: props.state.fields.text}}></h4>
             </div>
 
             <div className="row px-3">
@@ -33,8 +33,8 @@ export default function ViewQuestion(props) {
             </div>
 
             <div className='row px-3 d-flex mt-4 justify-content-between'>
-                <h4 className='lead'><span className='font-weight-bold'>Complexity: &nbsp;</span>{props.state.complexity.value}</h4>
-                <h4 className='lead'><span className='font-weight-bold'>Time: &nbsp;</span>{props.state.time.value} min(s)</h4>
+                <h4 className='lead'><span className='font-weight-bold'>Complexity: &nbsp;</span>{props.state.fields.complexity.value}</h4>
+                <h4 className='lead'><span className='font-weight-bold'>Time: &nbsp;</span>{props.state.fields.time.value} min(s)</h4>
             </div>
         </div>
     )

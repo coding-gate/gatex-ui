@@ -7,8 +7,7 @@ import AlertMessage from '../../components/alert/AlertMessage';
 import { Link } from 'react-router-dom';
 import { Plus, Search } from 'react-bootstrap-icons'
 
-//import axios from '../../utils/AxiosWithToken'
-import axios from 'axios'
+import axios from '../../utils/AxiosWithToken'
 
 import * as webUtil from '../../utils/WebUtil'
 import * as QueryString from "query-string"
@@ -32,15 +31,14 @@ class ListMcq extends Component {
 
     componentDidMount() {
 
-       //let uriComponent='/gatexapi/mcqQuestions/byUser';
+       let uriComponent='/mcqQuestions/byUser';
 
         const params = QueryString.parse(this.props.location.search)
         if(params.search){
-            //uriComponent='/gatexapi/mcqQuestions/search?'+params.search
+            uriComponent='/mcqQuestions/search?'+params.search
         }
 
-        //axios.get(webUtil.URL+uriComponent)
-        axios.get('https://gatex-exam-default-rtdb.firebaseio.com./question.json')
+        axios.get(webUtil.getApiUrl()+uriComponent)
         .then(response=> {
                 this.RECORDS=Object.values(response.data);
                 this.initilizedPagination(this.RECORDS)

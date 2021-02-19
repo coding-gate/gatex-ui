@@ -3,7 +3,7 @@ import React from 'react'
 function Answer(props) {
 
     function answerSelect(index) {
-        let options = {...props.state.options}
+        let options = {...props.state.fields.options}
         if (props.state.fields.type === 'mmcq') {
             options[props.state.fields.type].forEach((option,i) => {
                 if(i===index){
@@ -19,14 +19,18 @@ function Answer(props) {
         props.updateField('options',options);
     }
 
-    const submit = () => {
+    const proceed = () => {
+        if (!props.state.fields.options[props.state.fields.type].some(option => option[1] === true)) {
+            props.setAlert({ message: "Please Select At Least One Answer", type: 'warning' })
+            return
+        }
         props.setAlert(null)
         props.updateField("step", 5)
     }
 
 
 
-    let options = [...props.state.options[props.state.fields.type]]
+    let options = [...props.state.fields.options[props.state.fields.type]]
     let body = options.map((option, index) => <div key={index} className="input-group mb-3">
         <div className="input-group-prepend">
             <div className="input-group-text">
@@ -62,7 +66,7 @@ function Answer(props) {
                     Back
                 </button>
                 <button className="btn btn-sm btn-primary"
-                    onClick={submit}>
+                    onClick={proceed}>
                     Next
                 </button>
             </div>

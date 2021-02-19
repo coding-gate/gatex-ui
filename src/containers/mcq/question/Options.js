@@ -5,34 +5,34 @@ import { XCircle } from 'react-bootstrap-icons'
 function Options(props) {
 
     function addOption() {
-        let options = {...props.state.options, [props.state.fields.type]:[...props.state.options[props.state.fields.type],["",false]]}
+        let options = {...props.state.fields.options, [props.state.fields.type]:[...props.state.fields.options[props.state.fields.type],["",false]]}
         console.log(options);
         props.updateField('options', options)
     }
 
     function removeOption(index) {
-        let options = {...props.state.options}
+        let options = {...props.state.fields.options}
         options[props.state.fields.type].splice(index, 1)
         props.updateField('options', options)
     }
 
     function updateOptionValue(index, value) {
-        let options = {...props.state.options}
+        let options = {...props.state.fields.options}
         options[props.state.fields.type][index][0] = value;
         props.updateField('options', options)
     }
 
     const proceed = () => {
         if (props.state.fields.type !== 'tf') {
-            if (props.state.options[props.state.fields.type].length < 3) {
+            if (props.state.fields.options[props.state.fields.type].length < 3) {
                 props.setAlert({ message: 'Please Enter At Least 3 Options', type: 'warning' })
                 return
             }
-            if (props.state.options[props.state.fields.type].some(option => option[0].trim() === '')) {
+            if (props.state.fields.options[props.state.fields.type].some(option => option[0].trim() === '')) {
                 props.setAlert({ message: "Options Can't be Blank", type: 'warning' })
                 return
             }
-            if (!props.state.options[props.state.fields.type].map(option => option[0]).every((elem, index, array) => array.indexOf(elem) === index)) {
+            if (!props.state.fields.options[props.state.fields.type].map(option => option[0]).every((elem, index, array) => array.indexOf(elem) === index)) {
                 props.setAlert({ message: "Options Shouldn't Be Repeated", type: 'warning' })
                 return
             }
@@ -43,7 +43,7 @@ function Options(props) {
 
 
 
-    let options = [...props.state.options[props.state.fields['type']]]
+    let options = [...props.state.fields.options[props.state.fields['type']]]
 
     let optionLists = options.map((option, index) =>
         <div className="input-group mb-3" key={index + 1}>
@@ -72,10 +72,10 @@ function Options(props) {
             </div>
 
             <div className="my-3 d-flex justify-content-between align-items-center">
-                <h4>{props.state.type === 'tf' ? 'Please Proceed To The Next Page...' : 'Please Enter The Options:'}</h4>
+                <h4>{props.state.fields.type === 'tf' ? 'Please Proceed To The Next Page...' : 'Please Enter The Options:'}</h4>
                 <button 
                     onClick={() => addOption()} 
-                    className={props.state.type === 'tf' ? 'd-none' : 'btn btn-sm btn-primary d-block ml-auto'}>
+                    className={props.state.fields.type === 'tf' ? 'd-none' : 'btn btn-sm btn-primary d-block ml-auto'}>
                         Add Options</button>
             </div>
 

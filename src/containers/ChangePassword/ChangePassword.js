@@ -7,7 +7,18 @@ import FormClass from '../../utils/FormClass'
 class ChangePassword extends FormClass {
 
     changePassword = () => {
-        
+        let body = new FormData();
+        body.set('username', this.state.fields['userName']);
+        body.set('password', this.state.fields['password']);
+        body.set('grant_type', 'password');
+
+        const header = {
+            headers: {
+                'Content-type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Basic ' + btoa("gatexui:secret")
+            }
+        }
+        this.setState({isLoading:true})
     }
 
     submitHandler = () => {
@@ -28,7 +39,7 @@ class ChangePassword extends FormClass {
                 <div className="row">
                     <Breadcrumb elements={[
                         { url: '/', level: 'Home' },
-                        { url: '#', level: 'Password Reset' }
+                        { url: '#', level: 'Password Change' }
                     ]} />
                 </div>   
                 <div className="mt-5">
@@ -37,7 +48,7 @@ class ChangePassword extends FormClass {
                     <div className="p-3 mt-4 border mx-auto col-4">
                         <div className="form-group">
                             <label>Current Password :</label>
-                            <input className={this.getClassName('default')} name="currentPassword" placeholder="Enter Current Password"
+                            <input className={this.getClassName('currentPassword')} name="currentPassword" placeholder="Enter Current Password"
                                 onChange={(event) => this.updateFieldState(event)}
                                 onFocus={(event) => this.setCssAsDefault(event)} />
                         </div>
@@ -56,7 +67,7 @@ class ChangePassword extends FormClass {
                             <div className="invalid-feedback">Password Should Match As Typed Earlier.</div>
 
                         </div>
-                        <button onClick={this.submitHandler} className="btn mt-4 btn-outline-primary">Submit</button>
+                        <button onClick={this.submitHandler} className="btn mt-4 d-block mx-auto btn-outline-primary">Submit</button>
                     </div>
                 </div>
             </div>

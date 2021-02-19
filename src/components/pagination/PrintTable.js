@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
 import { Eye, Pen, Trash } from 'react-bootstrap-icons';
-import ViewQuestion from '../../containers/ViewQuestion/ViewQuestion';
-import DecisionModal from '../Modal/DecisionModal';
-import DisplayModal from '../Modal/DisplayModal';
 
 const PrintTable = (props) => {
 
@@ -52,23 +49,6 @@ const PrintTable = (props) => {
                             />
                         : null}
                 </div>
-                {
-                    option.view ? 
-                    <DisplayModal id={index}>
-                        <ViewQuestion state={body[index]} />
-                    </DisplayModal> 
-                    :null
-                }
-                
-                {
-                    option.delete ? 
-                    <DecisionModal confirmActionHandler={() => option.delete(index)} id={index}>
-                        <p className='font-weight-bold'>Are You Sure You Want To Delete The Question ?</p> 
-                        <p className='border p-3'>{body[index].text}</p>
-                    </DecisionModal> 
-                    :null
-                }
-
             </div>
         </div>)
     }

@@ -19,14 +19,14 @@ function GeneralField(props) {
    function fetchData(lang) {
     if (lang) {
         props.updateStateField('isLoading', true)
-        axios.get(webUtil.URL + '/gatexapi/tags/' + lang.value)
+        axios.get(webUtil.getApiUrl() + '/tags/' + lang.value)
             .then(response => {
                 props.updateStateField('tagOptions', response.data.tagEntries)
             }).catch(error => {
                 webUtil.handleError(error, props);
             })
 
-            axios.get(webUtil.URL + '/gatexapi/codeTemplate/' + lang.value)
+            axios.get(webUtil.getApiUrl + '/codeTemplate/' + lang.value)
             .then(response => {
                 props.updateFromField('answerTemplate', response.data.answer)
                 props.updateFromField('unittestTemplate', response.data.unittest)
