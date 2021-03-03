@@ -22,7 +22,6 @@ class ListMcq extends Component {
         isLoading:true,
         isFiltered:false,
         displayModalContent:null,
-        decisionModalContent:null,
         displayModalIsOpen:false,
         decisionModalIsOpen:false,
         deletingIndex:null
@@ -105,7 +104,7 @@ class ListMcq extends Component {
         .then(()=>{
                 this.props.setAlert({type:'success',message:'Succesfully deleted'})
                 this.RECORDS.splice(this.props.startPageIndex+id,1);
-                this.props.initPagination(this.RECORDS)
+                this.initilizedPagination(this.RECORDS)
                 this.setState({deletingIndex:null})
             })
             .catch(error => {
@@ -165,9 +164,7 @@ class ListMcq extends Component {
                     confirmActionHandler={this.deleteHandler}
                     modalIsOpen={!!this.state.decisionModalIsOpen} 
                     title={'Confirmation Window'} 
-                    hideModal={this.hideDecisionModal}>
-                    {this.state.decisionModalContent ? <ViewQuestion state={this.state.decisionModalContent} /> : null}
-                </DecisionModal>
+                    hideModal={this.hideDecisionModal} />
 
                 <DisplayModal 
                     modalIsOpen={!!this.state.displayModalIsOpen} 

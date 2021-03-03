@@ -21,16 +21,8 @@ const PrintTable = (props) => {
 
     function printBody(body, option) {
         return body.map((row, index) =>
-            props.loading === index ?
-                <div
-                    key={index}
-                    style={{ width: '5rem', height: '5rem' }}
-                    className="spinner-border d-block my-4 mx-auto">
-                </div>
-
-                :
                 <div key={index} className="border-light border-bottom" >
-                    <div className={"p-2 mb-1 d-flex " + rowBg[index]}
+                    <div className={"p-1 mb-1 d-flex " + rowBg[index]}
                         onMouseOver={() => { setBgLight(index) }}
                         onMouseOut={() => { setRowBg([]) }}>
                         {option.select ? 
@@ -51,21 +43,21 @@ const PrintTable = (props) => {
                             {option.view
                                 ? <Eye
                                     style={{ fontSize: '1.3rem', marginLeft: '15px', cursor: 'pointer' }}
-                                    className='text-secondary align-self-center'
+                                    className='text-primary align-self-center'
                                     onClick={() => option.view(index)} />
                                 : null}
 
                             {option.edit
                                 ? <Pen
                                     style={{ fontSize: '1.3rem', marginLeft: '15px', cursor: 'pointer' }}
-                                    className='text-secondary align-self-center'
+                                    className='text-primary align-self-center'
                                     onClick={() => option.edit(index)} />
                                 : null}
 
                             {option.delete
                                 ? <Trash
                                     style={{ fontSize: '1.3rem', marginLeft: '15px', cursor: 'pointer' }}
-                                    className='text-secondary align-self-center'
+                                    className='text-primary align-self-center'
                                     onClick={() => option.delete(index)}
                                 />
                                 : null}
@@ -74,11 +66,11 @@ const PrintTable = (props) => {
                                 !props.selected.map(ques=> ques.id).includes(props.tableBody[index]['id']) 
                                 ? <PlusCircle
                                     style={{ fontSize: '1.3rem', marginLeft: '15px', cursor: 'pointer' }}
-                                    className='text-secondary align-self-center'
+                                    className='text-primary align-self-center'
                                     onClick={() => option.select(props.tableBody[index])}/>
                                 : <DashCircle 
                                         style={{ fontSize: '1.3rem', marginLeft: '15px', cursor: 'pointer' }}
-                                        className='text-secondary align-self-center' 
+                                        className='text-primary align-self-center' 
                                         onClick={() => option.select(props.tableBody[index])} /> : null}
                         </div>
                     </div>

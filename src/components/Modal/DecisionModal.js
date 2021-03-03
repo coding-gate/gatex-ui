@@ -19,7 +19,6 @@ export default function DecisionModal(props) {
                         <XSquare className={classes.closeBtn} onClick={props.hideModal} />
                     </div>
                     <div className='bg-white'>
-                        {props.children}
                     </div>
                     <div className='bg-light text-center p-3'>
                         {props.confirmationMessage}
