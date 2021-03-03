@@ -9,9 +9,6 @@ import ErrorPage from './components/error/ErrorPage';
 import Home from './containers/home/HomePage';
 import Login from './containers/user/Login';
 import Register from './containers/user/Register';
-import contactUs from './containers/contact/ContactUs';
-import VeiwContacts from './containers/contact/ViewContacts';
-import aboutUs from './containers/about/AboutUs';
 import AddMCQ from './containers/mcq/AddMCQ'
 import ForgetPassword from './containers/ForgetPassword/ForgetPassword';
 import mcqList from './containers/listMCQ/ListMcq';
@@ -27,9 +24,6 @@ function App() {
                       <Route path="/" exact component={Home}/>               
                       <Route path="/login" component={Login}/> 
                       <Route path="/register" component={Register}/>      
-                      <Route path="/contactUs" component={contactUs}/>   
-                      <Route path="/viewContacts" component={VeiwContacts}/>
-                      <Route path="/aboutUs" component={aboutUs}/>
                       <Route path="/addMcq" component={AddMCQ}/>
                       <Route path="/mcqList" component={mcqList}/>
                       <Route path="/searchMcq" component={searchMcq}/>

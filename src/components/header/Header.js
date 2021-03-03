@@ -23,19 +23,9 @@ const Header = () => {
                         </button>
                         <div className="collapse navbar-collapse " id="navbarSupportedContent">
                             <Link className="navbar-brand" to="/">&nbsp;Gate<span style={{ color: "green" }}><b>X</b></span></Link>
-                            <ul className="navbar-nav ml-auto">
+                            <ul className="navbar-nav ml-auto">                               
                                
                                
-                                {roles.includes("ADMIN")
-                                    ? <li className="nav-item dropdown">
-                                        <Link className="nav-link dropdown-toggle" to="#" id="navbardrop" data-toggle="dropdown">
-                                            admin
-                                        </Link>
-                                        <div className="dropdown-menu ">
-                                            <Link className="dropdown-item" to="/viewContacts">View Contacts</Link>
-                                        </div>
-                                    </li>
-                                    : null}
                                 {roles.length !== 0
                                     ?<li className="nav-item dropdown">
                                             <Link className="nav-link dropdown-toggle text-primary" to="#" id="navbardrop" data-toggle="dropdown">
@@ -62,18 +52,12 @@ const Header = () => {
                                 
                                 <li className="nav-item dropdown">
                                    <Link className="nav-link dropdown-toggle text-primary" to="#" id="navbardrop" data-toggle="dropdown">
-                                      account
+                                     profile
                                     </Link>
                                     <div className="dropdown-menu ">
                                       <Link to="/register?ac=user" className="dropdown-item text-primary">register</Link>
                                     </div>
                                 </li>
-
-
-                                <li className="nav-item">
-                                    <Link className="nav-link text-primary" to="/aboutUs">about us</Link>
-                                </li>
-
 
                                 <li className="nav-item ">
                                     {roles.length === 0
