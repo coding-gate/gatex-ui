@@ -3,35 +3,39 @@ import React from 'react'
 function Answer(props) {
 
     function answerSelect(index) {
-        let options = {...props.state.options}
-        if (props.state.type === 'mmcq') {
-            options[props.state.type].forEach((option,i) => {
+        let options = {...props.state.fields.options}
+        if (props.state.fields.type === 'mmcq') {
+            options[props.state.fields.type].forEach((option,i) => {
                 if(i===index){
                     option[1] = !option[1]
                 }
             })
         }
         else {
-            options[props.state.type].forEach((option,i) => {
+            options[props.state.fields.type].forEach((option,i) => {
                     option[1] = i===index
             })
         }
         props.updateField('options',options);
     }
 
-    const submit = () => {
+    const proceed = () => {
+        if (!props.state.fields.options[props.state.fields.type].some(option => option[1] === true)) {
+            props.setAlert({ message: "Please Select At Least One Answer", type: 'warning' })
+            return
+        }
         props.setAlert(null)
         props.updateField("step", 5)
     }
 
 
 
-    let options = [...props.state.options[props.state.type]]
+    let options = [...props.state.fields.options[props.state.fields.type]]
     let body = options.map((option, index) => <div key={index} className="input-group mb-3">
         <div className="input-group-prepend">
             <div className="input-group-text">
                 <input
-                    type={props.state.type === 'mmcq' ? 'checkbox' : 'radio'}
+                    type={props.state.fields.type === 'mmcq' ? 'checkbox' : 'radio'}
                     name="answer"
                     value={option[0]}
                     id={index}
@@ -44,7 +48,10 @@ function Answer(props) {
     </div>)
     return (
         <div>
-            <h3 className='my-3 text-center lead'>{props.state.text}</h3>
+            <div className="row">
+            <h4 className="col text-center lead" dangerouslySetInnerHTML={{__html:props.state.fields.text}} />
+
+            </div>
             <h4 className='my-3 text-left'>Mark The Correct Answer(s):</h4>
             <div className='text-left list-unstyled' >
                 {body}
@@ -59,7 +66,7 @@ function Answer(props) {
                     Back
                 </button>
                 <button className="btn btn-sm btn-primary"
-                    onClick={submit}>
+                    onClick={proceed}>
                     Next
                 </button>
             </div>

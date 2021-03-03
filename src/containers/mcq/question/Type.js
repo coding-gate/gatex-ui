@@ -2,24 +2,14 @@ import React from 'react'
 
 function Type(props) {
 
-    const stepAhead = () => {
-        if (!props.state.type) {
-            props.setAlert({ message: 'Please Choose a Type ', type: 'warning' })
-            return
-        }
-        props.setAlert(null)
-        
-        props.updateField("step", 3)
-    }
-
-
+    const errorMessages={type:'Please select a type'};
     let types = ['mmcq', 'mcq', 'tf']
     let list = types.map((type, index) => <div key={index} className="input-group mb-3">
                                                 <div className="input-group-prepend">
                                                     <div className="input-group-text">
                                                         <input
                                                             type="radio"
-                                                            checked={props.state.type === type}
+                                                            checked={props.state.fields['type'] === type}
                                                             value={type}
                                                             id={index}
                                                             onChange={(e) => props.updateField("type", e.target.value)}
@@ -33,7 +23,7 @@ function Type(props) {
     return (
         <div className='my-3'>
             <div className="row">
-                <h4 className="col text-center lead">{props.state.text}</h4>
+                <h4 className="col text-center lead" dangerouslySetInnerHTML={{__html:props.state.fields.text}} />
             </div>
 
             <div className="row">
@@ -51,7 +41,7 @@ function Type(props) {
                     Back
                 </button>
                 <button className="btn btn-sm btn-primary"
-                    onClick={stepAhead}>
+                    onClick={() => props.handleNext(errorMessages,3)}>
                     Next
                 </button>
             </div>

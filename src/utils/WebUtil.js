@@ -1,8 +1,13 @@
+let url = window.location.protocol + '//' + window.location.hostname + ":" + window.location.port
 
-function getUrl() {
-    let url = window.location.protocol + '//' + window.location.hostname + ":" + window.location.port
-    return url;
+export const getApiUrl = function() {
+    return url + '/gatexapi';
 }
+export const getLangUrl = function() {
+    return url + '/gatexlang';
+}
+
+
 
 export const parseJwt = function (token) {
     var base64Url = token.split('.')[1];
@@ -51,4 +56,4 @@ export const handleError = function (error, props) {
 }
 
 
-export const URL = getUrl();
+export const URL = url;
