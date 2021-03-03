@@ -1,23 +1,37 @@
 import React, { Component } from 'react';
-
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb';
 import PrintTable from '../../components/pagination/PrintTable';
-import withPagination from '../../hoc/withPagination';
-import withAlert from '../../hoc/withAlert'
 import AlertMessage from '../../components/alert/AlertMessage';
+import DisplayModal from '../../components/Modal/DisplayModal'
+import ViewQuestion from '../ViewQuestion/ViewQuestion'
 import { Link } from 'react-router-dom';
+import { Plus, Search } from 'react-bootstrap-icons'
 
 import axios from '../../utils/AxiosWithToken'
+
+import withAlert from '../../hoc/withAlert'
+import withPagination from '../../hoc/withPagination';
+
 import * as webUtil from '../../utils/WebUtil'
 import * as QueryString from "query-string"
+import DecisionModal from '../../components/Modal/DecisionModal';
 
 class ListMcq extends Component {
 
+    state={
+        isLoading:true,
+        isFiltered:false,
+        displayModalContent:null,
+        displayModalIsOpen:false,
+        decisionModalIsOpen:false,
+        deletingIndex:null
+    }
+    
 
     TABLE_HEADER = [{ field: "ID", class: "col-1" },
     { field: "Type", class: "col-1" },
-    { field: "Question", class: "col-8" },
-    { field: " ", class: "col-2" }]
+    { field: "Question", class: "col-7 col-xl-8" },
+    { field: " ", class: "col-3 col-xl-2" }]
 
     RECORDS=[]
 
@@ -28,40 +42,76 @@ class ListMcq extends Component {
 
     componentDidMount() {
 
-       let uriComponent='/gatexapi/mcqQuestions/byUser';
+       let uriComponent='/mcqQuestions/byUser';
 
         const params = QueryString.parse(this.props.location.search)
         if(params.search){
-            uriComponent='/gatexapi/mcqQuestions/search?'+params.search
+            uriComponent='/mcqQuestions/search?'+params.search
+            this.setState({isFiltered:true})
         }
+        this.fetchUnfilteredData(uriComponent)
 
-        axios.get(webUtil.URL+uriComponent)
+        
+    }
+
+    fetchUnfilteredData(uriComponent){
+        axios.get(webUtil.getApiUrl()+uriComponent)
         .then(response=> {
-                this.RECORDS=response.data;
-                this.initilizedPagination(this.RECORDS)               
+                this.RECORDS = response.data
+                this.initilizedPagination(this.RECORDS)
+                this.setState({isLoading:false})           
              }
         )
+        .catch(error => {
+            webUtil.handleError(error, this.props);
+        })
+    }
 
+    hideDecisionModal = () => {
+        this.setState({decisionModalIsOpen:false}, () => {
+            setTimeout(() => {
+                this.setState({decisionModalContent:null,deletingIndex:null} )
+            },300)
+        })
+    }
+
+    hideDisplayModal = () => {
+        this.setState({displayModalIsOpen:false}, () => {
+            setTimeout(() => {
+                this.setState({displayModalContent:null} )
+            },300)
+        })
     }
 
     viewHandler = (id) => {
-        alert("View " + this.RECORDS[this.props.startPageIndex+id]['id']);
+        this.setState({displayModalIsOpen:true, displayModalContent:this.RECORDS[this.props.startPageIndex+id]})
     }
 
     editHandler = (id) => {
-        this.props.history.push('/addMcq?questionId='+this.RECORDS[this.props.startPageIndex+id]['id']);
+        this.props.history.push('/addMcq?questionId='+this.RECORDS[this.props.startPageIndex + id]['id']);
+    }
+
+    showDecisionModal = (id) => {
+        this.setState({decisionModalIsOpen:true,decisionModalContent:this.RECORDS[this.props.startPageIndex+id]},() => {
+            setTimeout(() => {
+                this.setState({deletingIndex:id})
+            },300)
+        })
     }
 
     deleteHandler = (id) => {
-        var response = window.confirm("Would you like to delete!");
-        if (response === true) {
-            axios.delete(webUtil.URL+'/gatexapi/mcqQuestions/'+this.RECORDS[this.props.startPageIndex+id]['id'])
-            .then(()=>{
+        axios.delete(webUtil.getApiUrl() + '/mcqQuestions/' +this.RECORDS[this.props.startPageIndex+id]['id'])
+        .then(()=>{
                 this.props.setAlert({type:'success',message:'Succesfully deleted'})
-                 this.RECORDS.splice(this.props.startPageIndex+id,1);
-                 this.initilizedPagination(this.RECORDS)  
-                })
-        }              
+                this.RECORDS.splice(this.props.startPageIndex+id,1);
+                this.initilizedPagination(this.RECORDS)
+                this.setState({deletingIndex:null})
+            })
+            .catch(error => {
+                webUtil.handleError(error, this.props);
+                this.setState({deletingIndex:null})
+
+            })         
     }
 
 
@@ -76,17 +126,29 @@ class ListMcq extends Component {
             </div>
            
             <div className="row mb-2">
-                <div className="col col-md-10 offset-1" >
+                <div className="col col-md-8 mx-auto" >
                     <div className="d-flex justify-content-between">
-                    <Link to="/searchMcq" className="btn btn-sm btn-light btn-outline-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search mr-1" viewBox="0 0 16 16">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                    </svg>search</Link>
+                    {this.state.isFiltered ? <span>
+                    <Link to="/searchMcq" className="btn btn-sm mr-3 btn-light btn-outline-primary">
+                        <Search /> Filters
+                    </Link>
+                    <button 
+                        onClick={() => {this.setState({isLoading:true,isFiltered:false},
+                                                    () => {   
+                                                            this.props.history.push('/mcqList');
+                                                            this.fetchUnfilteredData('/mcqQuestions/byUser')
+                                                           })
+                                        }
+                                } 
+                        className="btn btn-sm btn-light btn-outline-primary">
+                        Clear Filters
+                    </button></span> : <Link to="/searchMcq" className="btn btn-sm btn-light btn-outline-primary">
+                        <Search /> Filters
+                    </Link> }
+
                     <Link to="/addMcq" className="btn btn-sm btn-light btn-outline-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-plus" viewBox="0 0 16 16">
-                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                     </svg>
-                        add new</Link>
+                        <Plus style={{fontSize:'1.3rem'}} /> Add New
+                    </Link>
                     </div>
                 </div>
             </div>
@@ -95,8 +157,37 @@ class ListMcq extends Component {
                     <AlertMessage alert={this.props.alert} reSetAlert={this.props.setAlert} />
                 </div>
             </div>
-            <PrintTable tableHeader={this.TABLE_HEADER} tableBody={this.props.tableBody}
-                option={{ view: this.viewHandler, edit: this.editHandler, delete: this.deleteHandler }} />
+            <div>
+                <DecisionModal 
+                    id={this.state.deletingIndex}
+                    confirmationMessage={'Are You Sure You Want To Delete This Question ?'}
+                    confirmActionHandler={this.deleteHandler}
+                    modalIsOpen={!!this.state.decisionModalIsOpen} 
+                    title={'Confirmation Window'} 
+                    hideModal={this.hideDecisionModal} />
+
+                <DisplayModal 
+                    modalIsOpen={!!this.state.displayModalIsOpen} 
+                    title={'Question Details'} 
+                    hideModal={this.hideDisplayModal}>
+                    {this.state.displayModalContent ? <ViewQuestion state={this.state.displayModalContent} /> : null}
+                </DisplayModal>
+            </div>
+            {this.state.isLoading ? 
+            <div 
+                style={{width:'5rem',height:'5rem'}} 
+                className="spinner-border d-block my-4 mx-auto">
+            </div>
+        :
+                <div className='col-md-8 px-0 mx-auto'>
+
+            <PrintTable 
+                loading={this.state.deletingIndex}
+                tableHeader={this.TABLE_HEADER} 
+                tableBody={this.props.tableBody}
+                option={{ view: this.viewHandler, edit: this.editHandler, delete: this.showDecisionModal }} />
+                </div>
+                }
         </div>)
     }
 

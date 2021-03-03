@@ -15,19 +15,19 @@ class SearchMcq extends Component {
         fields: {}
       }
 
-      componentDidMount() {
-          console.log(this.props.mcqSerchParam)
-          this.setState({fields:this.props.mcqSerchParam})
-      }
+    componentDidMount() {
+        //console.log(this.props.mcqSerchParam)
+        this.setState({fields:this.props.mcqSerchParam})
+    }
 
-      clear = ()=>{
-        let fields={...this.state.fields};
-        for (var key in fields) {
-            fields[key]=null;   
-        }
-          this.setState({fields});
-      }
-    
+    clear = ()=>{
+    let fields={...this.state.fields};
+    for (var key in fields) {
+        fields[key]=null;   
+    }
+        this.setState({fields});
+    }
+
 
     updateField = (name, value)=>{
         let fields={...this.state.fields};
@@ -64,6 +64,7 @@ class SearchMcq extends Component {
                 <div className="row">
                     <Breadcrumb elements={[
                         { url: '/', level: 'Home' },
+                        { url: '/mcqList', level: 'List All' },
                         { url: '#', level: 'Search mcq' }
                     ]} />
                 </div>   
@@ -72,6 +73,7 @@ class SearchMcq extends Component {
                     <div className="col-3">
                         <h6>Language:</h6>
                         <Select
+                            isClearable
                             placeholder='Choose Language'
                             value={this.state.fields['lang']}
                             onChange={(val) => this.updateField("lang", val)}
@@ -81,6 +83,7 @@ class SearchMcq extends Component {
                     <div className="col">
                         <h6>Estimated time to solve:</h6>
                         <Select
+                            isClearable
                             placeholder='Choose time'
                             value={this.state.fields['time']}
                             onChange={(val) => this.updateField("time", val)}
@@ -90,6 +93,7 @@ class SearchMcq extends Component {
                     <div className="col">
                         <h6>Complexity:</h6>
                         <Select
+                            isClearable
                             placeholder='Choose Complexity'
                             value={this.state.fields['complexity']}
                             onChange={(val) => this.updateField('complexity', val)}
@@ -102,7 +106,7 @@ class SearchMcq extends Component {
                     <div className="col-9">
                         <h6>Add tags</h6>
                         <CreatableSelect isMulti
-                            placeholder='Hashtagss...'
+                            placeholder='Hashtags...'
                             value={this.state.fields['tags']}
                             onChange={(val) => this.updateField("tags", val)}
                             options={Settings.tagsOptions} />
@@ -110,6 +114,7 @@ class SearchMcq extends Component {
                     <div className="col-3">
                         <h6>Type</h6>
                         <Select 
+                            isClearable
                             placeholder='Choose Type'
                             value={this.state.fields['type']}
                             onChange={(val) => this.updateField("type", val)}
@@ -119,7 +124,7 @@ class SearchMcq extends Component {
                 <div className="row mt-2">
                     <div className="col text-right">
                         <button className="btn btn-sm btn-outline-primary mx-2" onClick={this.clear}> Clear</button>
-                        <button className="btn btn-sm btn-primary mx-2" onClick={this.makeURL}> Serach</button>
+                        <button className="btn btn-sm btn-primary mx-2" onClick={this.makeURL}> Search</button>
                     </div>
                 </div>
              </div>
