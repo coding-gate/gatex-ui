@@ -9,12 +9,13 @@ import * as Settings from '../../../utils/SiteSettings';
 
 function Text(props) {
 
-    const errorMessages={lang:'Please select language',
-        time:'Please select time',
-        complexity:'Please select complexity',
-        tags:'Please select tags',
-        text:'Please enter question statement'
-        };
+    const errorMessages = {
+        lang: 'Please select language',
+        time: 'Please select time',
+        complexity: 'Please select complexity',
+        tags: 'Please select tags',
+        text: 'Please enter question statement'
+    };
 
     return (
         <div className='mt-3'>
@@ -62,17 +63,20 @@ function Text(props) {
             <div className="row mt-2">
                 <div className="col">
                     <h5>Question Statement:</h5>
-                    <ReactQuill 
+                    <ReactQuill
+                        style={{ height: '150px' }}
                         onChange={(val) => props.updateField("text", val)}
-                        value={props.state.fields['text']?props.state.fields['text']:null} 
-                        />
+                        value={props.state.fields['text'] ? props.state.fields['text'] : null}/>
                 </div>
             </div>
-            <div className="mt-3 float-right">
-                <button className="btn btn-sm btn-primary"
-                    onClick={() => props.handleNext(errorMessages,2)}>
-                    Next
+            
+            <div className="mt-5 float-right row">
+                <div className="col">
+                    <button className="btn btn-sm btn-primary"
+                        onClick={() => props.handleNext(errorMessages, 2)}>
+                        Next
                 </button>
+                </div>
             </div>
         </div>
 
