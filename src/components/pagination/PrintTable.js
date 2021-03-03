@@ -20,7 +20,7 @@ const PrintTable = (props) => {
 
 
     function printBody(body, option) {
-        return body.map((e, index) => { return [index + 1, e['type'], e['text']] }).map((row, index) =>
+        return body.map((row, index) =>
             props.loading === index ?
                 <div
                     key={index}
@@ -52,14 +52,14 @@ const PrintTable = (props) => {
                                 ? <Eye
                                     style={{ fontSize: '1.3rem', marginLeft: '15px', cursor: 'pointer' }}
                                     className='text-secondary align-self-center'
-                                    onClick={() => option.view(props.tableBody[index])} />
+                                    onClick={() => option.view(index)} />
                                 : null}
 
                             {option.edit
                                 ? <Pen
                                     style={{ fontSize: '1.3rem', marginLeft: '15px', cursor: 'pointer' }}
                                     className='text-secondary align-self-center'
-                                    onClick={() => option.edit(props.tableBody[index])} />
+                                    onClick={() => option.edit(index)} />
                                 : null}
 
                             {option.delete

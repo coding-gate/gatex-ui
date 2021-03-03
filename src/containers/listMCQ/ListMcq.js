@@ -36,6 +36,11 @@ class ListMcq extends Component {
 
     RECORDS=[]
 
+    initilizedPagination=(records)=>{
+        let allRecords=records.map((e,index)=>{ return [index+1,e['type'],e['text']]})            
+        this.props.initPagination(allRecords); 
+    }
+
     componentDidMount() {
 
        let uriComponent='/mcqQuestions/byUser';
@@ -53,8 +58,8 @@ class ListMcq extends Component {
     fetchUnfilteredData(uriComponent){
         axios.get(webUtil.getApiUrl()+uriComponent)
         .then(response=> {
-                this.RECORDS=Object.values(response.data);
-                this.props.initPagination(this.RECORDS)
+                this.RECORDS = response.data
+                this.initilizedPagination(this.RECORDS)
                 this.setState({isLoading:false})           
              }
         )
@@ -79,12 +84,12 @@ class ListMcq extends Component {
         })
     }
 
-    viewHandler = (data) => {
-        this.setState({displayModalIsOpen:true, displayModalContent:data})
+    viewHandler = (id) => {
+        this.setState({displayModalIsOpen:true, displayModalContent:this.RECORDS[this.props.startPageIndex+id]})
     }
 
-    editHandler = (data) => {
-        this.props.history.push('/addMcq?questionId='+data.id);
+    editHandler = (id) => {
+        this.props.history.push('/addMcq?questionId='+this.RECORDS[this.props.startPageIndex + id]['id']);
     }
 
     showDecisionModal = (id) => {
