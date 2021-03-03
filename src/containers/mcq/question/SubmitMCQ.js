@@ -8,15 +8,9 @@ import * as webUtil from '../../../utils/WebUtil'
 export default function SubmitMCQ(props) {
 
     const submitHandler = () => {
-        let question = {
-            text:props.state.fields.text,
-            type:props.state.fields.type,
-            tags:props.state.fields.tags,
-            time:props.state.fields.time,
-            lang:props.state.fields.lang,
-            complexity:props.state.fields.complexity,
-            options:props.state.fields.options[props.state.fields.type],
-        }
+
+        let question = {...props.state.fields}
+        question.options = question.options[question.type]
 
         if(props.state.isEditing){
             question.id = props.state.id
@@ -25,11 +19,8 @@ export default function SubmitMCQ(props) {
 
         props.updateField('isLoading',true)
         axios.post(webUtil.getApiUrl()+'/mcqQuestions',question)
-            .then(res => console.log(res))
-            .then(() => props.setAlert({type:'success',message:'Succesfully Saved'}))
-            .then(() => {
-                props.initializedState();
-            })
+            .then(() => {props.initializedState(); props.setAlert({type:'success',message:'Succesfully Saved'})})
+            
             .catch((err) => {
                 props.setAlert({type:'danger',message:'Something Went Wrong, Try Again...'})
                 props.updateField('isLoading',false)

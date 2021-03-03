@@ -45,7 +45,12 @@ class ListMcq extends Component {
             uriComponent='/mcqQuestions/search?'+params.search
             this.setState({isFiltered:true})
         }
+        this.fetchUnfilteredData(uriComponent)
 
+        
+    }
+
+    fetchUnfilteredData(uriComponent){
         axios.get(webUtil.getApiUrl()+uriComponent)
         .then(response=> {
                 this.RECORDS=Object.values(response.data);
@@ -56,27 +61,6 @@ class ListMcq extends Component {
         .catch(error => {
             webUtil.handleError(error, this.props);
         })
-    }
-
-    componentDidUpdate(prevProps) {
-        const params = QueryString.parse(this.props.location.search)
-        const oldParams = QueryString.parse(prevProps.location.search)
-        if(params.search!==oldParams.search && !params.search){
-            this.setState({isLoading:true,isFiltered:false},() => {
-
-                axios.get(webUtil.getApiUrl()+'/mcqQuestions/byUser')
-                .then(response=> {
-                    this.RECORDS=Object.values(response.data);
-                    this.props.initPagination(this.RECORDS)
-                    this.setState({isLoading:false})           
-                }
-                )
-                .catch(error => {
-                    webUtil.handleError(error, this.props);
-                })
-            })
-        }
-        
     }
 
     hideDecisionModal = () => {
@@ -96,7 +80,7 @@ class ListMcq extends Component {
     }
 
     viewHandler = (data) => {
-        this.setState({displayModalIsOpen:true,displayModalContent:data})
+        this.setState({displayModalIsOpen:true, displayModalContent:data})
     }
 
     editHandler = (data) => {
@@ -144,9 +128,17 @@ class ListMcq extends Component {
                     <Link to="/searchMcq" className="btn btn-sm mr-3 btn-light btn-outline-primary">
                         <Search /> Filters
                     </Link>
-                    <Link to="/mcqList" className="btn btn-sm btn-light btn-outline-primary">
-                        Show All
-                    </Link></span> : <Link to="/searchMcq" className="btn btn-sm btn-light btn-outline-primary">
+                    <button 
+                        onClick={() => {this.setState({isLoading:true,isFiltered:false},
+                                                    () => {   
+                                                            this.props.history.push('/mcqList');
+                                                            this.fetchUnfilteredData('/mcqQuestions/byUser')
+                                                           })
+                                        }
+                                } 
+                        className="btn btn-sm btn-light btn-outline-primary">
+                        Clear Filters
+                    </button></span> : <Link to="/searchMcq" className="btn btn-sm btn-light btn-outline-primary">
                         <Search /> Filters
                     </Link> }
 
