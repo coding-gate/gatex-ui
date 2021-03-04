@@ -3,7 +3,7 @@ import Breadcrumb from '../../components/breadcrumb/Breadcrumb';
 import PrintTable from '../../components/pagination/PrintTable';
 import AlertMessage from '../../components/alert/AlertMessage';
 import DisplayModal from '../../components/modal/DisplayModal'
-import ViewQuestion from '../viewquestion/ViewQuestion'
+import ViewQuestion from '../viewQuestion/ViewQuestion'
 import { Link } from 'react-router-dom';
 import { Plus, Search } from 'react-bootstrap-icons'
 
