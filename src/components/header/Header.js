@@ -10,7 +10,6 @@ const Header = () => {
     const roles = useSelector(state => state.oauth.userRole)
     const username = useSelector(state => state.oauth.userName)
     const dispatch = useDispatch()
-    console.log(username);
     return (
         <div>
             <div className="row">
