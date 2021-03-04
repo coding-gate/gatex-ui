@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb';
 import PrintTable from '../../components/pagination/PrintTable';
 import AlertMessage from '../../components/alert/AlertMessage';
-import DisplayModal from '../../components/Modal/DisplayModal'
-import ViewQuestion from '../ViewQuestion/ViewQuestion'
+import DisplayModal from '../../components/modal/DisplayModal'
+import ViewQuestion from '../viewquestion/ViewQuestion'
 import { Link } from 'react-router-dom';
 import { Plus, Search } from 'react-bootstrap-icons'
 
@@ -14,7 +14,7 @@ import withPagination from '../../hoc/withPagination';
 
 import * as webUtil from '../../utils/WebUtil'
 import * as QueryString from "query-string"
-import DecisionModal from '../../components/Modal/DecisionModal';
+import DecisionModal from '../../components/modal/DecisionModal';
 
 class ListMcq extends Component {
 
@@ -68,11 +68,7 @@ class ListMcq extends Component {
     }
 
     hideDecisionModal = () => {
-        this.setState({decisionModalIsOpen:false}, () => {
-            setTimeout(() => {
-                this.setState({decisionModalContent:null,deletingIndex:null} )
-            },300)
-        })
+        this.setState({decisionModalIsOpen:false,decisionModalContent:null,deletingIndex:null})
     }
 
     hideDisplayModal = () => {
@@ -182,7 +178,6 @@ class ListMcq extends Component {
                 <div className='col-md-8 px-0 mx-auto'>
 
             <PrintTable 
-                loading={this.state.deletingIndex}
                 tableHeader={this.TABLE_HEADER} 
                 tableBody={this.props.tableBody}
                 option={{ view: this.viewHandler, edit: this.editHandler, delete: this.showDecisionModal }} />

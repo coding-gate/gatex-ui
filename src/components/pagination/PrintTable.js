@@ -22,7 +22,7 @@ const PrintTable = (props) => {
     function printBody(body, option) {
         return body.map((row, index) =>
                 <div key={index} className="border-light border-bottom" >
-                    <div className={"p-1 mb-1 d-flex " + rowBg[index]}
+                    <div className={"p-1 mb-0 d-flex " + rowBg[index]}
                         onMouseOver={() => { setBgLight(index) }}
                         onMouseOut={() => { setRowBg([]) }}>
                         {option.select ? 

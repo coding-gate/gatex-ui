@@ -1,16 +1,16 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
+import { PersonFill } from 'react-bootstrap-icons'
 import * as actionType from '../../store/actions'
-import { PersonFill } from 'react-bootstrap-icons';
 
 
 const Header = () => {
     const history = useHistory();
     const roles = useSelector(state => state.oauth.userRole)
-    const userName = useSelector(state => state.oauth.userName)
+    const username = useSelector(state => state.oauth.userName)
     const dispatch = useDispatch()
-
+    console.log(username);
     return (
         <div>
             <div className="row">
@@ -21,19 +21,9 @@ const Header = () => {
                         </button>
                         <div className="collapse navbar-collapse " id="navbarSupportedContent">
                             <Link className="navbar-brand" to="/">&nbsp;Gate<span style={{ color: "green" }}><b>X</b></span></Link>
-                            <ul className="navbar-nav ml-auto">
+                            <ul className="navbar-nav ml-auto">                               
                                
                                
-                                {roles.includes("ADMIN")
-                                    ? <li className="nav-item dropdown">
-                                        <Link className="nav-link dropdown-toggle" to="#" id="navbardrop" data-toggle="dropdown">
-                                            admin
-                                        </Link>
-                                        <div className="dropdown-menu ">
-                                            <Link className="dropdown-item" to="/viewContacts">View Contacts</Link>
-                                        </div>
-                                    </li>
-                                    : null}
                                 {roles.length !== 0
                                     ?<li className="nav-item dropdown">
                                             <Link className="nav-link dropdown-toggle text-primary" to="#" id="navbardrop" data-toggle="dropdown">
@@ -51,44 +41,37 @@ const Header = () => {
                                             MCQ
                                         </Link>
                                         <div className="dropdown-menu">
-                                            <Link className="dropdown-item text-primary" to="addMcq">Add new</Link>
-                                            <Link className="dropdown-item text-primary" to="/mcqList">List all</Link>
-                                            <Link className="dropdown-item text-primary" to="/createTest">Create test</Link>
-                                            <Link className="dropdown-item text-primary" to="/exam">Exam</Link>
+                                            <Link className="dropdown-item text-primary" to="/mcqList">questions</Link>
                                         </div>
                                 </li>
                                 :null
                                 }
-
-                                <li className="nav-item">
-                                    <Link className="nav-link text-primary" to="/aboutUs">about us</Link>
-                                </li>
                                
                                 
                                 <li className="nav-item dropdown">
                                    <Link className="nav-link dropdown-toggle text-primary" to="#" id="navbardrop" data-toggle="dropdown">
-                                   <PersonFill /> {userName ? userName : 'account'}
+                                    <PersonFill /> {username ? username : 'profile'}
                                     </Link>
                                     <div className="dropdown-menu ">
-                                      {roles.length===0 ?
-                                        <>
-                                      <Link to="/register?ac=user" className="dropdown-item text-primary">register</Link>
-                                      <Link className="dropdown-item text-primary" to="/login">
-                                             Login
+                                        {username ? <Link to="/changepassword" className="dropdown-item text-primary">change password</Link>
+                                     : <Link to="/register?ac=user" className="dropdown-item text-primary">register</Link>
+                                    }
+                                    </div>
+                                </li>
+
+                                <li className="nav-item ">
+                                    {roles.length === 0
+                                        ? <Link className="nav-link text-primary" to="/login">
+                                             login
                                         </Link>
-                                      </>
-                                      :
-                                      <>
-                                      <Link to="/changePassword" className="dropdown-item text-primary">change password</Link>
-                                         <button type="button" className="dropdown-item text-primary" onClick={() => {
+                                        : <button type="button" className="btn btn-link px-0" onClick={() => {
                                                         history.push("/login")
                                                         dispatch({ type: actionType.REMOVE_JWT_TOKEN })
                                                     }}>
-                                            Logout
-                                        </button>
-                                        </>}
-                                    </div>
+                                             logout
+                                        </button>}
                                 </li>
+
                             </ul>
                         </div>
                     </nav>
