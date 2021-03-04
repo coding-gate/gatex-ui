@@ -73,7 +73,6 @@ class ChangePassword extends FormClass {
                                 onChange={(event) => this.updateFieldState(event)}
                                 onFocus={(event) => this.setCssAsDefault(event)} />
                             <div className="invalid-feedback">Password Should Match As Typed Earlier.</div>
-
                         </div>
                         <button 
                                 className="btn btn-primary d-block mx-auto" 

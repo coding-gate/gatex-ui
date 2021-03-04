@@ -68,7 +68,7 @@ class ListMcq extends Component {
     }
 
     hideDecisionModal = () => {
-        this.setState({decisionModalIsOpen:false,decisionModalContent:null,deletingIndex:null})
+        this.setState({decisionModalIsOpen:false,deletingIndex:null})
     }
 
     hideDisplayModal = () => {
@@ -84,11 +84,7 @@ class ListMcq extends Component {
     }
 
     showDecisionModal = (id) => {
-        this.setState({decisionModalIsOpen:true},() => {
-            setTimeout(() => {
-                this.setState({deletingIndex:id})
-            },300)
-        })
+        this.setState({decisionModalIsOpen:true,deletingIndex:id})
     }
 
     deleteHandler = (id) => {
@@ -154,12 +150,12 @@ class ListMcq extends Component {
                     id={this.state.deletingIndex}
                     confirmationMessage={'Are You Sure You Want To Delete This Question ?'}
                     confirmActionHandler={this.deleteHandler}
-                    modalIsOpen={!!this.state.decisionModalIsOpen} 
+                    modalIsOpen={this.state.decisionModalIsOpen} 
                     title={'Confirmation Window'} 
                     hideModal={this.hideDecisionModal} />
 
                 <DisplayModal 
-                    modalIsOpen={!!this.state.displayModalIsOpen} 
+                    modalIsOpen={this.state.displayModalIsOpen} 
                     title={'Question Details'} 
                     hideModal={this.hideDisplayModal}>
                     {this.state.displayModalContent ? <ViewQuestion state={this.state.displayModalContent} /> : null}

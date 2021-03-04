@@ -10,7 +10,7 @@ import Home from './containers/home/HomePage';
 import Login from './containers/user/Login';
 import Register from './containers/user/Register';
 import AddMCQ from './containers/mcq/AddMCQ'
-import ChangePassword from './containers/ChangePassword/ChangePassword';
+import ChangePassword from './containers/changepassword/ChangePassword';
 import mcqList from './containers/listMCQ/ListMcq';
 import searchMcq from './containers/mcq/SearchMcq'
 import AddCodeQuestion from './containers/code/AddCodeQuestion'
