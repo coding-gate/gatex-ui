@@ -14,6 +14,7 @@ import ChangePassword from './containers/changePassword/ChangePassword';
 import mcqList from './containers/listMCQ/ListMcq';
 import searchMcq from './containers/mcq/SearchMcq'
 import AddCodeQuestion from './containers/code/AddCodeQuestion'
+import CreateTest from './containers/createTest/CreateTest'
 
 function App() {
           return (<div className="container-fluid">
@@ -28,6 +29,7 @@ function App() {
                       <Route path="/mcqList" component={mcqList}/>
                       <Route path="/searchMcq" component={searchMcq}/>
                       <Route path="/addCodeQuestion" component={AddCodeQuestion}/>
+                      <Route path="/createTest" component={CreateTest}/>
                       <Route path="/error" component={ErrorPage}/>
                       <Route path="/ChangePassword" component={ChangePassword}/>
                   </Switch>
