@@ -10,21 +10,7 @@ class ChangePassword extends FormClass {
         ...this.state,
         isLoading:false
     }
-
-    changePassword = () => {
-        let body = new FormData();
-        body.set('username', this.state.fields['userName']);
-        body.set('password', this.state.fields['password']);
-        body.set('grant_type', 'password');
-
-        // const header = {
-        //     headers: {
-        //         'Content-type': 'application/x-www-form-urlencoded',
-        //         'Authorization': 'Basic ' + btoa("gatexui:secret")
-        //     }
-        // }
-        this.setState({isLoading:true})
-    }
+   
 
     submitHandler = () => {
         this.validationCss=[];
@@ -34,7 +20,6 @@ class ChangePassword extends FormClass {
             & this.validateEquality("newPassword", "confirmPassword")
         ) {
             this.clearFieldCss();
-            this.changePassword()
         }else{
            this.applyValidationCss();     
         }  
