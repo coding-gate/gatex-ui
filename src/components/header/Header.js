@@ -2,16 +2,14 @@ import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import * as actionType from '../../store/actions'
+import { PersonFill } from 'react-bootstrap-icons';
 
 
 const Header = () => {
     const history = useHistory();
     const roles = useSelector(state => state.oauth.userRole)
+    const userName = useSelector(state => state.oauth.userName)
     const dispatch = useDispatch()
-
-    const svgText = (<svg width="1em" viewBox="0 0 16 16" className="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path fillRule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-    </svg>)
 
     return (
         <div>
@@ -23,9 +21,19 @@ const Header = () => {
                         </button>
                         <div className="collapse navbar-collapse " id="navbarSupportedContent">
                             <Link className="navbar-brand" to="/">&nbsp;Gate<span style={{ color: "green" }}><b>X</b></span></Link>
-                            <ul className="navbar-nav ml-auto">                               
+                            <ul className="navbar-nav ml-auto">
                                
                                
+                                {roles.includes("ADMIN")
+                                    ? <li className="nav-item dropdown">
+                                        <Link className="nav-link dropdown-toggle" to="#" id="navbardrop" data-toggle="dropdown">
+                                            admin
+                                        </Link>
+                                        <div className="dropdown-menu ">
+                                            <Link className="dropdown-item" to="/viewContacts">View Contacts</Link>
+                                        </div>
+                                    </li>
+                                    : null}
                                 {roles.length !== 0
                                     ?<li className="nav-item dropdown">
                                             <Link className="nav-link dropdown-toggle text-primary" to="#" id="navbardrop" data-toggle="dropdown">
@@ -43,35 +51,44 @@ const Header = () => {
                                             MCQ
                                         </Link>
                                         <div className="dropdown-menu">
-                                            <Link className="dropdown-item text-primary" to="/mcqList">questions</Link>
+                                            <Link className="dropdown-item text-primary" to="addMcq">Add new</Link>
+                                            <Link className="dropdown-item text-primary" to="/mcqList">List all</Link>
+                                            <Link className="dropdown-item text-primary" to="/createTest">Create test</Link>
+                                            <Link className="dropdown-item text-primary" to="/exam">Exam</Link>
                                         </div>
                                 </li>
                                 :null
                                 }
+
+                                <li className="nav-item">
+                                    <Link className="nav-link text-primary" to="/aboutUs">about us</Link>
+                                </li>
                                
                                 
                                 <li className="nav-item dropdown">
                                    <Link className="nav-link dropdown-toggle text-primary" to="#" id="navbardrop" data-toggle="dropdown">
-                                     profile
+                                   <PersonFill /> {userName ? userName : 'account'}
                                     </Link>
                                     <div className="dropdown-menu ">
+                                      {roles.length===0 ?
+                                        <>
                                       <Link to="/register?ac=user" className="dropdown-item text-primary">register</Link>
-                                    </div>
-                                </li>
-
-                                <li className="nav-item ">
-                                    {roles.length === 0
-                                        ? <Link className="nav-link text-primary" to="/login">
-                                            {svgText} login
+                                      <Link className="dropdown-item text-primary" to="/login">
+                                             Login
                                         </Link>
-                                        : <button type="button" className="btn btn-link px-0" onClick={() => {
+                                      </>
+                                      :
+                                      <>
+                                      <Link to="/changePassword" className="dropdown-item text-primary">change password</Link>
+                                         <button type="button" className="dropdown-item text-primary" onClick={() => {
                                                         history.push("/login")
                                                         dispatch({ type: actionType.REMOVE_JWT_TOKEN })
                                                     }}>
-                                            {svgText} logout
-                                        </button>}
+                                            Logout
+                                        </button>
+                                        </>}
+                                    </div>
                                 </li>
-
                             </ul>
                         </div>
                     </nav>
