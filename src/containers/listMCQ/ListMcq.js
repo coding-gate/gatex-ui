@@ -72,11 +72,7 @@ class ListMcq extends Component {
     }
 
     hideDisplayModal = () => {
-        this.setState({displayModalIsOpen:false}, () => {
-            setTimeout(() => {
-                this.setState({displayModalContent:null} )
-            },300)
-        })
+        this.setState({displayModalIsOpen:false})
     }
 
     viewHandler = (id) => {
@@ -88,7 +84,7 @@ class ListMcq extends Component {
     }
 
     showDecisionModal = (id) => {
-        this.setState({decisionModalIsOpen:true,decisionModalContent:this.RECORDS[this.props.startPageIndex+id]},() => {
+        this.setState({decisionModalIsOpen:true},() => {
             setTimeout(() => {
                 this.setState({deletingIndex:id})
             },300)
