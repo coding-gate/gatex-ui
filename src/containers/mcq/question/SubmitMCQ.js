@@ -1,5 +1,5 @@
 import React from 'react'
-import ViewQuestion from '../../ViewQuestion/ViewQuestion'
+import ViewQuestion from '../../viewQuestion/ViewQuestion'
 import axios from '../../../utils/AxiosWithToken'
 
 import * as webUtil from '../../../utils/WebUtil'

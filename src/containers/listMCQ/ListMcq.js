@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb';
 import PrintTable from '../../components/pagination/PrintTable';
 import AlertMessage from '../../components/alert/AlertMessage';
-import DisplayModal from '../../components/Modal/DisplayModal'
-import ViewQuestion from '../ViewQuestion/ViewQuestion'
+import DisplayModal from '../../components/modal/DisplayModal'
+import ViewQuestion from '../viewQuestion/ViewQuestion'
 import { Link } from 'react-router-dom';
 import { Plus, Search } from 'react-bootstrap-icons'
 
@@ -14,7 +14,7 @@ import withPagination from '../../hoc/withPagination';
 
 import * as webUtil from '../../utils/WebUtil'
 import * as QueryString from "query-string"
-import DecisionModal from '../../components/Modal/DecisionModal';
+import DecisionModal from '../../components/modal/DecisionModal';
 
 class ListMcq extends Component {
 
@@ -68,19 +68,11 @@ class ListMcq extends Component {
     }
 
     hideDecisionModal = () => {
-        this.setState({decisionModalIsOpen:false}, () => {
-            setTimeout(() => {
-                this.setState({decisionModalContent:null,deletingIndex:null} )
-            },300)
-        })
+        this.setState({decisionModalIsOpen:false,deletingIndex:null})
     }
 
     hideDisplayModal = () => {
-        this.setState({displayModalIsOpen:false}, () => {
-            setTimeout(() => {
-                this.setState({displayModalContent:null} )
-            },300)
-        })
+        this.setState({displayModalIsOpen:false})
     }
 
     viewHandler = (id) => {
@@ -92,11 +84,7 @@ class ListMcq extends Component {
     }
 
     showDecisionModal = (id) => {
-        this.setState({decisionModalIsOpen:true,decisionModalContent:this.RECORDS[this.props.startPageIndex+id]},() => {
-            setTimeout(() => {
-                this.setState({deletingIndex:id})
-            },300)
-        })
+        this.setState({decisionModalIsOpen:true,deletingIndex:id})
     }
 
     deleteHandler = (id) => {
@@ -162,12 +150,12 @@ class ListMcq extends Component {
                     id={this.state.deletingIndex}
                     confirmationMessage={'Are You Sure You Want To Delete This Question ?'}
                     confirmActionHandler={this.deleteHandler}
-                    modalIsOpen={!!this.state.decisionModalIsOpen} 
+                    modalIsOpen={this.state.decisionModalIsOpen} 
                     title={'Confirmation Window'} 
                     hideModal={this.hideDecisionModal} />
 
                 <DisplayModal 
-                    modalIsOpen={!!this.state.displayModalIsOpen} 
+                    modalIsOpen={this.state.displayModalIsOpen} 
                     title={'Question Details'} 
                     hideModal={this.hideDisplayModal}>
                     {this.state.displayModalContent ? <ViewQuestion state={this.state.displayModalContent} /> : null}
@@ -182,7 +170,6 @@ class ListMcq extends Component {
                 <div className='col-md-8 px-0 mx-auto'>
 
             <PrintTable 
-                loading={this.state.deletingIndex}
                 tableHeader={this.TABLE_HEADER} 
                 tableBody={this.props.tableBody}
                 option={{ view: this.viewHandler, edit: this.editHandler, delete: this.showDecisionModal }} />

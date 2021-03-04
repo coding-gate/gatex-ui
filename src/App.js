@@ -10,7 +10,7 @@ import Home from './containers/home/HomePage';
 import Login from './containers/user/Login';
 import Register from './containers/user/Register';
 import AddMCQ from './containers/mcq/AddMCQ'
-import ForgetPassword from './containers/ForgetPassword/ForgetPassword';
+import ChangePassword from './containers/changePassword/ChangePassword';
 import mcqList from './containers/listMCQ/ListMcq';
 import searchMcq from './containers/mcq/SearchMcq'
 import AddCodeQuestion from './containers/code/AddCodeQuestion'
@@ -29,7 +29,7 @@ function App() {
                       <Route path="/searchMcq" component={searchMcq}/>
                       <Route path="/addCodeQuestion" component={AddCodeQuestion}/>
                       <Route path="/error" component={ErrorPage}/>
-                      <Route path="/forgotPassword" component={ForgetPassword}/>
+                      <Route path="/ChangePassword" component={ChangePassword}/>
                   </Switch>
             </div>   
               <Footer />

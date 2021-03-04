@@ -24,8 +24,8 @@ export default function DecisionModal(props) {
                         {props.confirmationMessage}
                         <br/>
                         <br/>
-                    <button onClick={props.hideModal} className="btn btn-primary mr-3">Cancel</button>
-                    <button onClick={() => {hideModal() ;props.confirmActionHandler(props.id)}} className="btn btn-danger">Confirm</button>
+                    <button onClick={props.hideModal} className="btn btn-outline-primary mr-3">Cancel</button>
+                    <button onClick={() => {hideModal() ;props.confirmActionHandler(props.id)}} className="btn btn-primary">Confirm</button>
                     </div>
                 </div>
             </div>
