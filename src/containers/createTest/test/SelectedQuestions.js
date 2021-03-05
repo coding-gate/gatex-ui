@@ -1,3 +1,4 @@
+import classes from '../../listMCQ/questions.module.css'
 import React from 'react'
 
 export default function SelectedQuestions(props) {
@@ -32,9 +33,9 @@ export default function SelectedQuestions(props) {
             {props.state.fields.selectedQuestions
                 .map((ques, index) => 
                 <div key={index} className='d-flex col-8 offset-2 align-items-center rounded border p-2 mb-3'>
-                    <p className='mb-0 col-10'>
+                    <p className='mb-0 d-flex col-10'>
                         <b>{'Q-' + Number(index + 1)} :&nbsp; </b>
-                        {ques.text}
+                        <span className={classes.textBlock} dangerouslySetInnerHTML={{__html:ques.text}}></span>
                     </p>
                     <div
                         style={{ cursor: 'pointer', fontSize: '1.5rem' }}
