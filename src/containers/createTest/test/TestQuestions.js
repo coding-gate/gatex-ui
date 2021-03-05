@@ -5,11 +5,12 @@ import * as webUtil from '../../../utils/WebUtil'
 import * as Settings from '../../../utils/SiteSettings'
 import withPagination from '../../../hoc/withPagination'
 import PrintTable from '../../../components/pagination/PrintTable'
+import ReactHtmlParser from 'react-html-parser'
+
 
 
 class TestQuestions extends Component {
     state={
-        allQuestions:[],
         hashTagParam:null,
         complexityParam:null,
         isLoading:true,
@@ -21,6 +22,8 @@ class TestQuestions extends Component {
     { field: "Question", class: "col-6" },
     { field: " ", class: "col-3" }]
 
+    allQuestions=[]
+    
     filteredQuestions = []
 
     componentDidMount(){
@@ -28,24 +31,24 @@ class TestQuestions extends Component {
         axios.get(webUtil.getApiUrl() + `/mcqQuestions/search?lang=${this.props.state.fields.subject.value}&`)
             .then(res => res.data)
             .then(data => {
-                this.setState({isLoading:false,allQuestions:[...data]},() => {
-                    this.filteredQuestions=[...data]
-                    this.initializePagination(this.state.allQuestions)                    
-                })
+                this.allQuestions=[...data]
+                this.filteredQuestions=[...data]
+                this.initializePagination(this.allQuestions)
+                this.setState({isLoading:false})
             })
     }
 
     initializePagination = (data) => {
-        let formatted = data.map((e,index)=>{ return [index+1,e['type'],e['text']]}) 
+        let formatted = data.map((e,index)=>{ return [index+1,e['type'].toUpperCase(),ReactHtmlParser( e['text']),{id:e['id']}]}) 
         this.props.initPagination(formatted)
 
     }
 
     componentDidUpdate(prevProps,prevState){
         if(prevState.hashTagParam!==this.state.hashTagParam || prevState.complexityParam!==this.state.complexityParam ){
-            this.filteredQuestions = [...this.state.allQuestions]
+            this.filteredQuestions = [...this.allQuestions]
             if(this.state.hashTagParam){
-                this.filteredQuestions = this.filteredQuestions.filter(ques => ques.tags.map(tag=>tag.value.toLowerCase()).some(elem => elem.includes(this.state.hashTagParam.toLowerCase())))
+                this.filteredQuestions = this.filteredQuestions.filter(ques => ques.tags.map(tag=>tag.value.toLowerCase()).some(elem => elem.includes(this.state.hashTagParam.value.toLowerCase())))
             }
             if(this.state.complexityParam){
                 this.filteredQuestions = this.filteredQuestions.filter(ques => ques.complexity.value.toLowerCase()===this.state.complexityParam.value.toLowerCase()) 
@@ -53,6 +56,10 @@ class TestQuestions extends Component {
             this.initializePagination(this.filteredQuestions)
         }
 
+    }
+
+    fetchModalData = id => {
+        this.props.showModal(this.filteredQuestions[this.props.startPageIndex+id])
     }
 
     selectQuestion = (id) => {
@@ -103,11 +110,11 @@ class TestQuestions extends Component {
                         style={{position:'absolute',top:'-1.2rem',left:'1.5rem',borderRadius:'15px'}}>
                     Filter</p>
                         <div className='col-12 mx-auto my-2 col-md-6'>
-                            <input 
-                                type="text" 
-                                className='w-100 form-control' 
-                                onChange={e => this.setState({hashTagParam: e.target.value})} 
-                                placeholder='Hashtag'/>
+                            <Select 
+                                isClearable
+                                placeholder='Hashtags'
+                                onChange={(val) => this.setState({hashTagParam:val})}
+                                options={Settings.tagsOptions}/>
                         </div>
 
                         <div className='col-12 mx-auto my-2 col-md-6'>
@@ -132,7 +139,7 @@ class TestQuestions extends Component {
                     selected={this.props.state.fields.selectedQuestions}
                     tableHeader={this.TABLE_HEADER} 
                     tableBody={this.props.tableBody}
-                    option={{ view: this.props.showModal, select: this.selectQuestion }} />
+                    option={{ view: this.fetchModalData, select: this.selectQuestion }} />
                     : 
                     <p className='p-2 bg-light font-weight-bold border text-center col-6 col-lg-3 mx-auto'>No Questions Found</p> }
                     

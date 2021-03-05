@@ -19,7 +19,7 @@ const PrintTable = (props) => {
     }
 
 
-    function printBody(body, option) {
+    function printBody(body,header, option) {
         return body.map((row, index) =>
                 <div key={index} className="border-light border-bottom" >
                     <div className={"p-1 mb-0 d-flex " + rowBg[index]}
@@ -27,16 +27,16 @@ const PrintTable = (props) => {
                         onMouseOut={() => { setRowBg([]) }}>
                         {option.select ? 
                             <input 
-                                checked={props.selected.map(ques=> ques.id).includes(props.tableBody[index]['id'])}
+                                checked={props.selected.map(ques=> ques.id).includes(row[row.length-1].id)}
                                 onChange={() => option.select(index)}
                                 className='col-1 align-self-center' 
                                 type='checkbox'/> : null }
-                        <div className={"col-1 align-self-center text-center "}>{row[0]}</div>
-                        <div className={"col-1 align-self-center text-center "}>{row[1].toUpperCase()}</div>
-                        <div 
-                            style={option.select ? {cursor:'pointer'}: null} 
-                            onClick={option.select ? () => option.select(index) : null} 
-                            className={option.select ? "col-6 text-center "+classes.textBlock :"col-7 col-xl-8 text-center "+classes.textBlock} dangerouslySetInnerHTML={{ __html: row[2] }}></div>
+                        {row.map((col, index) => col.id ? null : 
+                            <div 
+                            className={option.select ? 
+                                            "col text-center " + header[index+1].class + " " + classes.textBlock : 
+                                            "col text-center " + header[index].class + " " + classes.textBlock} 
+                            key={index}>{col}</div>)}
                         <div 
                             className={option.select ? "col-3 text-right text-primary" : "col-3 col-xl-2 text-right text-primary"} 
                             style={rowBg[index] ? null : { "display": "none" }}>
@@ -63,7 +63,7 @@ const PrintTable = (props) => {
                                 : null}
 
                             {option.select ?
-                                !props.selected.map(ques=> ques.id).includes(props.tableBody[index]['id']) 
+                                !props.selected.map(ques=> ques.id).includes(row[row.length-1].id) 
                                 ? <PlusCircle
                                     style={{ fontSize: '1.3rem', marginLeft: '15px', cursor: 'pointer' }}
                                     className='text-primary align-self-center'
@@ -85,7 +85,7 @@ const PrintTable = (props) => {
                     {printHeader(props.tableHeader)}
                 </div>
             </div>
-            {printBody(props.tableBody, props.option)}
+            {printBody(props.tableBody,props.tableHeader, props.option)}
         </div>
     </div>)
 

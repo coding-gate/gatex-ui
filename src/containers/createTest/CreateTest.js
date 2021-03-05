@@ -43,19 +43,14 @@ class CreateTest extends Component {
         }
     }
 
-    showModal = (content) => {
+    showModal = (data) => {
         document.body.style.overflow = 'hidden'
-        this.setState({modalIsOpen:true, modalContent:content})
+        this.setState({modalIsOpen:true,modalContent:data })
     }
 
     hideDisplayModal = () => {
         document.body.style.overflow = 'visible'
-
-        this.setState({modalIsOpen:false}, () => {
-            setTimeout(() => {
-                this.setState({modalContent:null} )
-            },300)
-        })
+        this.setState({modalIsOpen:false})
     }
 
     changeSubject = (val) => {

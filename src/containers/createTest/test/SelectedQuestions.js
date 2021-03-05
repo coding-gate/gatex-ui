@@ -1,4 +1,5 @@
 import classes from '../../listMCQ/questions.module.css'
+import { Trash } from 'react-bootstrap-icons'
 import React from 'react'
 
 export default function SelectedQuestions(props) {
@@ -40,7 +41,7 @@ export default function SelectedQuestions(props) {
                     <div
                         style={{ cursor: 'pointer', fontSize: '1.5rem' }}
                         onClick={() => deleteSelectedQuestion(ques.id)}
-                        className="text-right text-danger col-2"><b>&times;</b></div>
+                        className="text-right text-danger col-2"> <Trash /> </div>
                 </div>)}
                 <div className="d-flex align-items-end row">
                     <button onClick={back} className="btn d-block ml-auto mr-4 btn-secondary">Back</button>

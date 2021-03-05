@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { Plus, Search } from 'react-bootstrap-icons'
 
 import axios from '../../utils/AxiosWithToken'
+import ReactHtmlParser from 'react-html-parser'
 
 import withAlert from '../../hoc/withAlert'
 import withPagination from '../../hoc/withPagination';
@@ -36,7 +37,7 @@ class ListMcq extends Component {
     RECORDS=[]
 
     initilizedPagination=(records)=>{
-        let allRecords=records.map((e,index)=>{ return [index+1,e['type'],e['text']]})            
+        let allRecords=records.map((e,index)=>{ return [index+1,e['type'].toUpperCase(), ReactHtmlParser( e['text'])]})            
         this.props.initPagination(allRecords); 
     }
 
@@ -68,14 +69,17 @@ class ListMcq extends Component {
     }
 
     hideDecisionModal = () => {
+        document.body.style.overflow = 'visible'
         this.setState({decisionModalIsOpen:false,deletingIndex:null})
     }
 
     hideDisplayModal = () => {
+        document.body.style.overflow = 'visible'
         this.setState({displayModalIsOpen:false})
     }
 
     viewHandler = (id) => {
+        document.body.style.overflow = 'hidden'
         this.setState({displayModalIsOpen:true, displayModalContent:this.RECORDS[this.props.startPageIndex+id]})
     }
 
@@ -84,6 +88,7 @@ class ListMcq extends Component {
     }
 
     showDecisionModal = (id) => {
+        document.body.style.overflow = 'hidden'
         this.setState({decisionModalIsOpen:true,deletingIndex:id})
     }
 
