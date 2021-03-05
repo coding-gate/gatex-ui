@@ -27,15 +27,15 @@ const PrintTable = (props) => {
                         onMouseOut={() => { setRowBg([]) }}>
                         {option.select ? 
                             <input 
-                                checked={props.selected.map(ques=> ques.id).includes(props.tableBody[index]['id'])} 
-                                onChange={() => option.select(props.tableBody[index])}
+                                checked={props.selected.map(ques=> ques.id).includes(props.tableBody[index]['id'])}
+                                onChange={() => option.select(index)}
                                 className='col-1 align-self-center' 
                                 type='checkbox'/> : null }
                         <div className={"col-1 align-self-center text-center "}>{row[0]}</div>
                         <div className={"col-1 align-self-center text-center "}>{row[1].toUpperCase()}</div>
                         <div 
                             style={option.select ? {cursor:'pointer'}: null} 
-                            onClick={option.select ? () => option.select(props.tableBody[index]) : null} 
+                            onClick={option.select ? () => option.select(index) : null} 
                             className={option.select ? "col-6 text-center "+classes.textBlock :"col-7 col-xl-8 text-center "+classes.textBlock} dangerouslySetInnerHTML={{ __html: row[2] }}></div>
                         <div 
                             className={option.select ? "col-3 text-right text-primary" : "col-3 col-xl-2 text-right text-primary"} 
@@ -67,11 +67,11 @@ const PrintTable = (props) => {
                                 ? <PlusCircle
                                     style={{ fontSize: '1.3rem', marginLeft: '15px', cursor: 'pointer' }}
                                     className='text-primary align-self-center'
-                                    onClick={() => option.select(props.tableBody[index])}/>
+                                    onClick={() => option.select(index)}/>
                                 : <DashCircle 
                                         style={{ fontSize: '1.3rem', marginLeft: '15px', cursor: 'pointer' }}
                                         className='text-primary align-self-center' 
-                                        onClick={() => option.select(props.tableBody[index])} /> : null}
+                                        onClick={() => option.select(index)} /> : null}
                         </div>
                     </div>
                 </div>)

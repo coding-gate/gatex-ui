@@ -9,7 +9,7 @@ import PrintTable from '../../../components/pagination/PrintTable'
 
 class TestQuestions extends Component {
     state={
-        questions:[],
+        allQuestions:[],
         hashTagParam:null,
         complexityParam:null,
         isLoading:true,
@@ -21,35 +21,43 @@ class TestQuestions extends Component {
     { field: "Question", class: "col-6" },
     { field: " ", class: "col-3" }]
 
+    filteredQuestions = []
+
     componentDidMount(){
 
         axios.get(webUtil.getApiUrl() + `/mcqQuestions/search?lang=${this.props.state.fields.subject.value}&`)
             .then(res => res.data)
             .then(data => {
-                this.setState({isLoading:false,questions:[...data]},() => {
-                    this.state.questions.map((e,index)=>{ return [index+1,e['type'],e['text']]}) 
-                    this.props.initPagination(this.state.questions)
+                this.setState({isLoading:false,allQuestions:[...data]},() => {
+                    this.filteredQuestions=[...data]
+                    this.initializePagination(this.state.allQuestions)                    
                 })
             })
     }
 
+    initializePagination = (data) => {
+        let formatted = data.map((e,index)=>{ return [index+1,e['type'],e['text']]}) 
+        this.props.initPagination(formatted)
+
+    }
+
     componentDidUpdate(prevProps,prevState){
         if(prevState.hashTagParam!==this.state.hashTagParam || prevState.complexityParam!==this.state.complexityParam ){
-            let questions = [...this.state.questions]
+            this.filteredQuestions = [...this.state.allQuestions]
             if(this.state.hashTagParam){
-                questions = questions.filter(ques => ques.tags.map(tag=>tag.value.toLowerCase()).some(elem => elem.includes(this.state.hashTagParam.toLowerCase())))
+                this.filteredQuestions = this.filteredQuestions.filter(ques => ques.tags.map(tag=>tag.value.toLowerCase()).some(elem => elem.includes(this.state.hashTagParam.toLowerCase())))
             }
             if(this.state.complexityParam){
-                questions = questions.filter(ques => ques.complexity.value.toLowerCase()===this.state.complexityParam.value.toLowerCase()) 
+                this.filteredQuestions = this.filteredQuestions.filter(ques => ques.complexity.value.toLowerCase()===this.state.complexityParam.value.toLowerCase()) 
             }
-            this.props.initPagination(questions)
+            this.initializePagination(this.filteredQuestions)
         }
 
     }
 
-    selectQuestion = (data) => {
+    selectQuestion = (id) => {
         let selectedQuestions = [...this.props.state.fields.selectedQuestions]
-        selectedQuestions = selectedQuestions.map(ques=> ques.id).includes(data.id) ? selectedQuestions.filter(ques => ques.id!==data.id) : [...selectedQuestions, data]
+        selectedQuestions = selectedQuestions.map(ques=> ques.id).includes(this.filteredQuestions[this.props.startPageIndex+id]['id']) ? selectedQuestions.filter(ques => ques.id!==this.filteredQuestions[this.props.startPageIndex+id]['id']) : [...selectedQuestions, this.filteredQuestions[this.props.startPageIndex+id]]
         this.props.updateState('selectedQuestions',selectedQuestions)
     }
 
