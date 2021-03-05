@@ -33,9 +33,9 @@ const PrintTable = (props) => {
                                 type='checkbox'/> : null }
                         {row.map((col, index) => col.id ? null : 
                             <div 
-                            className={option.select ? 
-                                            "col text-center " + header[index+1].class + " " + classes.textBlock : 
-                                            "col text-center " + header[index].class + " " + classes.textBlock} 
+                                className={option.select ? 
+                                            "col " + header[index+1].class + " " + classes.textBlock : 
+                                            "col " + header[index].class + " " + classes.textBlock} 
                             key={index}>{col}</div>)}
                         <div 
                             className={option.select ? "col-3 text-right text-primary" : "col-3 col-xl-2 text-right text-primary"} 

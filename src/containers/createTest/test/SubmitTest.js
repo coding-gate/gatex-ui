@@ -36,14 +36,14 @@ export default function SubmitTest(props) {
     }
 
     return (
-        <div className='border col-9 mx-auto p-5'>
-            <h4 className='lead'>Test Title: {props.state.fields.title}</h4>
-            <h3 className='lead my-4'>Total Questions Selected : {props.state.fields.selectedQuestions.length}</h3>
+        <div className='border col-9 mx-auto p-3'>
+            <h4 className='h3 font-weight-normal'>Test Title: <b>{props.state.fields.title}</b></h4>
+            <h3 className='h3 font-weight-normal my-4'>Total Questions Selected : <b>{props.state.fields.selectedQuestions.length}</b></h3>
              
-            <div className='d-flex flex-column flex-lg-row '>
-                <p className='mr-3 lead'>Examination Time : </p>
-                <ul className='list-unstyled mb-0 d-flex flex-column flex-lg-row justify-content-around'>
-                    <li className='mr-4'> 
+            <div className='d-flex flex-column flex-xl-row '>
+                <p className='mr-3 h3  font-weight-normal'>Examination Time : </p>
+                <ul className='list-unstyled mb-0 d-flex flex-column flex-xl-row justify-content-around'>
+                    <li className='mr-4  align-self-xl-center align-self-start'> 
                         <input
                             checked={useDefaultTime} 
                             onChange={() => updateState('timeLimit',defaultTime)}
@@ -53,9 +53,9 @@ export default function SubmitTest(props) {
                             name='time' 
                             className='mr-2' 
                             id="defaultTime"/>
-                        <label htmlFor="defaultTime"> {defaultTime} Mins. (default)</label> 
+                        <label className='mb-0' htmlFor="defaultTime"> {defaultTime} Mins. (default)</label> 
                     </li>
-                    <li> 
+                    <li className=' align-self-xl-center align-self-start'> 
                         <input 
                             onChange={(e) => updateState('timeLimit',Number(e.target.parentElement.lastChild.firstChild.value))}
                             onClick={() => setUseDefaultTime(false)}
@@ -64,7 +64,7 @@ export default function SubmitTest(props) {
                             checked={!useDefaultTime}
                             className='mr-2' 
                             id="customTime"/> 
-                        <label htmlFor="customTime">
+                        <label className='mb-0' htmlFor="customTime">
                             <input 
                                 onChange={e => {setUseDefaultTime(false); updateState('timeLimit',Number(e.target.value))}}
                                 onKeyDown={() => setUseDefaultTime(false)}
@@ -78,15 +78,15 @@ export default function SubmitTest(props) {
                 </ul>
             </div>
 
-            <div className="row d-flex align-items-end">
+            <div className="row mt-3 mr-4 d-flex align-items-end">
                 <button 
-                    onClick={() => updateState('step',2)} 
-                    className="btn ml-auto mr-4 d-block btn-secondary">
+                    onClick={() => updateState('step',3)} 
+                    className="btn ml-auto mr-4 d-block btn-outline-primary">
                     Back
                 </button>
                 <button 
                     onClick={submitTest} 
-                    className="btn d-block btn-success">
+                    className="btn d-block btn-primary">
                     Submit
                 </button>
             </div>

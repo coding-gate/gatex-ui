@@ -34,9 +34,24 @@ class CreateTest extends Component {
 
     }
 
+    handleNext = (errorMessages, nextVal) => {
+        for (var key in errorMessages) {
+            let field = this.state.fields[key];
+            if (field == null || field === '' || field.length===0) {
+                this.props.setAlert({ type: 'warning', message: errorMessages[key] })
+                return
+            }
+        }
+        this.props.setAlert(null)
+        this.setState({ step: nextVal });
+    }
+
     updateState = (field, value) => {
         if(field==='step'||field==='isLoading'){
             this.setState({[field]:value})
+        }
+        else if(field==='language'){
+            this.setState({fields:{...this.state.fields,[field]:value,selectedQuestions:[]}})
         }
         else{
             this.setState({fields:{...this.state.fields,[field]:value}})
@@ -53,32 +68,28 @@ class CreateTest extends Component {
         this.setState({modalIsOpen:false})
     }
 
-    changeSubject = (val) => {
-        let fields = this.state.fields
-        fields['subject'] =val
-        fields['selectedQuestions'] = []
-        this.setState({fields})
-    }
-
     render() {
 
         let body;
 
         switch(this.state.step){
             case 1 : body = <TestForm 
-                                changeSubject={this.changeSubject}
+                                handleNext={this.handleNext}
                                 state = {this.state} 
                                 setAlert={this.props.setAlert} 
                                 updateState={this.updateState} />
                     break;
             case 2 : body = <TestQuestions
+                                handleNext={this.handleNext}
                                 state={this.state}
                                 showModal={this.showModal}
                                 updateState={this.updateState}
                                 setAlert={this.props.setAlert}
                                 selectQuestion={this.selectQuestion} />
                     break;
-            case 3 : body = <SelectedQuestions 
+            case 3 : body = <SelectedQuestions
+                                showModal={this.showModal} 
+                                handleNext={this.handleNext}
                                 updateState={this.updateState}
                                 setAlert={this.props.setAlert}
                                 state={this.state} /> 

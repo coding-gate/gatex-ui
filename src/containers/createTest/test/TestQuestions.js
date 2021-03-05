@@ -16,6 +16,8 @@ class TestQuestions extends Component {
         isLoading:true,
     }
 
+    errorMessages={selectedQuestions:'Please Select At Least One Question'};
+
     TABLE_HEADER = [{ field: " ", class: "col-1" },
     { field: "ID", class: "col-1" },
     { field: "Type", class: "col-1" },
@@ -28,7 +30,7 @@ class TestQuestions extends Component {
 
     componentDidMount(){
 
-        axios.get(webUtil.getApiUrl() + `/mcqQuestions/search?lang=${this.props.state.fields.subject.value}&`)
+        axios.get(webUtil.getApiUrl() + `/mcqQuestions/search?lang=${this.props.state.fields.language.value}&`)
             .then(res => res.data)
             .then(data => {
                 this.allQuestions=[...data]
@@ -68,15 +70,6 @@ class TestQuestions extends Component {
         this.props.updateState('selectedQuestions',selectedQuestions)
     }
 
-    proceed = () => {
-        if(!this.props.state.fields.selectedQuestions.length>0){
-            this.props.setAlert({type:'warning',message:'Please Enter At least one question'})
-            return
-        }
-        this.props.setAlert(null)
-        this.props.updateState('step',3)
-    }
-
     back = () => {
         this.props.setAlert(null)
         this.props.updateState('step',1)
@@ -91,7 +84,7 @@ class TestQuestions extends Component {
                     <p 
                     style={{position:'absolute',top:'0',left:'0'}} 
                     className="p-2 border-bottom border-right mx-auto text-capitalize text-center">
-                        Selected Topic : <b> {this.props.state.fields.subject.label}</b>
+                        Selected Topic : <b> {this.props.state.fields.language.label}</b>
                         </p>
                     <p 
                     style={{position:'absolute',top:'0',right:'0'}} 
@@ -146,8 +139,8 @@ class TestQuestions extends Component {
                 </div>
 
                 <div className="d-flex align-items-end row">
-                    <button onClick={this.back} className="btn d-block ml-auto mr-4 btn-secondary">Back</button>
-                    <button onClick={this.proceed} className="btn d-block mr-4 btn-info">Proceed</button>
+                    <button onClick={this.back} className="btn d-block ml-auto mr-4 btn-outline-primary">Back</button>
+                    <button onClick={() => this.props.handleNext(this.errorMessages,3)} className="btn d-block mr-4 btn-primary">Proceed</button>
                 </div>
                 
             </div>
