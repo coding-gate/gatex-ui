@@ -29,7 +29,6 @@ class TestQuestions extends Component {
     filteredQuestions = []
 
     componentDidMount(){
-
         axios.get(webUtil.getApiUrl() + `/mcqQuestions/search?lang=${this.props.state.fields.language.value}&`)
             .then(res => res.data)
             .then(data => {
@@ -41,9 +40,8 @@ class TestQuestions extends Component {
     }
 
     initializePagination = (data) => {
-        let formatted = data.map((e,index)=>{ return [index+1,e['type'].toUpperCase(),ReactHtmlParser( e['text']),{id:e['id']}]}) 
-        this.props.initPagination(formatted)
-
+        let formattedData = data.map((e,index)=>{ return [index+1,e['type'].toUpperCase(),ReactHtmlParser( e['text']),{id:e['id']}]}) 
+        this.props.initPagination(formattedData)
     }
 
     componentDidUpdate(prevProps,prevState){
@@ -82,14 +80,13 @@ class TestQuestions extends Component {
 
                 <div  className="row px-0 col-12 mx-auto border-top border-bottom">
                     <span 
-                    className="p-2 border-left border-right bg-light mr-auto text-capitalize text-center">
+                        className="p-2 border-left border-right bg-light mr-auto text-capitalize text-center">
                         Selected Topic : <b> {this.props.state.fields.language.label}</b>
-                        </span>
+                    </span>
+
                     <span 
                     className="p-2 border-left border-right bg-light ml-auto text-capitalize text-center">
-                        Selected : <b>
-                                        {this.props.state.fields.selectedQuestions.length}
-                                   </b> 
+                        Selected : <b>{this.props.state.fields.selectedQuestions.length}</b> 
                     </span>
                 </div>
 
@@ -117,28 +114,31 @@ class TestQuestions extends Component {
                         </div>
                 </div>
                 
-
                 <div className="mx-auto mt-4 col-12 px-0">
-                    {this.state.isLoading ? 
+                        {this.state.isLoading ? 
                     <div 
-                    style={{width:'5rem',height:'5rem'}} 
-                    className="spinner-border d-block my-4 mx-auto">
-                </div>
+                        style={{width:'5rem',height:'5rem'}} 
+                        className="spinner-border d-block my-4 mx-auto">
+                    </div>
                     
-                    : this.props.tableBody.length ? 
-                <PrintTable 
-                    selected={this.props.state.fields.selectedQuestions}
-                    tableHeader={this.TABLE_HEADER} 
-                    tableBody={this.props.tableBody}
-                    option={{ view: this.fetchModalData, select: this.selectQuestion }} />
-                    : 
-                    <p className='p-2 bg-light font-weight-bold border text-center col-6 col-lg-3 mx-auto'>No Questions Found</p> }
-                    
+                : this.props.tableBody.length ? 
+                    <PrintTable 
+                        selected={this.props.state.fields.selectedQuestions}
+                        tableHeader={this.TABLE_HEADER} 
+                        tableBody={this.props.tableBody}
+                        option={{ view: this.fetchModalData, select: this.selectQuestion }} />
+                        : 
+                        <p className='p-2 bg-light font-weight-bold border text-center col-6 col-lg-3 mx-auto'>No Questions Found</p> }
+                        
                 </div>
 
                 <div className="d-flex align-items-end row">
-                    <button onClick={this.back} className="btn d-block ml-auto mr-4 btn-outline-primary">Back</button>
-                    <button onClick={() => this.props.handleNext(this.errorMessages,3)} className="btn d-block mr-4 btn-primary">Next</button>
+                    <button 
+                        onClick={this.back} 
+                        className="btn d-block ml-auto mr-4 btn-outline-primary">Back</button>
+                    <button 
+                        onClick={() => this.props.handleNext(this.errorMessages,3)} 
+                        className="btn d-block mr-4 btn-primary">Next</button>
                 </div>
                 
             </div>
