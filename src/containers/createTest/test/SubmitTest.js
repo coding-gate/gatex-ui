@@ -36,12 +36,12 @@ export default function SubmitTest(props) {
     }
 
     return (
-        <div className='border col-9 mx-auto p-3'>
-            <h4 className='h3 font-weight-normal'>Test Title: <b>{props.state.fields.title}</b></h4>
-            <h3 className='h3 font-weight-normal my-4'>Total Questions Selected : <b>{props.state.fields.selectedQuestions.length}</b></h3>
+        <div className='col-12 col-md-8 mx-auto'>
+            <h4 className='h4 font-weight-normal'>Test Title: <b>{props.state.fields.title}</b></h4>
+            <h3 className='h4 font-weight-normal my-4'>Total Questions Selected : <b>{props.state.fields.selectedQuestions.length}</b></h3>
              
             <div className='d-flex flex-column flex-xl-row '>
-                <p className='mr-3 h3  font-weight-normal'>Examination Time : </p>
+                <p className='mr-3 h4  font-weight-normal'>Examination Time : </p>
                 <ul className='list-unstyled mb-0 d-flex flex-column flex-xl-row justify-content-around'>
                     <li className='mr-4  align-self-xl-center align-self-start'> 
                         <input
