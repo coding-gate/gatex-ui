@@ -78,28 +78,26 @@ class TestQuestions extends Component {
     render() {
 
         return (
-            <div className='col-12 col-md-9 py-4 mx-auto border'>
+            <div className='col-12 col-md-9 mx-auto'>
 
-                <div  className="row">
-                    <p 
-                    style={{position:'absolute',top:'0',left:'0'}} 
-                    className="p-2 border-bottom border-right mx-auto text-capitalize text-center">
+                <div  className="row px-0 col-12 mx-auto border-top border-bottom">
+                    <span 
+                    className="p-2 border-left border-right bg-light mr-auto text-capitalize text-center">
                         Selected Topic : <b> {this.props.state.fields.language.label}</b>
-                        </p>
-                    <p 
-                    style={{position:'absolute',top:'0',right:'0'}} 
-                    className="p-2 border-bottom border-left mx-auto text-capitalize text-center">
+                        </span>
+                    <span 
+                    className="p-2 border-left border-right bg-light ml-auto text-capitalize text-center">
                         Selected : <b>
                                         {this.props.state.fields.selectedQuestions.length}
                                    </b> 
-                    </p>
+                    </span>
                 </div>
 
                 <div 
                     style={{position:'relative',marginTop:'4rem'}} 
-                    className="row col-12 col-lg-9 p-3 pt-5 border rounded border-info mx-auto">
+                    className="row col-12 p-3 pt-4 border rounded mx-auto">
                     <p 
-                        className='lead py-1 px-3 bg-white border border-info' 
+                        className='lead py-1 px-3 bg-light border' 
                         style={{position:'absolute',top:'-1.2rem',left:'1.5rem',borderRadius:'15px'}}>
                     Filter</p>
                         <div className='col-12 mx-auto my-2 col-md-6'>
@@ -120,7 +118,7 @@ class TestQuestions extends Component {
                 </div>
                 
 
-                <div className="mx-auto mt-4 col-12 col-lg-9 px-0">
+                <div className="mx-auto mt-4 col-12 px-0">
                     {this.state.isLoading ? 
                     <div 
                     style={{width:'5rem',height:'5rem'}} 
@@ -140,7 +138,7 @@ class TestQuestions extends Component {
 
                 <div className="d-flex align-items-end row">
                     <button onClick={this.back} className="btn d-block ml-auto mr-4 btn-outline-primary">Back</button>
-                    <button onClick={() => this.props.handleNext(this.errorMessages,3)} className="btn d-block mr-4 btn-primary">Proceed</button>
+                    <button onClick={() => this.props.handleNext(this.errorMessages,3)} className="btn d-block mr-4 btn-primary">Next</button>
                 </div>
                 
             </div>

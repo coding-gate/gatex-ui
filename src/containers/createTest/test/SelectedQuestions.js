@@ -18,12 +18,12 @@ export default function SelectedQuestions(props) {
     }
 
     return (
-        <div className='col-12 col-md-9 my-4 border p-5 mt-5 mx-auto '>
-            <p className="lead text-center p-3">
-                <span className='border-bottom pb-1'>
+        <div className='col-12 col-md-9 my-4 mt-5 mx-auto '>
+            <div className="lead text-center p-3">
+                <p className='border-bottom col-9 mx-auto pb-1'>
                     {props.state.fields.selectedQuestions.length>0 ? 'Selected Questions' : 'No Questions Selected'}
-                </span>
-            </p>
+                </p>
+            </div>
             {props.state.fields.selectedQuestions
                 .map((ques, index) => 
                 <div key={index} className='d-flex col-12 col-md-9 col-lg-8 mx-auto align-items-center rounded border p-2 mb-3'>
@@ -41,7 +41,7 @@ export default function SelectedQuestions(props) {
                 </div>)}
                 <div className="d-flex align-items-end row">
                     <button onClick={back} className="btn d-block ml-auto mr-4 btn-outline-primary">Back</button>
-                    <button onClick={() => props.handleNext(errorMessages, 4)} className="btn d-block btn-primary">Proceed</button>
+                    <button onClick={() => props.handleNext(errorMessages, 4)} className="btn d-block btn-primary">Next</button>
                 </div>
         </div>
     )
