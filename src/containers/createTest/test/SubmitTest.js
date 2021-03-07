@@ -1,6 +1,6 @@
 import React from 'react'
 import axiosWithToken from '../../../utils/AxiosWithToken';
-import * as WebUtil from '../../../utils/WebUtil'
+import * as webUtil from '../../../utils/WebUtil'
 
 export default function SubmitTest(props) {
 
@@ -14,14 +14,18 @@ export default function SubmitTest(props) {
 
     const submitTest = () => {
         props.updateState('isLoading', true)
-        const test = {...props.state.fields}
-        let url = WebUtil.getApiUrl() + ''
-        axiosWithToken.post(url,test)
-            .then()
-            .catch(err => {
-                WebUtil.handleError(err,props)
-            })
+        let test = {...props.state.fields}
+        let questionids=test.selectedQuestions.map(question => question.id)
+        test.selectedQuestions=questionids;
         console.log(test);
+        let url=webUtil.getApiUrl()+'/mcqTest';
+        axiosWithToken.post(url, test)
+            .then(() => {props.setAlert({type:'success',message:'Succesfully Saved'});
+                         props.updateState('isLoading', false)})
+                         
+            .catch(err => {
+                webUtil.handleError(err,props)
+            })
     }
 
     React.useEffect(()=>{

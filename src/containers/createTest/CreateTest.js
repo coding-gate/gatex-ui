@@ -96,6 +96,7 @@ class CreateTest extends Component {
                     break;
             case 4 : body = <SubmitTest 
                                 updateState={this.updateState} 
+                                setAlert={this.props.setAlert}
                                 state={this.state} /> 
                     break;
             default : break;
