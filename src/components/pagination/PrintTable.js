@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import classes from '../../containers/listMCQ/questions.module.css'
-import { DashCircle, Eye, Pen, PlusCircle, Trash } from 'react-bootstrap-icons';
+import { DashCircle, Eye, Pen, PlusCircle, Trash, Share } from 'react-bootstrap-icons';
 
 const PrintTable = (props) => {
 
@@ -46,6 +46,14 @@ const PrintTable = (props) => {
                                     className='text-primary align-self-center'
                                     onClick={() => option.view(index)} />
                                 : null}
+                            
+                            {option.link 
+                                ? 
+                                    <Share 
+                                        style={{ fontSize: '1.3rem', marginLeft: '15px', cursor: 'pointer' }}
+                                        className='text-primary align-self-center'
+                                        onClick={option.link} /> 
+                                    : null }
 
                             {option.edit
                                 ? <Pen

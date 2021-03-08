@@ -47,7 +47,7 @@ class AddQuestion extends Component {
         const params = QueryString.parse(this.props.location.search)
         this.setState({ isEditing: !!params.questionId })
         if (!!params.questionId) {
-            this.setState({ isLoading: true,id:params.questionId }, () => {
+            this.setState({ isLoading: true }, () => {
                 axios.get(webUtil.getApiUrl() + '/mcqQuestions/' + params.questionId)
                     .then(res => {
                         const {text,complexity,id,lang,tags,time,type,options} = res.data;

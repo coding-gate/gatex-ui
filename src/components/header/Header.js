@@ -41,7 +41,7 @@ const Header = () => {
                                         </Link>
                                         <div className="dropdown-menu">
                                             <Link className="dropdown-item text-primary" to="/mcqList">questions</Link>
-                                            <Link className="dropdown-item text-primary" to="/createtest">Create Test</Link>
+                                            <Link className="dropdown-item text-primary" to="/testList">Tests</Link>
                                         </div>
                                 </li>
                                 :null

@@ -13,6 +13,11 @@ import SubmitTest from './test/SubmitTest'
 import DisplayModal from '../../components/modal/DisplayModal'
 import ViewQuestion from '../viewQuestion/ViewQuestion'
 
+import axios from '../../utils/AxiosWithToken'
+
+import * as QueryString from "query-string"
+import * as webUtil from '../../utils/WebUtil'
+
 class CreateTest extends Component {
 
     state = {
@@ -20,7 +25,26 @@ class CreateTest extends Component {
         fields:{},
         modalIsOpen:false,
         modalContent:null,
-        isLoading:false
+        isLoading:false,
+        isEditing:false
+    }
+
+    componentDidMount(){
+        const params = QueryString.parse(this.props.location.search)
+        this.setState({ isEditing: !!params.testId })
+        if (!!params.testId) {
+            this.setState({ isLoading: true }, () => {
+                axios.get(webUtil.getApiUrl() + '/mcqTest/' + params.testId)
+                    .then(res => {
+                        console.log(res.data);
+                        //const {text,complexity,id,lang,tags,time,type,options} = res.data;
+                        //this.setState({isLoading:false,fields:{text,complexity,id,lang,tags,time,type ,options:{...this.state.fields.options, [type]:options}}})
+                    })
+                    .catch(error => {
+                        webUtil.handleError(error, this.props);
+                    })
+            })
+        }
     }
 
     initializedState = () => {
@@ -107,6 +131,7 @@ class CreateTest extends Component {
                 <div className="row">
                     <Breadcrumb elements={[
                         { url: '/', level: 'Home' },
+                        { url: '/testList', level: 'Test List' },
                         { url: '#', level: 'Create Test' },
                     ]} />
                 </div>
