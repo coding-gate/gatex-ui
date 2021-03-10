@@ -22,7 +22,8 @@ function retrieveAdminAcountState() {
 const initialState = {
     oauth: retrieveOauthState(),
     isAdminAccountConfigured: retrieveAdminAcountState(),
-    mcqSerchParam: {}
+    mcqSerchParam: {},
+    testSerchParam:{}
 }
 
 const reducer = (state = initialState, action)=>{
@@ -45,6 +46,10 @@ const reducer = (state = initialState, action)=>{
         case actionType.SAVE_MCQ_SEARCH_PARAM:
             state={...state}
             state.mcqSerchParam=action.payload;
+            break;    
+        case actionType.SAVE_TEST_SEARCH_PARAM:
+            state={...state}
+            state.testSerchParam=action.payload;
             break;    
         default:
           return state;   

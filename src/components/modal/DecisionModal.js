@@ -13,7 +13,7 @@ export default function DecisionModal(props) {
     }, [hideModal])
     return (
         <div className={classes.modal}>
-            <div className={props.modalIsOpen ? classes.backdrop : classes.backdrop + " " + classes.backdropHidden}>
+            <div onClick={props.hideModal} className={props.modalIsOpen ? classes.backdrop : classes.backdrop + " " + classes.backdropHidden}>
                 <div className={props.modalIsOpen ? classes.modalBody + ' ' + classes.modalOpen : classes.modalBody}>
                     <div className='bg-light font-weight-bold p-2 w-100 d-flex justify-content-between'>{props.title}
                         <XSquare className={classes.closeBtn} onClick={props.hideModal} />

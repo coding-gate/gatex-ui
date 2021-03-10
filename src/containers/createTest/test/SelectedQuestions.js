@@ -1,10 +1,19 @@
+import React from 'react'
 import classes from '../../listMCQ/questions.module.css'
 import { Trash, Eye } from 'react-bootstrap-icons'
-import React from 'react'
 
 export default function SelectedQuestions(props) {
 
     const errorMessages={selectedQuestions:'Please Select At Least One Question'};
+
+    const [selectedQuestions, setSelectedQuestions] = React.useState([])
+
+    const {allQuestions, state} = props
+
+    React.useEffect(() => {
+        let selectedQuestions = allQuestions.filter(ques => state.fields.selectedQuestions.includes(ques.id))
+        setSelectedQuestions(selectedQuestions)
+    },[allQuestions, state.fields.selectedQuestions])
 
     const back = () => {
         props.setAlert(null)
@@ -13,7 +22,7 @@ export default function SelectedQuestions(props) {
 
     const deleteSelectedQuestion = (questionId) => {
         let selectedQuestions = [...props.state.fields.selectedQuestions]
-        selectedQuestions = selectedQuestions.filter(ques => ques.id !== questionId)
+        selectedQuestions = selectedQuestions.filter(id => id !== questionId)
         props.updateState('selectedQuestions',selectedQuestions )
     }
 
@@ -24,7 +33,7 @@ export default function SelectedQuestions(props) {
                     {props.state.fields.selectedQuestions.length>0 ? 'Selected Questions' : 'No Questions Selected'}
                 </p>
             </div>
-            {props.state.fields.selectedQuestions
+            {selectedQuestions
                 .map((ques, index) => 
                 <div key={index} className='d-flex col-12 col-md-9 col-lg-8 mx-auto align-items-center rounded border p-2 mb-3'>
                     <p className='mb-0 d-flex col-10'>

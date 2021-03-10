@@ -22,11 +22,17 @@ class CreateTest extends Component {
 
     state = {
         step: 1,
-        fields:{},
+        fields:{isLocked:false},
         modalIsOpen:false,
         modalContent:null,
         isLoading:false,
         isEditing:false
+    }
+
+    allQuestions = []
+
+    updateQuestions = data => {
+        this.allQuestions = data
     }
 
     componentDidMount(){
@@ -37,8 +43,8 @@ class CreateTest extends Component {
                 axios.get(webUtil.getApiUrl() + '/mcqTest/' + params.testId)
                     .then(res => {
                         console.log(res.data);
-                        //const {text,complexity,id,lang,tags,time,type,options} = res.data;
-                        //this.setState({isLoading:false,fields:{text,complexity,id,lang,tags,time,type ,options:{...this.state.fields.options, [type]:options}}})
+                        const {title,language,id,timeLimit,selectedQuestions} = res.data;
+                        this.setState({isLoading:false, fields:{title,language,id,timeLimit,selectedQuestions}})
                     })
                     .catch(error => {
                         webUtil.handleError(error, this.props);
@@ -47,7 +53,7 @@ class CreateTest extends Component {
         }
     }
 
-    initializedState = () => {
+    initializeState = () => {
         this.setState({
             step: 1,
             fields:{},
@@ -104,14 +110,16 @@ class CreateTest extends Component {
                                 updateState={this.updateState} />
                     break;
             case 2 : body = <TestQuestions
+                                updateQuestions={this.updateQuestions}
+                                allQuestions={this.allQuestions}
                                 handleNext={this.handleNext}
                                 state={this.state}
                                 showModal={this.showModal}
                                 updateState={this.updateState}
-                                setAlert={this.props.setAlert}
-                                selectQuestion={this.selectQuestion} />
+                                setAlert={this.props.setAlert} />
                     break;
             case 3 : body = <SelectedQuestions
+                                allQuestions={this.allQuestions}
                                 showModal={this.showModal} 
                                 handleNext={this.handleNext}
                                 updateState={this.updateState}
@@ -119,11 +127,19 @@ class CreateTest extends Component {
                                 state={this.state} /> 
                     break;
             case 4 : body = <SubmitTest 
+                                allQuestions={this.allQuestions}
+                                initializeState={this.initializeState}
                                 updateState={this.updateState} 
                                 setAlert={this.props.setAlert}
                                 state={this.state} /> 
                     break;
             default : break;
+        }
+
+        if (this.state.isLoading) {
+            body = <div style={{ width: '5rem', height: '5rem' }}
+                className="spinner-border mx-auto d-block mt-5">
+            </div>
         }
 
         return (

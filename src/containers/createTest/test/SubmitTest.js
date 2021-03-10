@@ -1,12 +1,22 @@
 import React from 'react'
 import axiosWithToken from '../../../utils/AxiosWithToken';
+import classes from '../../listMCQ/questions.module.css'
+
 import * as webUtil from '../../../utils/WebUtil'
 
 export default function SubmitTest(props) {
 
     const [useDefaultTime, setUseDefaultTime] = React.useState(true)
+    const [selectedQuestions, setSelectedQuestions] = React.useState([])
 
-    const defaultTime = props.state.fields.selectedQuestions
+    const {allQuestions, state} = props
+
+    React.useEffect(() => {
+        let selectedQuestions = allQuestions.filter(ques => state.fields.selectedQuestions.includes(ques.id))
+        setSelectedQuestions(selectedQuestions)
+    },[allQuestions, state.fields.selectedQuestions])
+
+    const defaultTime = selectedQuestions
                             .map(ques=> Number(ques.time.value))
                             .reduce((total,currentTime) =>currentTime+total,0 );
     
@@ -15,14 +25,11 @@ export default function SubmitTest(props) {
     const submitTest = () => {
         props.updateState('isLoading', true)
         let test = {...props.state.fields}
-        let questionids=test.selectedQuestions.map(question => question.id)
-        test.selectedQuestions=questionids;
         console.log(test);
-        let url=webUtil.getApiUrl()+'/mcqTest';
-        axiosWithToken.post(url, test)
+        axiosWithToken.post(webUtil.getApiUrl()+'/mcqTest', test)
             .then(() => {props.setAlert({type:'success',message:'Succesfully Saved'});
+                         props.initializeState()
                          props.updateState('isLoading', false)})
-                         
             .catch(err => {
                 webUtil.handleError(err,props)
             })
@@ -42,7 +49,15 @@ export default function SubmitTest(props) {
     return (
         <div className='col-12 col-md-8 mx-auto'>
             <h4 className='h4 font-weight-normal'>Test Title: <b>{props.state.fields.title}</b></h4>
-            <h3 className='h4 font-weight-normal my-4'>Total Questions Selected : <b>{props.state.fields.selectedQuestions.length}</b></h3>
+            <h3 className='h4 font-weight-normal my-4'>Questions Selected :</h3>
+                {selectedQuestions
+                    .map((ques, index) => 
+                    <div key={index} className='d-flex col-12 col-md-9 col-lg-8 align-items-center rounded border p-2 mb-3'>
+                        <p className='mb-0 d-flex col-10'>
+                            <b className='text-nowrap'>{'Q-' + Number(index + 1)} :&nbsp; </b>
+                            <span className={classes.textBlock} dangerouslySetInnerHTML={{__html:ques.text}}></span>
+                        </p>
+                    </div> )}
              
             <div className='d-flex flex-column flex-xl-row '>
                 <p className='mr-3 h4  font-weight-normal'>Examination Time : </p>

@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb';
 
-import CreatableSelect from 'react-select/creatable';
 import Select from 'react-select';
 
 import * as actionType from '../../store/actions'
@@ -17,15 +16,15 @@ class SearchMcq extends Component {
 
     componentDidMount() {
         //console.log(this.props.mcqSerchParam)
-        this.setState({fields:this.props.mcqSerchParam})
+        this.setState({fields:this.props.testSerchParam})
     }
 
     clear = ()=>{
-    let fields={...this.state.fields};
-    for (var key in fields) {
-        fields[key]=null;   
-    }
-        this.setState({fields});
+        let fields={...this.state.fields};
+        for (var key in fields) {
+            fields[key]=null;   
+        }
+            this.setState({fields});
     }
 
 
@@ -40,21 +39,18 @@ class SearchMcq extends Component {
         let query="";
         for (var key in this.state.fields) {
             if(this.state.fields[key]){
-                if(Array.isArray(this.state.fields[key])){
-                    let tags=this.state.fields[key];
-                    for (var entry in tags) {
-                        query=query+key+"="+ tags[entry].value+"&";
-                    }
+                if(typeof this.state.fields[key]==='object'){
+                    query=query+key+"="+ this.state.fields[key].value+'&';
                 }else{
-                    query=query+key+"="+ this.state.fields[key].value+"&";
+                    query=query+key+"="+ this.state.fields[key]+"&";
                 } 
             }
           }
           this.props.onSearchSaveParamState(this.state.fields)
           if(query.length){
-            this.props.history.push('/mcqList?search='+encodeURIComponent(query));
+            this.props.history.push('/testList?search='+encodeURIComponent(query));
           }else{
-            this.props.history.push('/mcqList');
+            this.props.history.push('/testList');
           }
     }
 
@@ -71,65 +67,40 @@ class SearchMcq extends Component {
             <div className="container">
 
                 <div className="row mb-3">
-                    <div className="col-12">
+                    <div className="col-5">
                         <h5>Title:</h5>
-                        <input type="text" className='form-control' />
+                        <input 
+                            value={this.state.fields['title'] ? this.state.fields['title'] : '' }
+                            placeholder='Enter Title'
+                            onChange={e => this.updateField('title', e.target.value)}
+                            type="text" 
+                            className='form-control' />
 
                     </div>
-                </div>
-
-                <div className="row">
-                    <div className="col-3">
+                
+                    <div className="col-4">
                         <h5>Language:</h5>
                         <Select
                             isClearable
                             placeholder='Choose Language'
-                            value={this.state.fields['lang']}
-                            onChange={(val) => this.updateField("lang", val)}
+                            value={this.state.fields['language']}
+                            onChange={(val) => this.updateField("language", val)}
                             options={Settings.langOptions}
                         />
                     </div>
-                    <div className="col">
-                        <h5>Estimated time to solve:</h5>
-                        <Select
-                            isClearable
-                            placeholder='Choose time'
-                            value={this.state.fields['time']}
-                            onChange={(val) => this.updateField("time", val)}
-                            options={Settings.timeOption}
-                        />
-                    </div>
-                    <div className="col">
-                        <h5>Complexity:</h5>
-                        <Select
-                            isClearable
-                            placeholder='Choose Complexity'
-                            value={this.state.fields['complexity']}
-                            onChange={(val) => this.updateField('complexity', val)}
-                            options={Settings.complexityOption}
+                    <div className="col-3">
+                        <h5>TimeLimit</h5>
+                        <input
+                            type='text'
+                            className='form-control'
+                            placeholder='TimeLimit'
+                            value={this.state.fields['timeLimit'] ? this.state.fields['timeLimit'] : '' }
+                            onChange={(e) => this.updateField("timeLimit", e.target.value)}
                         />
                     </div>
                 </div>
 
-                <div className="row mt-2">
-                    <div className="col-9">
-                        <h5>Add tags</h5>
-                        <CreatableSelect isMulti
-                            placeholder='Hashtags...'
-                            value={this.state.fields['tags']}
-                            onChange={(val) => this.updateField("tags", val)}
-                            options={Settings.tagsOptions} />
-                    </div>
-                    <div className="col-3">
-                        <h5>Type</h5>
-                        <Select 
-                            isClearable
-                            placeholder='Choose Type'
-                            value={this.state.fields['type']}
-                            onChange={(val) => this.updateField("type", val)}
-                            options={Settings.typeOption} />
-                    </div>
-                </div>
+                
                 <div className="row mt-2">
                     <div className="col text-right">
                         <button className="btn btn-sm btn-outline-primary mx-2" onClick={this.clear}> Clear</button>
@@ -145,13 +116,13 @@ class SearchMcq extends Component {
 
 const mapDispatchToProps = dispatch =>{
     return {
-        onSearchSaveParamState: (payload)=>dispatch({type: actionType.SAVE_MCQ_SEARCH_PARAM, payload: payload})
+        onSearchSaveParamState: (payload)=>dispatch({type: actionType.SAVE_TEST_SEARCH_PARAM, payload: payload})
     }
 }
 
 const mapStateToProps = state =>{
     return {
-        mcqSerchParam: state.mcqSerchParam
+        testSerchParam: state.testSerchParam
     }
 }
 

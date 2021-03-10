@@ -4,7 +4,7 @@ import Select from 'react-select'
 import * as webUtil from '../../../utils/WebUtil'
 import * as Settings from '../../../utils/SiteSettings'
 import withPagination from '../../../hoc/withPagination'
-import PrintTable from '../../../components/pagination/PrintTable'
+import SelectablePrintTable from '../../../components/pagination/SelectablePrintTable'
 import ReactHtmlParser from 'react-html-parser'
 
 
@@ -23,18 +23,19 @@ class TestQuestions extends Component {
     { field: "Type", class: "col-1" },
     { field: "Question", class: "col-6" },
     { field: " ", class: "col-3" }]
-
-    allQuestions=[]
     
     filteredQuestions = []
 
     componentDidMount(){
-        axios.get(webUtil.getApiUrl() + `/mcqQuestions/search?lang=${this.props.state.fields.language.value}&`)
-            .then(res => res.data)
-            .then(data => {
-                this.allQuestions=[...data]
-                this.filteredQuestions=[...data]
-                this.initializePagination(this.allQuestions)
+        axios.get(webUtil.getApiUrl() + `/mcqQuestions/search?lang=${this.props.state.fields.language.value}`)
+            .then(res => {
+                this.props.updateQuestions(res.data)
+                this.filteredQuestions=[...res.data]
+                if(this.props.state.selectedId){
+                    let selectedQuestions = this.props.allQuestions.filter(ques=> this.props.state.selectedId.includes(ques.id))
+                    this.props.updateState('selectedQuestions', selectedQuestions)
+                }
+                this.initializePagination(res.data)
                 this.setState({isLoading:false})
             })
     }
@@ -46,7 +47,7 @@ class TestQuestions extends Component {
 
     componentDidUpdate(prevProps,prevState){
         if(prevState.hashTagParam!==this.state.hashTagParam || prevState.complexityParam!==this.state.complexityParam ){
-            this.filteredQuestions = [...this.allQuestions]
+            this.filteredQuestions = [...this.props.allQuestions]
             if(this.state.hashTagParam){
                 this.filteredQuestions = this.filteredQuestions.filter(ques => ques.tags.map(tag=>tag.value.toLowerCase()).some(elem => elem.includes(this.state.hashTagParam.value.toLowerCase())))
             }
@@ -62,9 +63,9 @@ class TestQuestions extends Component {
         this.props.showModal(this.filteredQuestions[this.props.startPageIndex+id])
     }
 
-    selectQuestion = (id) => {
+    selectQuestion = (index) => {
         let selectedQuestions = [...this.props.state.fields.selectedQuestions]
-        selectedQuestions = selectedQuestions.map(ques=> ques.id).includes(this.filteredQuestions[this.props.startPageIndex+id]['id']) ? selectedQuestions.filter(ques => ques.id!==this.filteredQuestions[this.props.startPageIndex+id]['id']) : [...selectedQuestions, this.filteredQuestions[this.props.startPageIndex+id]]
+        selectedQuestions = selectedQuestions.includes(this.filteredQuestions[this.props.startPageIndex+index]['id']) ? selectedQuestions.filter(id => id!==this.filteredQuestions[this.props.startPageIndex+index]['id']) : [...selectedQuestions, this.filteredQuestions[this.props.startPageIndex+index]['id']]
         this.props.updateState('selectedQuestions',selectedQuestions)
     }
 
@@ -122,7 +123,7 @@ class TestQuestions extends Component {
                     </div>
                     
                 : this.props.tableBody.length ? 
-                    <PrintTable 
+                    <SelectablePrintTable 
                         selected={this.props.state.fields.selectedQuestions}
                         tableHeader={this.TABLE_HEADER} 
                         tableBody={this.props.tableBody}

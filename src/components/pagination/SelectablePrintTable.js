@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import classes from '../../containers/listMCQ/questions.module.css'
-import {Eye, Pen, Trash} from 'react-bootstrap-icons';
+import { DashCircle, Eye, PlusCircle } from 'react-bootstrap-icons';
 
 const PrintTable = (props) => {
-
-    
 
     const [rowBg, setRowBg] = useState([]);
 
@@ -25,11 +23,18 @@ const PrintTable = (props) => {
                     <div className={"p-1 mb-0 d-flex " + rowBg[index]}
                         onMouseOver={() => { setBgLight(index) }}
                         onMouseOut={() => { setRowBg([]) }}>
-                        {row.map((col, index) => <div 
-                                className={"col " + header[index].class + " " + classes.textBlock} 
+                        {option.select ? 
+                            <input 
+                                checked={props.selected.includes(row[row.length-1].id)}
+                                onChange={() => option.select(index)}
+                                className='col-1 align-self-center' 
+                                type='checkbox'/> : null }
+                        {row.map((col, index) => col.id ? null : 
+                            <div 
+                                className={ "col  " + header[index+1].class + " " + classes.textBlock } 
                             key={index}>{col}</div>)}
                         <div 
-                            className={"col-3 col-xl-2 text-right text-primary"} 
+                            className={"col-3 text-right text-primary"} 
                             style={rowBg[index] ? null : { "display": "none" }}>
                             {option.view
                                 ? <Eye
@@ -37,21 +42,17 @@ const PrintTable = (props) => {
                                     className='text-primary align-self-center'
                                     onClick={() => option.view(index)} />
                                 : null}
-
-                            {option.edit
-                                ? <Pen
+                            
+                            {option.select ?
+                                !props.selected.includes(row[row.length-1].id) 
+                                ? <PlusCircle
                                     style={{ fontSize: '1.3rem', marginLeft: '15px', cursor: 'pointer' }}
                                     className='text-primary align-self-center'
-                                    onClick={() => option.edit(index)} />
-                                : null}
-
-                            {option.delete
-                                ? <Trash
-                                    style={{ fontSize: '1.3rem', marginLeft: '15px', cursor: 'pointer' }}
-                                    className='text-primary align-self-center'
-                                    onClick={() => option.delete(index)}
-                                />
-                                : null}
+                                    onClick={() => option.select(index)}/>
+                                : <DashCircle 
+                                        style={{ fontSize: '1.3rem', marginLeft: '15px', cursor: 'pointer' }}
+                                        className='text-primary align-self-center' 
+                                        onClick={() => option.select(index)} /> : null}
                         </div>
                     </div>
                 </div>)

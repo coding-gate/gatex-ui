@@ -65,7 +65,7 @@ class SearchMcq extends Component {
                     <Breadcrumb elements={[
                         { url: '/', level: 'Home' },
                         { url: '/mcqList', level: 'List All' },
-                        { url: '#', level: 'Search mcq' }
+                        { url: '#', level: 'Search MCQ' }
                     ]} />
                 </div>   
             <div className="container">
